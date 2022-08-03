@@ -1,0 +1,74 @@
+[read_more]
+other = "阅读更多"
+
+[copyright]
+other = "Copyright"
+
+[all_rights]
+other = "All Rights Reserved"
+
+[share_on]
+other = "分享到"
+
+[featured_posts]
+other = "精选文章"
+
+[recent_posts]
+other = "最新文章"
+
+[404_title]
+other = "页面不见了"
+
+[could_not_find]
+other = "页面不存在或已被删除"
+
+[go_back]
+other = "返回"
+
+[translations]
+other = "翻译"
+
+[categories]
+other = "分类"
+
+[tags]
+other = "标签"
+
+[series]
+other = "专栏"
+
+[all_categories]
+other = "所有分类"
+
+[all_tags]
+other = "所有标签"
+
+[all_series]
+other = "所有专栏"
+
+[overview]
+other = "文章目录"
+
+[reading_time]
+other = "{{ .ReadingTime }} min read"
+
+[img_web_path]
+other = "网站链接"
+
+[img_web_path_desc]
+other = "在新选项卡中打开此网站链接"
+
+[img_disk_path]
+other = "链接到文件"
+
+[img_pb]
+other = "Page Bundles"
+
+[img_pb_using]
+other = "使用"
+
+[img_pb_desc]
+other = "相关信息 Hugo Page Bundles"
+
+[series_posts]
+other = "Posts in this series"

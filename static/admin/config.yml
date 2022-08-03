@@ -1,0 +1,28 @@
+backend:
+  name: github
+  repo: # for example username/reponame
+  branch: main # Branch to update (optional; defaults to master)
+  site_domain: # for example www.how2code.info
+  base_url: # used by oauth authentication, for example https://www.how2code.info
+  auth_endpoint: api/auth # don't change, used for azure static webapp oauth authentication
+
+media_folder: "app/static/images" # Folder where user uploaded files should go
+public_folder: "/images"
+
+collections:
+  - name: "post" # Used in routes, e.g., /admin/collections/blog
+    label: "post" # Used in the UI
+    folder: "/app/content/post" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: "{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    fields: # The fields for each document, usually in front matter
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Author", name: "author", widget: "string", default: "John Doe"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Featured Image", name: "thumbnail", widget: "image"}
+      - {label: "Draft", name: "draft", widget: "boolean", default: false}
+      - {label: "Categories", name: "categories", widget: "list"}
+      - {label: "Tags", name: "tags", widget: "list"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Body", name: "body", widget: "markdown"}
+      

@@ -1,0 +1,10 @@
+
+[en]
+  title = "danielhanaj.com"
+  LanguageName = "English"
+  weight = 1
+
+[pl]
+  title = "danielhanaj.com"
+  LanguageName = "Polski"
+  weight = 2

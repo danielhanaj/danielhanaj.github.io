@@ -1,0 +1,989 @@
+
+<!DOCTYPE html>
+<html lang="en" data-figures="" class="page">
+  <head>
+<title>Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent | danielhanaj.com</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ER2SQBRHGZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-ER2SQBRHGZ');
+</script>
+
+  
+<meta property="og:locale" content="en" />
+
+<meta property="og:type" content="article">
+<meta name="description" content="Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content="@donkojot">
+<meta name="twitter:title" content="Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent" />
+<meta property="og:url" content="https://blog.danielhanaj.com/post/2021/12/28/create_docker_container_with_packer/" />
+<meta property="og:title" content="Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent" />
+<meta property="og:description" content="Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent" />
+<meta property="og:image" content="https://blog.danielhanaj.com/post/2021/12/28/create_docker_container_with_packer/images/2021/12/27/docker.png" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://blog.danielhanaj.com/icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://blog.danielhanaj.com/icons/favicon-32x32.png">
+<link rel="manifest" href="https://blog.danielhanaj.com/icons/site.webmanifest">
+
+<link rel="canonical" href="https://blog.danielhanaj.com/post/2021/12/28/create_docker_container_with_packer/">
+
+    
+
+    
+    
+    <link rel="preload" href="https://blog.danielhanaj.com/css/styles.3b8bba1267d315fc2a238cd60528d7d25d09546ea4278107412f86c961bb5022b9678d9ef6aa8c313bc8ef9da8afafade9bd65997f85cc9e4363f3d1609a10a7.css" integrity = "sha512-O4u6EmfTFfwqI4zWBSjX0l0JVG6kJ4EHQS&#43;GyWG7UCK5Z42e9qqMMTvI752or6&#43;t6b1lmX&#43;FzJ5DY/PRYJoQpw==" as="style" crossorigin="anonymous">
+    <link rel="preload" href="https://blog.danielhanaj.com/en/js/bundle.19668860ea177cfe8cad686c7464b57e39acde1a4c33f6a1a8c57f7ab127ac39e8330b38e7184422cf0e9351ef3efaf75d122eca818d38a929941b8a5c04b09e.js" as="script" integrity=
+    "sha512-GWaIYOoXfP6MrWhsdGS1fjms3hpMM/ahqMV/erEnrDnoMws45xhEIs8Ok1HvPvr3XRIuyoGNOKkplBuKXASwng==" crossorigin="anonymous">
+
+    
+    <link rel="stylesheet" type="text/css" href="https://blog.danielhanaj.com/css/styles.3b8bba1267d315fc2a238cd60528d7d25d09546ea4278107412f86c961bb5022b9678d9ef6aa8c313bc8ef9da8afafade9bd65997f85cc9e4363f3d1609a10a7.css" integrity="sha512-O4u6EmfTFfwqI4zWBSjX0l0JVG6kJ4EHQS&#43;GyWG7UCK5Z42e9qqMMTvI752or6&#43;t6b1lmX&#43;FzJ5DY/PRYJoQpw==" crossorigin="anonymous">
+    
+  </head>
+  
+  
+    
+  
+  <body data-code="7" data-lines="false" id="documentTop">
+
+<header class="nav_header" >
+  <nav class="nav"><a href='https://blog.danielhanaj.com/' class="nav_brand nav_item" title="danielhanaj.com">
+  <img src="https://blog.danielhanaj.com/logos/danielhanaj.png" class="logo" alt="danielhanaj.com">
+  <div class="nav_close">
+    <div><svg class="icon">
+  <title>open-menu</title>
+  <use xlink:href="#open-menu"></use>
+</svg>
+<svg class="icon">
+  <title>closeme</title>
+  <use xlink:href="#closeme"></use>
+</svg>
+</div>
+  </div>
+</a>
+
+    <div class='nav_body nav_body_left'>
+      
+      
+      
+        
+
+  <div class="nav_parent">
+    <a href="https://blog.danielhanaj.com/" class="nav_item" title="Home">Home </a>
+  </div>
+  <div class="nav_parent">
+    <a href="https://blog.danielhanaj.com/" class="nav_item" title="VMware">VMware <img src='https://blog.danielhanaj.com/icons/caret-icon.svg' alt="icon" class="nav_icon"></a>
+    <div class="nav_sub">
+      <span class="nav_child"></span>
+        <a href="https://blog.danielhanaj.com/post/2021/12/30/horizon_view_direct_connection_to_linux_vm/" class="nav_child nav_item" title="Configure VMware Horizon View  Direct-Connection Agent for Linux">Configure VMware Horizon View  Direct-Connection Agent for Linux</a>
+    </div>
+  </div>
+  <div class="nav_parent">
+    <a href="https://blog.danielhanaj.com/" class="nav_item" title="Tags">Tags <img src='https://blog.danielhanaj.com/icons/caret-icon.svg' alt="icon" class="nav_icon"></a>
+    <div class="nav_sub">
+      <span class="nav_child"></span>
+        <a href="https://blog.danielhanaj.com/tags/packer" class="nav_child nav_item" title="Packer">Packer</a>
+        <a href="https://blog.danielhanaj.com/tags/terraform" class="nav_child nav_item" title="Terraform">Terraform</a>
+    </div>
+  </div>
+  <div class="nav_parent">
+    <a href="https://www.credly.com/users/daniel-hanaj/badges?sort=-state_updated_at&amp;page=1" class="nav_item" title="Certifications">Certifications </a>
+  </div>
+  <div class="nav_parent">
+    <a href="https://blog.danielhanaj.com/about/" class="nav_item" title="About">About </a>
+  </div>
+      
+      <div class="nav_parent">
+        <a href="#" class="nav_item">Select Language</a>
+        <div class="nav_sub">
+          <span class="nav_child"></span>
+          
+          <a href="https://blog.danielhanaj.com/" class="nav_child nav_item">English</a>
+          
+          <a href="https://blog.danielhanaj.com/pl/" class="nav_child nav_item">Polski</a>
+          
+        </div>
+      </div>
+<div class='follow'>
+  <a href="https://github.com/#">
+    <svg class="icon">
+  <title>github</title>
+  <use xlink:href="#github"></use>
+</svg>
+
+  </a>
+  <a href="https://twitter.com/danielhanaj">
+    <svg class="icon">
+  <title>twitter</title>
+  <use xlink:href="#twitter"></use>
+</svg>
+
+  </a>
+  <a href="https://www.linkedin.com/in/danielhanaj">
+    <svg class="icon">
+  <title>linkedin</title>
+  <use xlink:href="#linkedin"></use>
+</svg>
+
+  </a>
+    
+  <a href="https://blog.danielhanaj.com/index.xml">
+    <svg class="icon">
+  <title>rss</title>
+  <use xlink:href="#rss"></use>
+</svg>
+
+  </a>
+<div class="color_mode">
+  <input type="checkbox" class="color_choice" id="mode">
+</div>
+
+</div>
+
+    </div>
+  </nav>
+</header>
+
+    <main>
+  
+<div class="grid-inverse wrap content">
+  <article class="post_content">
+    <h1 class="post_title">Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent</h1>
+  <div class="post_meta">
+    <span><svg class="icon">
+  <title>calendar</title>
+  <use xlink:href="#calendar"></use>
+</svg>
+</span>
+    <span class="post_date">
+      Dec 28, 2021</span>
+    <span class="post_time"> · 10 min read</span><span>&nbsp;· <a href='https://blog.danielhanaj.com/tags/packer' title="Packer" class="post_tag button button_translucent">Packer
+        </a><a href='https://blog.danielhanaj.com/tags/devops' title="DevOps" class="post_tag button button_translucent">DevOps
+        </a><a href='https://blog.danielhanaj.com/tags/azure' title="Azure" class="post_tag button button_translucent">Azure
+        </a><a href='https://blog.danielhanaj.com/tags/docker' title="Docker" class="post_tag button button_translucent">Docker
+        </a><a href='https://blog.danielhanaj.com/tags/powercli' title="PowerCLI" class="post_tag button button_translucent">PowerCLI
+        </a><a href='https://blog.danielhanaj.com/tags/automation' title="Automation" class="post_tag button button_translucent">Automation
+        </a>
+    </span>
+    <span class="page_only">&nbsp;·
+  <div class="post_share">
+    Share on:
+    <a href="https://twitter.com/intent/tweet?text=Create%20Docker%20image%20with%20Packer%2c%20PowerShell%2c%20PowerCLI%20and%20Azure%20DevOps%20self-hosted%20agent&url=https%3a%2f%2fblog.danielhanaj.com%2fpost%2f2021%2f12%2f28%2fcreate_docker_container_with_packer%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>twitter</title>
+  <use xlink:href="#twitter"></use>
+</svg>
+
+    </a>
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fblog.danielhanaj.com%2fpost%2f2021%2f12%2f28%2fcreate_docker_container_with_packer%2f&t=Create%20Docker%20image%20with%20Packer%2c%20PowerShell%2c%20PowerCLI%20and%20Azure%20DevOps%20self-hosted%20agent" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>facebook</title>
+  <use xlink:href="#facebook"></use>
+</svg>
+
+    </a>
+    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
+      <svg class="icon">
+  <title>linkedin</title>
+  <use xlink:href="#linkedin"></use>
+</svg>
+
+    </a>
+    <a href="https://blog.danielhanaj.com/post/2021/12/28/create_docker_container_with_packer/" title="Copy Link" class="link link_yank">
+      <svg class="icon">
+  <title>copy</title>
+  <use xlink:href="#copy"></use>
+</svg>
+
+    </a>
+  </div>
+  </span>
+  </div>
+<div class="post_featured">
+
+
+
+
+
+
+
+
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+<figure>
+    <picture>
+
+        
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+        
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+        
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+        
+
+        <img class="image_figure image_featured image_internal" src="https://blog.danielhanaj.com/images/2021/12/27/docker.png" alt="" loading="lazy" decoding="async" width="200" height="150"  />
+      
+
+    </picture>
+  </figure>
+
+
+      </div>
+    <div class="post_body"><p>Today we will create a Docker image that will contain Packer, Windows Update Provisioner for Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent.</p>
+<p>To automate Packer image creation process we will utilize Azure DevOps, which is a service hosted in public cloud. What we want to do is to create Packer image on-premise in our datacenter, so there is a problem with communication between vCenter server and Azure DevOps.</p>
+<h1 id="azure-devops-agent">Azure DevOps agent</h1>
+<h2 id="why-azure-devops-agent-is-needed">Why Azure DevOps agent is needed?</h2>
+<p>Normally Azure DevOps does not have any connection with our datacenter. 
+To establish connection between on-premise vCenter server and Azure DevOps, a dedicated agent placed inside our datacenter is needed. That agent needs to have network connection with our vCenter server and ESXi hosts. It can be placed in different VLAN, but that VLAN needs to be routable with vCenter and ESXi VLAN.</p>
+<h2 id="what-azure-devops-agent-does">What Azure Devops agent does?</h2>
+<p>It actually triggers a tasks initiated from Azure DevOps portal locally in our infrastructure. All files reuired to create our builds needs to be first copied on Azure Devops agent and agent triggers the build job. The files copied on agent from Azure DevOps server are called artifacts.
+Because agent triggers a build jobs, it needs to be equipped with all necessary tools that are required to create Packer template.
+Those are:</p>
+<ul>
+<li>Packer</li>
+<li>Packer Windows Update provisioner</li>
+<li>PowerShell</li>
+<li>PowerCLI</li>
+</ul>
+<h2 id="self-hosted-azure-devops-agent">Self-hosted Azure DevOps agent</h2>
+<p>Azure DevOps agent can be hosted in Azure or it can be hosted locally in our DC. Obviously we will need self-hosted agent.<br>
+First of all it allows direct communication with our datacenter. Second thing - it's free. For Azure DevOps agent hosted in Azure you normally needs to pay some money.<br>
+Of course everything depends on subscription level you own, but my assumption is that you don't have any available subscription and want to minimize operational costs.<br>
+<code>Remember, or goal is to build secure templates and minimize operational costs!</code><br>
+To establish communication between DevOps server and on-premise vCenter server a dedicated token will be used. This token will have to be generated on Azure Devops portal.</p>
+<h2 id="support-platforms-for-devops-agents">Support platforms for DevOps agents</h2>
+<p>Azure DevOps agent can be installed on Windows or on Linux. We will choose Linux as our destination platform and there is few reasons for that:</p>
+<ul>
+<li>When utilizing Linux you don't need to pay for Windows license. Since Azure DevOps agent will just trigger our build tasks, there is no need to pay Windows license for such service.</li>
+<li>When using Linux as agent platform we can utlize Docker and automate process of creating a docker image will all necessary tools.</li>
+</ul>
+<blockquote>
+<p>You could probably use some bash script to automate process of installing and configuring all necessary tools on Linux, but using Docker will be much faster and efficient way to achieve expected result.</p>
+</blockquote>
+<ul>
+<li>Since DevOps agent keeps all artifacts locally in clear text (including passwords), security is a major concern here. It's very easy to erase Windows password using some small 3rd party tool and get access to all artifacts and all passwords on that agent. Using Linux and Docker container make a things much harder for potential attacker. We will use other methods to secure data on agent machine but Linux is much better option in terms of security.</li>
+</ul>
+<h1 id="build-ubuntu-vm">Build Ubuntu VM</h1>
+<h2 id="create-ubuntu-2104-packer-image">Create Ubuntu 21.04 Packer image</h2>
+<p>We could use Windows Subsystem for Linux (WSL) to speedup Docker image creation process but we want to build our final solution which will utilize Ubuntu VM. For this reason we will use Ubuntu 21.04. To create Ubuntu VM Template using Packer use this <a href="https://www.virtualizationhowto.com/2021/05/packer-build-ubuntu-21-04-for-vmware-vsphere/">link</a>.</p>
+<h2 id="customize-ubuntu-vm">Customize Ubuntu VM</h2>
+<p>To make life easier first enable root account and setup new root account password.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">sudo passwd root
+</span></span></span></code></pre></div><p>Once done switch to root account typing command:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">su root
+</span></span></span></code></pre></div><p>Username will change from your existing user to root. This means we have elevated privileges on the system.</p>
+<h3 id="set-static-ip">Set static IP</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">cd /etc/netplan/
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="go">ls
+</span></span></span></code></pre></div><p>Once done a configuration file will be displayed</p>
+<p>Edit the file using nano editor:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">nano 00-installer-config.yaml
+</span></span></span></code></pre></div><p>Edit IP, gateway and DNS settings to match your network configuration:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="c"># This is the network config written by &#39;subiquity&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="w"></span><span class="nt">network</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="w">  </span><span class="nt">ethernets</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="w">    </span><span class="nt">ens192</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="w">      </span><span class="nt">addresses</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="w">      </span>- <span class="m">192.168.1.222</span><span class="l">/24</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="w">      </span><span class="nt">gateway4</span><span class="p">:</span><span class="w"> </span><span class="m">192.168.1.1</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="w">      </span><span class="nt">nameservers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="w">        </span><span class="nt">addresses</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="m">192.168.1.1</span><span class="p">,</span><span class="w"> </span><span class="m">8.8.8.8</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="w">        </span><span class="nt">search</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">lab.local]</span><span class="w">
+</span></span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="w">
+</span></span></span></code></pre></div><p>Type Ctrl+x and confirm saving changes typing y.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">netplan apply
+</span></span></span></code></pre></div><p>This will apply network settings that has been modified.
+From now putty can be used to interact with VM through SSH console</p>
+<h3 id="change-hostname">Change hostname</h3>
+<p>Perform fallowing command to change hostname to ld9-vcsabackups01</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">sudo hostnamectl set-hostname devopsagent01
+</span></span></span></code></pre></div><p>Provide server description using fallowing command:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">sudo hostnamectl set-hostname &#34;Azure DevOps Self-hosted Agent&#34; --pretty
+</span></span></span></code></pre></div><p>Once applied verify that changes have been applied</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">hostnamectl
+</span></span></span></code></pre></div><h3 id="upgrade-system">Upgrade system</h3>
+<p>Perform server upgrade</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">sudo apt-get update
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="go">sudo apt-get-upgrade
+</span></span></span></code></pre></div><h2 id="install-docker-engine-and-docker-compose">Install Docker Engine and Docker Compose</h2>
+<h3 id="install-docker-engine">Install Docker Engine</h3>
+<p>Docker Engine allow us to run standalone containers.</p>
+<p>First remove existing Docker Engine if exists:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">sudo apt-get remove docker docker-engine docker.io containerd runc
+</span></span></span></code></pre></div><p>Update the apt package index and install packages to allow apt to use a repository over HTTPS:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go"> sudo apt-get update
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="go"> sudo apt-get install \
+</span></span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="go">    ca-certificates \
+</span></span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="go">    curl \
+</span></span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="go">    gnupg \
+</span></span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="go">    lsb-release
+</span></span></span></code></pre></div><p>Add Docker’s official GPG key:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+</span></span></span></code></pre></div><p>Use the following command to set up the stable repository.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">echo \
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="go">  &#34;deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+</span></span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="go">  $(lsb_release -cs) stable&#34; | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
+</span></span></span></code></pre></div><p>Install Docker Engine</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">sudo apt-get update
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="go">sudo apt-get install docker-ce docker-ce-cli containerd.io
+</span></span></span></code></pre></div><p>Check Docker version:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">docker --version
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="go"></span><span class="err">
+</span></span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="err"></span><span class="go">Docker version 20.10.10, build b485636
+</span></span></span></code></pre></div><h3 id="install-docker-compose">Install Docker Compose</h3>
+<p>Compose is a file format for describing distributed Docker apps, and it’s a tool for managing them.
+Docker Compose relies on Docker Engine for any meaningful work, so make sure you have Docker Engine installed either locally or remote.</p>
+<p>On Linux, you can download the Docker Compose binary from the <a href="https://github.com/docker/compose/releases">Compose repository release page on GitHub</a>.</p>
+<p>Run this command to download the current stable release of Docker Compose:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">sudo curl -L &#34;https://github.com/docker/compose/releases/download/v2.2.2/docker-compose-$(uname -s)-$(uname -m)&#34; -o /usr/local/bin/docker-compose
+</span></span></span></code></pre></div><p>Apply executable permissions to the binary:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">sudo chmod +x /usr/local/bin/docker-compose
+</span></span></span></code></pre></div><p>Note: If the command docker-compose fails after installation, check your path. You can also create a symbolic link to /usr/bin or any other directory in your path.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+</span></span></span></code></pre></div><p>Test the installation:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">docker-compose --version
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="go"></span><span class="err">
+</span></span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="err"></span><span class="go">Docker Compose version v2.2.2
+</span></span></span></code></pre></div><p>Once Docker Engine and Docker Compose will be installed we need to add existing, non-root user to docker group to perform docker tasks without privileged mode:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">sudo usermod -aG docker your-user-name
+</span></span></span></code></pre></div><p>Once added, restart your SSH session to apply changes.</p>
+<h2 id="preparing-for-docker-container-image-creation">Preparing for Docker container image creation</h2>
+<p>Inside your home directory create new folder named &quot;Azure-DevOps-Agent&quot;:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">mkdir Azure-DevOps-Agent
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="go">cd Azure-DevOps-Agent/
+</span></span></span></code></pre></div><p>Once we are inside devopsagent folder create new file named <code>Dockerfile</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">nano Dockefile
+</span></span></span></code></pre></div><p>To build container image we need a file named <code>Dockerfile</code> which will include fallowing content:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-docker" data-lang="docker"><span class="line"><span class="ln">  1</span><span class="cl"><span class="c"># Indicates the base image.</span><span class="err">
+</span></span></span><span class="line"><span class="ln">  2</span><span class="cl"><span class="err"></span><span class="k">FROM</span><span class="s"> ubuntu:18.04</span><span class="err">
+</span></span></span><span class="line"><span class="ln">  3</span><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="ln">  4</span><span class="cl"><span class="err"></span><span class="c"># Define Args for the needed to add the package</span><span class="err">
+</span></span></span><span class="line"><span class="ln">  5</span><span class="cl"><span class="err"></span><span class="k">ARG</span> <span class="nv">PACKER_VERSION</span><span class="o">=</span><span class="s2">&#34;1.7.8&#34;</span><span class="err">
+</span></span></span><span class="line"><span class="ln">  6</span><span class="cl"><span class="err"></span><span class="k">ARG</span> <span class="nv">PACKER_WINDOWSUPDATE_VERSION</span><span class="o">=</span><span class="s2">&#34;0.14.0&#34;</span><span class="err">
+</span></span></span><span class="line"><span class="ln">  7</span><span class="cl"><span class="err"></span><span class="k">ARG</span> <span class="nv">PS_VERSION</span><span class="o">=</span><span class="m">7</span>.1.3<span class="err">
+</span></span></span><span class="line"><span class="ln">  8</span><span class="cl"><span class="err"></span><span class="k">ARG</span> <span class="nv">PS_PACKAGE</span><span class="o">=</span>powershell_<span class="si">${</span><span class="nv">PS_VERSION</span><span class="si">}</span>-1.ubuntu.18.04_amd64.deb<span class="err">
+</span></span></span><span class="line"><span class="ln">  9</span><span class="cl"><span class="err"></span><span class="k">ARG</span> <span class="nv">PS_PACKAGE_URL</span><span class="o">=</span>https://github.com/PowerShell/PowerShell/releases/download/v<span class="si">${</span><span class="nv">PS_VERSION</span><span class="si">}</span>/<span class="si">${</span><span class="nv">PS_PACKAGE</span><span class="si">}</span><span class="err">
+</span></span></span><span class="line"><span class="ln"> 10</span><span class="cl"><span class="err"></span><span class="k">ARG</span> <span class="nv">TARGETARCH</span><span class="o">=</span>amd64
+</span></span><span class="line"><span class="ln"> 11</span><span class="cl"><span class="k">ARG</span> <span class="nv">AGENT_VERSION</span><span class="o">=</span><span class="s2">&#34;2.195.2&#34;</span><span class="err">
+</span></span></span><span class="line"><span class="ln"> 12</span><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="ln"> 13</span><span class="cl"><span class="err"></span><span class="c"># Define ENVs for Localization/Globalization</span><span class="err">
+</span></span></span><span class="line"><span class="ln"> 14</span><span class="cl"><span class="err"></span><span class="k">ENV</span> <span class="nv">DOTNET_SYSTEM_GLOBALIZATION_INVARIANT</span><span class="o">=</span><span class="nb">false</span> <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 15</span><span class="cl"><span class="se"></span>    <span class="nv">LC_ALL</span><span class="o">=</span>en_US.UTF-8 <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 16</span><span class="cl"><span class="se"></span>    <span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8 <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 17</span><span class="cl"><span class="se"></span>    <span class="c1"># set a fixed location for the Module analysis cache</span><span class="err">
+</span></span></span><span class="line"><span class="ln"> 18</span><span class="cl"><span class="err"></span>    <span class="nv">PSModuleAnalysisCachePath</span><span class="o">=</span>/var/cache/microsoft/powershell/PSModuleAnalysisCache/ModuleAnalysisCache <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 19</span><span class="cl"><span class="se"></span>    <span class="nv">POWERSHELL_DISTRIBUTION_CHANNEL</span><span class="o">=</span>PSDocker-Ubuntu-18.04<span class="err">
+</span></span></span><span class="line"><span class="ln"> 20</span><span class="cl"><span class="err"></span><span class="k">ENV</span> <span class="nv">PACKER_VERSION</span><span class="o">=</span><span class="si">${</span><span class="nv">PACKER_VERSION</span><span class="si">}</span><span class="err">
+</span></span></span><span class="line"><span class="ln"> 21</span><span class="cl"><span class="err"></span><span class="k">ENV</span> <span class="nv">PACKER_WINDOWSUPDATE_VERSION</span><span class="o">=</span><span class="si">${</span><span class="nv">PACKER_WINDOWSUPDATE_VERSION</span><span class="si">}</span><span class="err">
+</span></span></span><span class="line"><span class="ln"> 22</span><span class="cl"><span class="err"></span><span class="k">ENV</span> <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive
+</span></span><span class="line"><span class="ln"> 23</span><span class="cl"><span class="k">RUN</span> <span class="nb">echo</span> <span class="s2">&#34;APT::Get::Assume-Yes \&#34;true\&#34;;&#34;</span> &gt; /etc/apt/apt.conf.d/90assumeyes<span class="err">
+</span></span></span><span class="line"><span class="ln"> 24</span><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="ln"> 25</span><span class="cl"><span class="err"></span><span class="c"># Install dependencies and clean up</span><span class="err">
+</span></span></span><span class="line"><span class="ln"> 26</span><span class="cl"><span class="err"></span><span class="k">RUN</span> apt-get update <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 27</span><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> apt-get install --no-install-recommends -y <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 28</span><span class="cl"><span class="se"></span>    <span class="c1"># curl is required to grab the Linux package</span><span class="err">
+</span></span></span><span class="line"><span class="ln"> 29</span><span class="cl"><span class="err"></span>        curl <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 30</span><span class="cl"><span class="se"></span>    <span class="c1"># less is required for help in powershell</span><span class="err">
+</span></span></span><span class="line"><span class="ln"> 31</span><span class="cl"><span class="err"></span>        less <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 32</span><span class="cl"><span class="se"></span>    <span class="c1"># requied to setup the locale</span><span class="err">
+</span></span></span><span class="line"><span class="ln"> 33</span><span class="cl"><span class="err"></span>        locales <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 34</span><span class="cl"><span class="se"></span>    <span class="c1"># required for SSL</span><span class="err">
+</span></span></span><span class="line"><span class="ln"> 35</span><span class="cl"><span class="err"></span>        ca-certificates <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 36</span><span class="cl"><span class="se"></span>        gss-ntlmssp <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 37</span><span class="cl"><span class="se"></span>    <span class="c1"># PowerShell remoting over SSH dependencies</span><span class="err">
+</span></span></span><span class="line"><span class="ln"> 38</span><span class="cl"><span class="err"></span>        openssh-client <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 39</span><span class="cl"><span class="se"></span>    <span class="c1"># Install python</span><span class="err">
+</span></span></span><span class="line"><span class="ln"> 40</span><span class="cl"><span class="err"></span>    python3 <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 41</span><span class="cl"><span class="se"></span>    python3-pip<span class="se">\
+</span></span></span><span class="line"><span class="ln"> 42</span><span class="cl"><span class="se"></span>    python3-boto<span class="se">\
+</span></span></span><span class="line"><span class="ln"> 43</span><span class="cl"><span class="se"></span>    <span class="c1"># Install unzip</span><span class="err">
+</span></span></span><span class="line"><span class="ln"> 44</span><span class="cl"><span class="err"></span>    unzip <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 45</span><span class="cl"><span class="se"></span>    <span class="c1"># Install DevOps Agent packages</span><span class="err">
+</span></span></span><span class="line"><span class="ln"> 46</span><span class="cl"><span class="err"></span>    jq <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 47</span><span class="cl"><span class="se"></span>    git <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 48</span><span class="cl"><span class="se"></span>    iputils-ping <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 49</span><span class="cl"><span class="se"></span>    libcurl4 <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 50</span><span class="cl"><span class="se"></span>    libicu60 <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 51</span><span class="cl"><span class="se"></span>    libunwind8 <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 52</span><span class="cl"><span class="se"></span>    netcat <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 53</span><span class="cl"><span class="se"></span>    libssl1.0 <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 54</span><span class="cl"><span class="se"></span>    <span class="c1"># Download the Linux package and save it</span><span class="err">
+</span></span></span><span class="line"><span class="ln"> 55</span><span class="cl"><span class="err"></span>    <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="si">${</span><span class="nv">PS_PACKAGE_URL</span><span class="si">}</span> <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 56</span><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> curl -sSL <span class="si">${</span><span class="nv">PS_PACKAGE_URL</span><span class="si">}</span> -o /tmp/powershell.deb <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 57</span><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> curl -LO https://releases.hashicorp.com/packer/<span class="si">${</span><span class="nv">PACKER_VERSION</span><span class="si">}</span>/packer_<span class="si">${</span><span class="nv">PACKER_VERSION</span><span class="si">}</span>_linux_amd64.zip <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 58</span><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> curl -LO https://github.com/rgl/packer-plugin-windows-update/releases/download/v<span class="si">${</span><span class="nv">PACKER_WINDOWSUPDATE_VERSION</span><span class="si">}</span>/packer-plugin-windows-update_v<span class="si">${</span><span class="nv">PACKER_WINDOWSUPDATE_VERSION</span><span class="si">}</span>_x5.0_linux_amd64.zip <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 59</span><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> unzip <span class="s1">&#39;*.zip&#39;</span> -d /usr/bin <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 60</span><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> chmod +x /usr/bin/packer-plugin-windows-update_v<span class="si">${</span><span class="nv">PACKER_WINDOWSUPDATE_VERSION</span><span class="si">}</span>_x5.0_linux_amd64 <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 61</span><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> rm *.zip <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 62</span><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> mv /usr/bin/packer-plugin-windows-update_v<span class="si">${</span><span class="nv">PACKER_WINDOWSUPDATE_VERSION</span><span class="si">}</span>_x5.0_linux_amd64 /usr/bin/packer-plugin-windows-update <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 63</span><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> curl -LsS https://aka.ms/InstallAzureCLIDeb <span class="p">|</span> bash <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 64</span><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> apt-get install --no-install-recommends -y /tmp/powershell.deb <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 65</span><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> apt-get dist-upgrade -y <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 66</span><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> apt-get clean <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 67</span><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> rm -rf /var/lib/apt/lists/* <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 68</span><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> locale-gen <span class="nv">$LANG</span> <span class="o">&amp;&amp;</span> update-locale <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 69</span><span class="cl"><span class="se"></span>    <span class="c1"># remove powershell package</span><span class="err">
+</span></span></span><span class="line"><span class="ln"> 70</span><span class="cl"><span class="err"></span>    <span class="o">&amp;&amp;</span> rm /tmp/powershell.deb <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 71</span><span class="cl"><span class="se"></span>    <span class="c1"># intialize powershell module cache</span><span class="err">
+</span></span></span><span class="line"><span class="ln"> 72</span><span class="cl"><span class="err"></span>    <span class="c1"># and disable telemetry</span><span class="err">
+</span></span></span><span class="line"><span class="ln"> 73</span><span class="cl"><span class="err"></span>    <span class="o">&amp;&amp;</span> <span class="nb">export</span> <span class="nv">POWERSHELL_TELEMETRY_OPTOUT</span><span class="o">=</span><span class="m">1</span> <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 74</span><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> pwsh <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 75</span><span class="cl"><span class="se"></span>        -NoLogo <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 76</span><span class="cl"><span class="se"></span>        -NoProfile <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 77</span><span class="cl"><span class="se"></span>        -Command <span class="s2">&#34; \
+</span></span></span><span class="line"><span class="ln"> 78</span><span class="cl"><span class="s2">          \$ErrorActionPreference = &#39;Stop&#39; ; \
+</span></span></span><span class="line"><span class="ln"> 79</span><span class="cl"><span class="s2">          \$ProgressPreference = &#39;SilentlyContinue&#39; ; \
+</span></span></span><span class="line"><span class="ln"> 80</span><span class="cl"><span class="s2">          while(!(Test-Path -Path \$env:PSModuleAnalysisCachePath)) {  \
+</span></span></span><span class="line"><span class="ln"> 81</span><span class="cl"><span class="s2">            Write-Host &#34;</span><span class="s1">&#39;Waiting for $env:PSModuleAnalysisCachePath&#39;</span><span class="s2">&#34; ; \
+</span></span></span><span class="line"><span class="ln"> 82</span><span class="cl"><span class="s2">            Start-Sleep -Seconds 6 ; \
+</span></span></span><span class="line"><span class="ln"> 83</span><span class="cl"><span class="s2">          }&#34;</span><span class="err">
+</span></span></span><span class="line"><span class="ln"> 84</span><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="ln"> 85</span><span class="cl"><span class="err"></span><span class="k">RUN</span> apt-get clean <span class="o">&amp;&amp;</span> <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 86</span><span class="cl"><span class="se"></span>    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*<span class="err">
+</span></span></span><span class="line"><span class="ln"> 87</span><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="ln"> 88</span><span class="cl"><span class="err"></span><span class="k">WORKDIR</span><span class="s"> /azp</span><span class="err">
+</span></span></span><span class="line"><span class="ln"> 89</span><span class="cl"><span class="err"></span><span class="k">RUN</span> <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$TARGETARCH</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;amd64&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 90</span><span class="cl"><span class="se"></span>      <span class="nv">AZP_AGENTPACKAGE_URL</span><span class="o">=</span>https://vstsagentpackage.azureedge.net/agent/<span class="si">${</span><span class="nv">AGENT_VERSION</span><span class="si">}</span>/vsts-agent-linux-x64-<span class="si">${</span><span class="nv">AGENT_VERSION</span><span class="si">}</span>.tar.gz<span class="p">;</span> <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 91</span><span class="cl"><span class="se"></span>    <span class="k">else</span> <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 92</span><span class="cl"><span class="se"></span>      <span class="nv">AZP_AGENTPACKAGE_URL</span><span class="o">=</span>https://vstsagentpackage.azureedge.net/agent/<span class="si">${</span><span class="nv">AGENT_VERSION</span><span class="si">}</span>/vsts-agent-linux-<span class="si">${</span><span class="nv">TARGETARCH</span><span class="si">}</span>-<span class="si">${</span><span class="nv">AGENT_VERSION</span><span class="si">}</span>.tar.gz<span class="p">;</span> <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 93</span><span class="cl"><span class="se"></span>    <span class="k">fi</span><span class="p">;</span> <span class="se">\
+</span></span></span><span class="line"><span class="ln"> 94</span><span class="cl"><span class="se"></span>    curl -LsS <span class="s2">&#34;</span><span class="nv">$AZP_AGENTPACKAGE_URL</span><span class="s2">&#34;</span> <span class="p">|</span> tar -xz<span class="err">
+</span></span></span><span class="line"><span class="ln"> 95</span><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="ln"> 96</span><span class="cl"><span class="err"></span><span class="k">COPY</span> ./start.sh .<span class="err">
+</span></span></span><span class="line"><span class="ln"> 97</span><span class="cl"><span class="err"></span><span class="k">RUN</span> chmod +x start.sh<span class="err">
+</span></span></span><span class="line"><span class="ln"> 98</span><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="ln"> 99</span><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="ln">100</span><span class="cl"><span class="err"></span><span class="c"># Install the VMware.PowerCLI Module</span><span class="err">
+</span></span></span><span class="line"><span class="ln">101</span><span class="cl"><span class="err"></span><span class="k">SHELL</span> <span class="p">[</span> <span class="s2">&#34;pwsh&#34;</span><span class="p">,</span> <span class="s2">&#34;-command&#34;</span> <span class="p">]</span><span class="err">
+</span></span></span><span class="line"><span class="ln">102</span><span class="cl"><span class="err"></span><span class="k">RUN</span> Install-Module VMware.PowerCLI, PowerNSX -Force -Confirm:0<span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="ln">103</span><span class="cl"><span class="err"></span><span class="k">RUN</span> Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -confirm:<span class="nv">$false</span><span class="err">
+</span></span></span><span class="line"><span class="ln">104</span><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="ln">105</span><span class="cl"><span class="err"></span><span class="c">## Install DevOps Agnet</span><span class="err">
+</span></span></span><span class="line"><span class="ln">106</span><span class="cl"><span class="err"></span><span class="c">#CMD [ &#34;pwsh&#34; ]</span><span class="err">
+</span></span></span><span class="line"><span class="ln">107</span><span class="cl"><span class="err"></span><span class="c">#CMD    [&#34;/bin/bash&#34;]</span><span class="err">
+</span></span></span><span class="line"><span class="ln">108</span><span class="cl"><span class="err"></span><span class="k">ENTRYPOINT</span> <span class="p">[</span> <span class="s2">&#34;./start.sh&#34;</span> <span class="p">]</span><span class="err">
+</span></span></span></code></pre></div><p>In same directory as <code>Dockerfile</code> create new file named <code>start.sh</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="gp">$</span> nano start.sh
+</span></span></code></pre></div><p>and paste there fallowing content:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="nb">set</span> -e
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$AZP_URL</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	  <span class="nb">echo</span> 1&gt;<span class="p">&amp;</span><span class="m">2</span> <span class="s2">&#34;error: missing AZP_URL environment variable&#34;</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	    <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$AZP_TOKEN_FILE</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$AZP_TOKEN</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">		      <span class="nb">echo</span> 1&gt;<span class="p">&amp;</span><span class="m">2</span> <span class="s2">&#34;error: missing AZP_TOKEN environment variable&#34;</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">		          <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">			    <span class="k">fi</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">			      <span class="nv">AZP_TOKEN_FILE</span><span class="o">=</span>/azp/.token
+</span></span><span class="line"><span class="ln">13</span><span class="cl">			        <span class="nb">echo</span> -n <span class="nv">$AZP_TOKEN</span> &gt; <span class="s2">&#34;</span><span class="nv">$AZP_TOKEN_FILE</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="nb">unset</span> AZP_TOKEN
+</span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="k">if</span> <span class="o">[</span> -n <span class="s2">&#34;</span><span class="nv">$AZP_WORK</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">	  mkdir -p <span class="s2">&#34;</span><span class="nv">$AZP_WORK</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="nb">export</span> <span class="nv">AGENT_ALLOW_RUNASROOT</span><span class="o">=</span><span class="s2">&#34;1&#34;</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">cleanup<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">	  <span class="k">if</span> <span class="o">[</span> -e config.sh <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">		      print_header <span class="s2">&#34;Cleanup. Removing Azure Pipelines agent...&#34;</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">		          <span class="c1"># If the agent has some running jobs, the configuration removal process will fail.</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">			      <span class="c1"># So, give it some time to finish the job.</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl">			          <span class="k">while</span> true<span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl">					        ./config.sh remove --unattended --auth PAT --token <span class="k">$(</span>cat <span class="s2">&#34;</span><span class="nv">$AZP_TOKEN_FILE</span><span class="s2">&#34;</span><span class="k">)</span> <span class="o">&amp;&amp;</span> <span class="nb">break</span>
+</span></span><span class="line"><span class="ln">27</span><span class="cl">						      <span class="nb">echo</span> <span class="s2">&#34;Retrying in 30 seconds...&#34;</span>
+</span></span><span class="line"><span class="ln">28</span><span class="cl">						            sleep <span class="m">30</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl">							        <span class="k">done</span>
+</span></span><span class="line"><span class="ln">30</span><span class="cl">								  <span class="k">fi</span>
+</span></span><span class="line"><span class="ln">31</span><span class="cl">							  <span class="o">}</span>
+</span></span><span class="line"><span class="ln">32</span><span class="cl">						  print_header<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="ln">33</span><span class="cl">							    <span class="nv">lightcyan</span><span class="o">=</span><span class="s1">&#39;\033[1;36m&#39;</span>
+</span></span><span class="line"><span class="ln">34</span><span class="cl">							      <span class="nv">nocolor</span><span class="o">=</span><span class="s1">&#39;\033[0m&#39;</span>
+</span></span><span class="line"><span class="ln">35</span><span class="cl">							        <span class="nb">echo</span> -e <span class="s2">&#34;</span><span class="si">${</span><span class="nv">lightcyan</span><span class="si">}</span><span class="nv">$1</span><span class="si">${</span><span class="nv">nocolor</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="ln">36</span><span class="cl">							<span class="o">}</span>
+</span></span><span class="line"><span class="ln">37</span><span class="cl">						<span class="c1"># Let the agent ignore the token env variables</span>
+</span></span><span class="line"><span class="ln">38</span><span class="cl">						<span class="nb">export</span> <span class="nv">VSO_AGENT_IGNORE</span><span class="o">=</span>AZP_TOKEN,AZP_TOKEN_FILE
+</span></span><span class="line"><span class="ln">39</span><span class="cl">						<span class="nb">source</span> ./env.sh
+</span></span><span class="line"><span class="ln">40</span><span class="cl">						print_header <span class="s2">&#34;1. Configuring Azure Pipelines agent...&#34;</span>
+</span></span><span class="line"><span class="ln">41</span><span class="cl">						./config.sh --unattended <span class="se">\
+</span></span></span><span class="line"><span class="ln">42</span><span class="cl"><span class="se"></span>							  --agent <span class="s2">&#34;</span><span class="si">${</span><span class="nv">AZP_AGENT_NAME</span><span class="k">:-$(</span>hostname<span class="k">)</span><span class="si">}</span><span class="s2">&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="ln">43</span><span class="cl"><span class="se"></span>							    --url <span class="s2">&#34;</span><span class="nv">$AZP_URL</span><span class="s2">&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="ln">44</span><span class="cl"><span class="se"></span>							      --auth PAT <span class="se">\
+</span></span></span><span class="line"><span class="ln">45</span><span class="cl"><span class="se"></span>							        --token <span class="k">$(</span>cat <span class="s2">&#34;</span><span class="nv">$AZP_TOKEN_FILE</span><span class="s2">&#34;</span><span class="k">)</span> <span class="se">\
+</span></span></span><span class="line"><span class="ln">46</span><span class="cl"><span class="se"></span>								  --pool <span class="s2">&#34;</span><span class="si">${</span><span class="nv">AZP_POOL</span><span class="k">:-</span><span class="nv">Default</span><span class="si">}</span><span class="s2">&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="ln">47</span><span class="cl"><span class="se"></span>								    --work <span class="s2">&#34;</span><span class="si">${</span><span class="nv">AZP_WORK</span><span class="k">:-</span><span class="nv">_work</span><span class="si">}</span><span class="s2">&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="ln">48</span><span class="cl"><span class="se"></span>								      --replace <span class="se">\
+</span></span></span><span class="line"><span class="ln">49</span><span class="cl"><span class="se"></span>								        --acceptTeeEula <span class="p">&amp;</span> <span class="nb">wait</span> <span class="nv">$!</span>
+</span></span><span class="line"><span class="ln">50</span><span class="cl">						print_header <span class="s2">&#34;2. Running Azure Pipelines agent...&#34;</span>
+</span></span><span class="line"><span class="ln">51</span><span class="cl">						<span class="nb">trap</span> <span class="s1">&#39;cleanup; exit 0&#39;</span> EXIT
+</span></span><span class="line"><span class="ln">52</span><span class="cl">						<span class="nb">trap</span> <span class="s1">&#39;cleanup; exit 130&#39;</span> INT
+</span></span><span class="line"><span class="ln">53</span><span class="cl">						<span class="nb">trap</span> <span class="s1">&#39;cleanup; exit 143&#39;</span> TERM
+</span></span><span class="line"><span class="ln">54</span><span class="cl">						<span class="c1"># To be aware of TERM and INT signals call run.sh</span>
+</span></span><span class="line"><span class="ln">55</span><span class="cl">						<span class="c1"># Running it with the --once flag at the end will shut down the agent after the build is executed</span>
+</span></span><span class="line"><span class="ln">56</span><span class="cl">						./run.sh <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span> --once <span class="p">&amp;</span>
+</span></span><span class="line"><span class="ln">57</span><span class="cl">						<span class="nb">wait</span> <span class="nv">$!</span>
+</span></span></code></pre></div><p>Alternatively once you are under your home directory run fallowing command:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">git clone https://github.com/danonh/Azure-DevOps-Agent
+</span></span></span></code></pre></div><p>Once done you should see Azure-DevOps-Agent folder which will contain three files:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln">1</span><span class="cl">├── Dockerfile
+</span></span><span class="line"><span class="ln">2</span><span class="cl">├── Readme.md
+</span></span><span class="line"><span class="ln">3</span><span class="cl">└── start.sh
+</span></span></code></pre></div><p>You can find both files on my <a href="https://github.com/danonh/Azure-DevOps-Agent">GitHub account</a></p>
+<h3 id="changing-product-versions">Changing product versions</h3>
+<p>Within Dockerfile I've hardcoded particular product versions:</p>
+<ul>
+<li>Packer version 1.7.8</li>
+<li>Windows Update Provisioner version 0.14.0</li>
+<li>PowerShell version 7.1.3</li>
+<li>Azure DevOps agent version 2.195.2</li>
+</ul>
+<p>Obviously you may change product versions according your needs. This can be done modifying ARG values directly in the Dockerfile or provide alternative values during building process which will be passed to Dockerfile.</p>
+<h2 id="build-docker-image">Build Docker image</h2>
+<p>Finally we are at stage where building process can be initiated.</p>
+<p>If product versions has been manually changed directly inside Dockerfile then you can simply run fallowing command:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">cd Azure-DevOps-Agent/
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="go">docker build -t packercontainer:local .
+</span></span></span></code></pre></div><p>This will initiate building process that may take up to 15 minutes.</p>
+<p>Alternatively you can pass particular product versions into docker build command:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">docker build -t packercontainer:local --build-arg PS_VERSION=&#34;7.1.4&#34; --build-arg PACKER_VERSION=&#34;1.7.7&#34; .
+</span></span></span></code></pre></div><p>With those arguments we are telling Docker to include PowerShell version 7.1.4 instead 7.1.3 and Packer version 1.7.7 instead 1.7.8.</p>
+<p>Don't forget to include <code>.</code> at the end of build command. This tells where Docker should look for Dockerfile.</p>
+<p>Now sit down and relax.</p>
+<p>If everything will go well you should see fallowing console output:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">Removing intermediate container 281635ad7c01
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="go"> ---&gt; fc1495d19d30
+</span></span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="go">Step 24/24 : ENTRYPOINT [ &#34;./start.sh&#34; ]
+</span></span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="go"> ---&gt; Running in f2d498a10b01
+</span></span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="go">Removing intermediate container f2d498a10b01
+</span></span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="go"> ---&gt; ae65ba27dd06
+</span></span></span><span class="line"><span class="ln">7</span><span class="cl"><span class="go">Successfully built ae65ba27dd06
+</span></span></span><span class="line"><span class="ln">8</span><span class="cl"><span class="go">Successfully tagged packercontainer:local
+</span></span></span></code></pre></div><p>This would mean that our docker image has been created successfully. You can check if container image is visible running fallowing command:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">docker images
+</span></span></span></code></pre></div><p>The output should look like this:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="ln">1</span><span class="cl"><span class="go">docker images
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="go">REPOSITORY        TAG       IMAGE ID       CREATED          SIZE
+</span></span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="go">packercontainer   local     ae65ba27dd06   15 minutes ago   2.25GB
+</span></span></span></code></pre></div><p>To run the container we would have to pass few specific values from our Azure DevOps account, but that will be topic for some other blog entry.</p>
+<p>Thanks for reading.</p>
+    </div>
+<div class="post_comments">
+  
+  
+  
+</div>
+
+
+
+
+  </article>
+<aside class="sidebar">
+  <section class="sidebar_inner">
+    <br>
+    
+  
+  <div class="search">
+    <input type="search" class="search_field form_field" placeholder='Search...' id="find" autocomplete="off" data-scope='post'>
+    <label for="find" class="search_label"><svg class="icon">
+  <title>search</title>
+  <use xlink:href="#search"></use>
+</svg>
+
+    </label>
+    
+    <div class="search_results results"></div>
+  </div>
+
+        <div class="author_header">
+          <img src="https://blog.danielhanaj.com/images/About/danielhanaj2.png" alt="Daniel Hanaj photo">
+          <h2>Daniel Hanaj</h2>
+        </div>
+      <div class="author_bio">
+        I'm a VMware engineer focused on DevOps and automation.
+      </div>
+      <a href='https://blog.danielhanaj.com/about/' class="button mt-1" role="button" title='Read More'>Read More</a>
+
+    
+    
+    <h2 class="mt-4">Featured Posts</h2>
+    <ul>
+      <li>
+        <a href="https://blog.danielhanaj.com/post/2021/12/30/horizon_view_direct_connection_to_linux_vm/" class="nav-link" title="Configure VMware Horizon View Direct-Connection Agent for Linux">Configure VMware Horizon View Direct-Connection Agent for Linux</a>
+      </li>
+      <li>
+        <a href="https://blog.danielhanaj.com/post/2021/08/24/packer_variables/" class="nav-link" title="Packer variables">Packer variables</a>
+      </li>
+      <li>
+        <a href="https://blog.danielhanaj.com/post/2021/08/16/build_basic_windows_image_with_packer/" class="nav-link" title="Build basic Windows image with Packer on vSphere">Build basic Windows image with Packer on vSphere</a>
+      </li>
+      <li>
+        <a href="https://blog.danielhanaj.com/post/2021/08/03/packer_resources_for_windows_images/" class="nav-link" title="Packer resources for Windows images">Packer resources for Windows images</a>
+      </li>
+      <li>
+        <a href="https://blog.danielhanaj.com/post/2021/08/02/packer_explained/" class="nav-link" title="Packer Explained">Packer Explained</a>
+      </li>
+      <li>
+        <a href="https://blog.danielhanaj.com/post/2021/06/25/vcenterrole/" class="nav-link" title="Create vCenter Role for Packer using Terraform">Create vCenter Role for Packer using Terraform</a>
+      </li>
+      <li>
+        <a href="https://blog.danielhanaj.com/post/2021/06/21/intoduction/" class="nav-link" title="Fully automated Windows Templates with Packer, Terraform and Azure DevOps">Fully automated Windows Templates with Packer, Terraform and Azure DevOps</a>
+      </li>
+    </ul>
+    <h2 class="mt-4">Recent Posts</h2>
+    <ul class="flex-column">
+      <li>
+        <a href="https://blog.danielhanaj.com/post/2021/12/30/horizon_view_direct_connection_to_linux_vm/" class="nav-link" title="Configure VMware Horizon View Direct-Connection Agent for Linux">Configure VMware Horizon View Direct-Connection Agent for Linux</a>
+      </li>
+      <li>
+        <a href="https://blog.danielhanaj.com/post/2021/08/24/packer_variables/" class="nav-link" title="Packer variables">Packer variables</a>
+      </li>
+      <li>
+        <a href="https://blog.danielhanaj.com/post/2021/08/16/build_basic_windows_image_with_packer/" class="nav-link" title="Build basic Windows image with Packer on vSphere">Build basic Windows image with Packer on vSphere</a>
+      </li>
+      <li>
+        <a href="https://blog.danielhanaj.com/post/2021/08/03/packer_resources_for_windows_images/" class="nav-link" title="Packer resources for Windows images">Packer resources for Windows images</a>
+      </li>
+      <li>
+        <a href="https://blog.danielhanaj.com/post/2021/08/02/packer_explained/" class="nav-link" title="Packer Explained">Packer Explained</a>
+      </li>
+      <li>
+        <a href="https://blog.danielhanaj.com/post/2021/06/25/vcenterrole/" class="nav-link" title="Create vCenter Role for Packer using Terraform">Create vCenter Role for Packer using Terraform</a>
+      </li>
+      <li>
+        <a href="https://blog.danielhanaj.com/post/2021/06/21/intoduction/" class="nav-link" title="Fully automated Windows Templates with Packer, Terraform and Azure DevOps">Fully automated Windows Templates with Packer, Terraform and Azure DevOps</a>
+      </li>
+    </ul>
+    <div>
+      <h2 class="mt-4 taxonomy" id="categories-section">Categories</h2>
+      <nav class="tags_nav">
+        <a href='https://blog.danielhanaj.com/categories/getting-started/' class="post_tag button button_translucent" title="getting-started">
+          GETTING-STARTED
+          <span class="button_tally">8</span>
+        </a>
+        
+        
+      </nav>
+    </div>
+    <div>
+      <h2 class="mt-4 taxonomy" id="tags-section">Tags</h2>
+      <nav class="tags_nav">
+        <a href='https://blog.danielhanaj.com/tags/packer/' class="post_tag button button_translucent" title="packer">
+          PACKER
+          <span class="button_tally">7</span>
+        </a>
+        
+        <a href='https://blog.danielhanaj.com/tags/automation/' class="post_tag button button_translucent" title="automation">
+          AUTOMATION
+          <span class="button_tally">5</span>
+        </a>
+        
+        <a href='https://blog.danielhanaj.com/tags/devops/' class="post_tag button button_translucent" title="devops">
+          DEVOPS
+          <span class="button_tally">5</span>
+        </a>
+        
+        <a href='https://blog.danielhanaj.com/tags/vmware/' class="post_tag button button_translucent" title="vmware">
+          VMWARE
+          <span class="button_tally">2</span>
+        </a>
+        
+        <a href='https://blog.danielhanaj.com/tags/vsphere/' class="post_tag button button_translucent" title="vsphere">
+          VSPHERE
+          <span class="button_tally">2</span>
+        </a>
+        
+        <a href='https://blog.danielhanaj.com/tags/windows/' class="post_tag button button_translucent" title="windows">
+          WINDOWS
+          <span class="button_tally">2</span>
+        </a>
+        
+        <a href='https://blog.danielhanaj.com/tags/azure/' class="post_tag button button_translucent" title="azure">
+          AZURE
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://blog.danielhanaj.com/tags/azure-devops/' class="post_tag button button_translucent" title="azure-devops">
+          AZURE-DEVOPS
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://blog.danielhanaj.com/tags/docker/' class="post_tag button button_translucent" title="docker">
+          DOCKER
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://blog.danielhanaj.com/tags/horizon/' class="post_tag button button_translucent" title="horizon">
+          HORIZON
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://blog.danielhanaj.com/tags/index/' class="post_tag button button_translucent" title="index">
+          INDEX
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://blog.danielhanaj.com/tags/linux/' class="post_tag button button_translucent" title="linux">
+          LINUX
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://blog.danielhanaj.com/tags/powercli/' class="post_tag button button_translucent" title="powercli">
+          POWERCLI
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://blog.danielhanaj.com/tags/role/' class="post_tag button button_translucent" title="role">
+          ROLE
+          <span class="button_tally">1</span>
+        </a>
+        
+        
+        <br>
+        <div class="post_tags_toggle button">All Tags</div>
+        <div class="post_tags">
+          <div class="tags_list">
+            
+            <a href='https://blog.danielhanaj.com/tags/automation/' class=" post_tag button button_translucent" data-position=5 title="automation">AUTOMATION<span class="button_tally">5</span>
+            </a>
+            
+            
+            <a href='https://blog.danielhanaj.com/tags/azure/' class=" post_tag button button_translucent" data-position=1 title="azure">AZURE<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://blog.danielhanaj.com/tags/azure-devops/' class=" post_tag button button_translucent" data-position=1 title="azure-devops">AZURE-DEVOPS<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://blog.danielhanaj.com/tags/devops/' class=" post_tag button button_translucent" data-position=5 title="devops">DEVOPS<span class="button_tally">5</span>
+            </a>
+            
+            
+            <a href='https://blog.danielhanaj.com/tags/docker/' class=" post_tag button button_translucent" data-position=1 title="docker">DOCKER<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://blog.danielhanaj.com/tags/horizon/' class=" post_tag button button_translucent" data-position=1 title="horizon">HORIZON<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://blog.danielhanaj.com/tags/index/' class=" post_tag button button_translucent" data-position=1 title="index">INDEX<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://blog.danielhanaj.com/tags/linux/' class=" post_tag button button_translucent" data-position=1 title="linux">LINUX<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://blog.danielhanaj.com/tags/packer/' class=" post_tag button button_translucent" data-position=7 title="packer">PACKER<span class="button_tally">7</span>
+            </a>
+            
+            
+            <a href='https://blog.danielhanaj.com/tags/powercli/' class=" post_tag button button_translucent" data-position=1 title="powercli">POWERCLI<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://blog.danielhanaj.com/tags/role/' class=" post_tag button button_translucent" data-position=1 title="role">ROLE<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://blog.danielhanaj.com/tags/terraform/' class=" post_tag button button_translucent" data-position=1 title="terraform">TERRAFORM<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://blog.danielhanaj.com/tags/ubuntu/' class=" post_tag button button_translucent" data-position=1 title="ubuntu">UBUNTU<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://blog.danielhanaj.com/tags/vcenter/' class=" post_tag button button_translucent" data-position=1 title="vcenter">VCENTER<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://blog.danielhanaj.com/tags/view-agent/' class=" post_tag button button_translucent" data-position=1 title="view-agent">VIEW-AGENT<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://blog.danielhanaj.com/tags/vmware/' class=" post_tag button button_translucent" data-position=2 title="vmware">VMWARE<span class="button_tally">2</span>
+            </a>
+            
+            
+            <a href='https://blog.danielhanaj.com/tags/vsphere/' class=" post_tag button button_translucent" data-position=2 title="vsphere">VSPHERE<span class="button_tally">2</span>
+            </a>
+            
+            
+            <a href='https://blog.danielhanaj.com/tags/windows/' class=" post_tag button button_translucent" data-position=2 title="windows">WINDOWS<span class="button_tally">2</span>
+            </a>
+            
+            <div class="tags_sort"><span title="sort alphabetically">[A~Z]</span><span title="sort by count">[0~9]</span>
+            </div>
+            <span class="tags_hide"><svg class="icon">
+            <use xlink:href="#closeme"></use>
+          </svg></span>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </section>
+</aside>
+
+  
+</div>
+    </main><svg width="0" height="0" class="hidden">
+  <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="facebook">
+    <path d="M437 0H75C33.648 0 0 33.648 0 75v362c0 41.352 33.648 75 75 75h151V331h-60v-90h60v-61c0-49.629 40.371-90 90-90h91v90h-91v61h91l-15 90h-76v181h121c41.352 0 75-33.648 75-75V75c0-41.352-33.648-75-75-75zm0 0"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18.001 18.001" id="twitter">
+    <path d="M15.891 4.013c.808-.496 1.343-1.173 1.605-2.034a8.68 8.68 0 0 1-2.351.861c-.703-.756-1.593-1.14-2.66-1.14-1.043 0-1.924.366-2.643 1.078a3.56 3.56 0 0 0-1.076 2.605c0 .309.039.585.117.819-3.076-.105-5.622-1.381-7.628-3.837-.34.601-.51 1.213-.51 1.846 0 1.301.549 2.332 1.645 3.089-.625-.053-1.176-.211-1.645-.47 0 .929.273 1.705.82 2.388a3.623 3.623 0 0 0 2.115 1.291c-.312.08-.641.118-.979.118-.312 0-.533-.026-.664-.083.23.757.664 1.371 1.291 1.841a3.652 3.652 0 0 0 2.152.743C4.148 14.173 2.625 14.69.902 14.69c-.422 0-.721-.006-.902-.038 1.697 1.102 3.586 1.649 5.676 1.649 2.139 0 4.029-.542 5.674-1.626 1.645-1.078 2.859-2.408 3.639-3.974a10.77 10.77 0 0 0 1.172-4.892v-.468a7.788 7.788 0 0 0 1.84-1.921 8.142 8.142 0 0 1-2.11.593z"
+      ></path>
+  </symbol>
+  <symbol aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="mail">
+    <path  d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="calendar">
+    <path d="M452 40h-24V0h-40v40H124V0H84v40H60C26.916 40 0 66.916 0 100v352c0 33.084 26.916 60 60 60h392c33.084 0 60-26.916 60-60V100c0-33.084-26.916-60-60-60zm20 412c0 11.028-8.972 20-20 20H60c-11.028 0-20-8.972-20-20V188h432v264zm0-304H40v-48c0-11.028 8.972-20 20-20h24v40h40V80h264v40h40V80h24c11.028 0 20 8.972 20 20v48z"></path>
+    <path d="M76 230h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zM76 310h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zM76 390h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zm80-80h40v40h-40z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="github">
+    <path d="M255.968 5.329C114.624 5.329 0 120.401 0 262.353c0 113.536 73.344 209.856 175.104 243.872 12.8 2.368 17.472-5.568 17.472-12.384 0-6.112-.224-22.272-.352-43.712-71.2 15.52-86.24-34.464-86.24-34.464-11.616-29.696-28.416-37.6-28.416-37.6-23.264-15.936 1.728-15.616 1.728-15.616 25.696 1.824 39.2 26.496 39.2 26.496 22.848 39.264 59.936 27.936 74.528 21.344 2.304-16.608 8.928-27.936 16.256-34.368-56.832-6.496-116.608-28.544-116.608-127.008 0-28.064 9.984-51.008 26.368-68.992-2.656-6.496-11.424-32.64 2.496-68 0 0 21.504-6.912 70.4 26.336 20.416-5.696 42.304-8.544 64.096-8.64 21.728.128 43.648 2.944 64.096 8.672 48.864-33.248 70.336-26.336 70.336-26.336 13.952 35.392 5.184 61.504 2.56 68 16.416 17.984 26.304 40.928 26.304 68.992 0 98.72-59.84 120.448-116.864 126.816 9.184 7.936 17.376 23.616 17.376 47.584 0 34.368-.32 62.08-.32 70.496 0 6.88 4.608 14.88 17.6 12.352C438.72 472.145 512 375.857 512 262.353 512 120.401 397.376 5.329 255.968 5.329z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 212 212" id="gitlab">
+    <path d="M12.3 74.7h54L43.3 3c-1-3.6-6.4-3.6-7.6 0L12.3 74.8z" />
+    <path d="M12.3 74.7L.5 111c-1 3.2 0 6.8 3 8.8l101.6 74-92.5-119z"/>
+    <path d="M105 193.7l-38.6-119h-54l92.7 119z"/>
+    <path d="M105 193.7l38.7-119H66.4l38.7 119z"/>
+    <path d="M105 193.7l38.7-119H198l-93 119z"/>
+    <path d="M198 74.7l11.6 36.2c1 3 0 6.6-3 8.6l-101.5 74 93-119z"/>
+    <path d="M198 74.7h-54.3L167 3c1.2-3.6 6.4-3.6 7.6 0L198 74.8z"/> 
+  </symbol>
+  <symbol viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="rss">
+    <circle cx="3.429" cy="20.571" r="3.429"></circle>
+    <path d="M11.429 24h4.57C15.999 15.179 8.821 8.001 0 8v4.572c6.302.001 11.429 5.126 11.429 11.428z"></path>
+    <path d="M24 24C24 10.766 13.234 0 0 0v4.571c10.714 0 19.43 8.714 19.43 19.429z"></path>
+  </symbol>
+  <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="linkedin">
+    <path d="M437 0H75C33.648 0 0 33.648 0 75v362c0 41.352 33.648 75 75 75h362c41.352 0 75-33.648 75-75V75c0-41.352-33.648-75-75-75zM181 406h-60V196h60zm0-240h-60v-60h60zm210 240h-60V286c0-16.54-13.46-30-30-30s-30 13.46-30 30v120h-60V196h60v11.309C286.719 202.422 296.93 196 316 196c40.691.043 75 36.547 75 79.688zm0 0"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 612 612" id="to-top">
+    <path d="M604.501 440.509L325.398 134.956c-5.331-5.357-12.423-7.627-19.386-7.27-6.989-.357-14.056 1.913-19.387 7.27L7.499 440.509c-9.999 10.024-9.999 26.298 0 36.323s26.223 10.024 36.222 0l262.293-287.164L568.28 476.832c9.999 10.024 26.222 10.024 36.221 0 9.999-10.023 9.999-26.298 0-36.323z"></path>
+  </symbol>
+  <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="carly">
+    <path d="M504.971 239.029L448 182.059V84c0-46.317-37.682-84-84-84h-44c-13.255 0-24 10.745-24 24s10.745 24 24 24h44c19.851 0 36 16.149 36 36v108c0 6.365 2.529 12.47 7.029 16.971L454.059 256l-47.029 47.029A24.002 24.002 0 0 0 400 320v108c0 19.851-16.149 36-36 36h-44c-13.255 0-24 10.745-24 24s10.745 24 24 24h44c46.318 0 84-37.683 84-84v-98.059l56.971-56.971c9.372-9.372 9.372-24.568 0-33.941zM112 192V84c0-19.851 16.149-36 36-36h44c13.255 0 24-10.745 24-24S205.255 0 192 0h-44c-46.318 0-84 37.683-84 84v98.059l-56.971 56.97c-9.373 9.373-9.373 24.568 0 33.941L64 329.941V428c0 46.317 37.682 84 84 84h44c13.255 0 24-10.745 24-24s-10.745-24-24-24h-44c-19.851 0-36-16.149-36-36V320c0-6.365-2.529-12.47-7.029-16.971L57.941 256l47.029-47.029A24.002 24.002 0 0 0 112 192z"></path>
+  </symbol>
+  <symbol viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="copy">
+    <path d="M23 2.75A2.75 2.75 0 0 0 20.25 0H8.75A2.75 2.75 0 0 0 6 2.75v13.5A2.75 2.75 0 0 0 8.75 19h11.5A2.75 2.75 0 0 0 23 16.25zM18.25 14.5h-7.5a.75.75 0 0 1 0-1.5h7.5a.75.75 0 0 1 0 1.5zm0-3h-7.5a.75.75 0 0 1 0-1.5h7.5a.75.75 0 0 1 0 1.5zm0-3h-7.5a.75.75 0 0 1 0-1.5h7.5a.75.75 0 0 1 0 1.5z"></path>
+    <path d="M8.75 20.5a4.255 4.255 0 0 1-4.25-4.25V2.75c0-.086.02-.166.025-.25H3.75A2.752 2.752 0 0 0 1 5.25v16A2.752 2.752 0 0 0 3.75 24h12a2.752 2.752 0 0 0 2.75-2.75v-.75z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.001 512.001" id="closeme">
+    <path d="M284.286 256.002L506.143 34.144c7.811-7.811 7.811-20.475 0-28.285-7.811-7.81-20.475-7.811-28.285 0L256 227.717 34.143 5.859c-7.811-7.811-20.475-7.811-28.285 0-7.81 7.811-7.811 20.475 0 28.285l221.857 221.857L5.858 477.859c-7.811 7.811-7.811 20.475 0 28.285a19.938 19.938 0 0 0 14.143 5.857 19.94 19.94 0 0 0 14.143-5.857L256 284.287l221.857 221.857c3.905 3.905 9.024 5.857 14.143 5.857s10.237-1.952 14.143-5.857c7.811-7.811 7.811-20.475 0-28.285L284.286 256.002z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="open-menu">
+    <path d="M492 236H20c-11.046 0-20 8.954-20 20s8.954 20 20 20h472c11.046 0 20-8.954 20-20s-8.954-20-20-20zm0-160H20C8.954 76 0 84.954 0 96s8.954 20 20 20h472c11.046 0 20-8.954 20-20s-8.954-20-20-20zm0 320H20c-11.046 0-20 8.954-20 20s8.954 20 20 20h472c11.046 0 20-8.954 20-20s-8.954-20-20-20z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="instagram">
+    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id=youtube>
+    <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="stackoverflow">
+    <path d="M21 27v-8h3v11H0V19h3v8h18z"></path><path d="M17.1.2L15 1.8l7.9 10.6 2.1-1.6L17.1.2zm3.7 14.7L10.6 6.4l1.7-2 10.2 8.5-1.7 2zM7.2 12.3l12 5.6 1.1-2.4-12-5.6-1.1 2.4zm-1.8 6.8l13.56 1.96.17-2.38-13.26-2.55-.47 2.97zM19 25H5v-3h14v3z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="xing">
+    <path d="M18.188 0c-.517 0-.741.325-.927.66 0 0-7.455 13.224-7.702 13.657.015.024 4.919 9.023 4.919 9.023.17.308.436.66.967.66h3.454c.211 0 .375-.078.463-.22.089-.151.089-.346-.009-.536l-4.879-8.916c-.004-.006-.004-.016 0-.022L22.139.756c.095-.191.097-.387.006-.535C22.056.078 21.894 0 21.686 0h-3.498zM3.648 4.74c-.211 0-.385.074-.473.216-.09.149-.078.339.02.531l2.34 4.05c.004.01.004.016 0 .021L1.86 16.051c-.099.188-.093.381 0 .529.085.142.239.234.45.234h3.461c.518 0 .766-.348.945-.667l3.734-6.609-2.378-4.155c-.172-.315-.434-.659-.962-.659H3.648v.016z"/>
+  </symbol>
+</svg>
+
+
+<footer class="footer">
+  <div class="footer_inner wrap pale">
+    <img src='https://blog.danielhanaj.com/icons/apple-touch-icon1.png' class="icon icon_2 transparent" alt="danielhanaj.com">
+    <p>Copyright&nbsp;<span class="year"></span>&nbsp;DANIELHANAJ.COM. All Rights Reserved
+      &nbsp;
+      <a class="button" href="/admin/">Admin</a></p><a class="to_top" href="#documentTop">
+  <svg class="icon">
+  <title>to-top</title>
+  <use xlink:href="#to-top"></use>
+</svg>
+
+</a>
+
+  </div>
+</footer>
+
+    <script type="text/javascript" src="https://blog.danielhanaj.com/en/js/bundle.19668860ea177cfe8cad686c7464b57e39acde1a4c33f6a1a8c57f7ab127ac39e8330b38e7184422cf0e9351ef3efaf75d122eca818d38a929941b8a5c04b09e.js" integrity="sha512-GWaIYOoXfP6MrWhsdGS1fjms3hpMM/ahqMV/erEnrDnoMws45xhEIs8Ok1HvPvr3XRIuyoGNOKkplBuKXASwng==" crossorigin="anonymous"></script>
+
+  <script src="https://blog.danielhanaj.com/js/search.min.f025654ce47f69b033f46c1264953ad1968323b00f3928e0ecf9b0a73a5b913ed7dfadf8f5164844d4a789b19d3cd81da5f90f925e6d32f4b9e45ab43cf0ba73.js"></script>
+
+    
+  </body>
+</html>
