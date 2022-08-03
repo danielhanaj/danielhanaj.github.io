@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Terraform on danielhanaj.com</title>
-    <link>https://blog.danielhanaj.com/tags/terraform/</link>
+    <link>https://danielhanaj.github.io/tags/terraform/</link>
     <description>Recent content in Terraform on danielhanaj.com</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
-    <lastBuildDate>Fri, 25 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.danielhanaj.com/tags/terraform/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 25 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://danielhanaj.github.io/tags/terraform/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Create vCenter Role for Packer using Terraform</title>
-      <link>https://blog.danielhanaj.com/post/2021/06/25/vcenterrole/</link>
+      <link>https://danielhanaj.github.io/post/2021/06/25/vcenterrole/</link>
       <pubDate>Fri, 25 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://blog.danielhanaj.com/post/2021/06/25/vcenterrole/</guid>
+      <guid>https://danielhanaj.github.io/post/2021/06/25/vcenterrole/</guid>
       <description>
         
           

@@ -2,52 +2,52 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://blog.danielhanaj.com/pl/categories/</loc>
+    <loc>https://danielhanaj.github.io/pl/categories/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://blog.danielhanaj.com/categories/"
+                href="https://danielhanaj.github.io/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pl"
-                href="https://blog.danielhanaj.com/pl/categories/"
+                href="https://danielhanaj.github.io/pl/categories/"
                 />
   </url><url>
-    <loc>https://blog.danielhanaj.com/pl/</loc>
+    <loc>https://danielhanaj.github.io/pl/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://blog.danielhanaj.com/"
+                href="https://danielhanaj.github.io/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pl"
-                href="https://blog.danielhanaj.com/pl/"
+                href="https://danielhanaj.github.io/pl/"
                 />
   </url><url>
-    <loc>https://blog.danielhanaj.com/pl/series/</loc>
+    <loc>https://danielhanaj.github.io/pl/series/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://blog.danielhanaj.com/series/"
+                href="https://danielhanaj.github.io/series/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pl"
-                href="https://blog.danielhanaj.com/pl/series/"
+                href="https://danielhanaj.github.io/pl/series/"
                 />
   </url><url>
-    <loc>https://blog.danielhanaj.com/pl/tags/</loc>
+    <loc>https://danielhanaj.github.io/pl/tags/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://blog.danielhanaj.com/tags/"
+                href="https://danielhanaj.github.io/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pl"
-                href="https://blog.danielhanaj.com/pl/tags/"
+                href="https://danielhanaj.github.io/pl/tags/"
                 />
   </url>
 </urlset>

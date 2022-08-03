@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ubuntu on danielhanaj.com</title>
-    <link>https://blog.danielhanaj.com/tags/ubuntu/</link>
+    <link>https://danielhanaj.github.io/tags/ubuntu/</link>
     <description>Recent content in Ubuntu on danielhanaj.com</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
-    <lastBuildDate>Thu, 30 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.danielhanaj.com/tags/ubuntu/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 30 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://danielhanaj.github.io/tags/ubuntu/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Configure VMware Horizon View Direct-Connection Agent for Linux</title>
-      <link>https://blog.danielhanaj.com/post/2021/12/30/horizon_view_direct_connection_to_linux_vm/</link>
+      <link>https://danielhanaj.github.io/post/2021/12/30/horizon_view_direct_connection_to_linux_vm/</link>
       <pubDate>Thu, 30 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://blog.danielhanaj.com/post/2021/12/30/horizon_view_direct_connection_to_linux_vm/</guid>
+      <guid>https://danielhanaj.github.io/post/2021/12/30/horizon_view_direct_connection_to_linux_vm/</guid>
       <description>
         
           
