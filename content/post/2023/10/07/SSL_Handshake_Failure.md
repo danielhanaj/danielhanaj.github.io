@@ -136,4 +136,4 @@ No reboot was required on cells.
 
 After that change the cell status changed to "Up" in NSX-T Load Balancer.
 
-Thanks for reading.
+Thats all. Thanks for reading.
