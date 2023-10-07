@@ -20,7 +20,8 @@ If you use NSX-T Load Balancer to load balance Cloud Director cell traffic you m
  <!--more-->
  This will be a short post in case you have experienced SSL Handshake Failure on you NSX-T load balancer after upgrading to Cloud Director 10.5.
 
-Couple of days I have upgraded Cloud Director from 10.4.2 to 10.5. The upgrade went smoothly, but NSX-T Load Balancer, that we use to load balance traffic to CLoud Director cells started to report an error message. After checking the status in Server Pools, a pool members started to report SSL Handshake Failure and LB service went down. 
+Couple of days ago I have upgraded Cloud Director from 10.4.2 to 10.5. The upgrade went smoothly, but NSX-T Load Balancer, that we use to load balance traffic to CLoud Director cells, started to report an error message. After checking the status in Server Pools, a pool members started to report SSL Handshake Failure and LB service went down. 
+
 At that time I had to bypass LB to allow users to login into the environment.
 
 # VMware Support case
@@ -135,5 +136,7 @@ Next we had to repeat this procedure on remaining cells.
 No reboot was required on cells.
 
 After that change the cell status changed to "Up" in NSX-T Load Balancer.
+
+At the end that was a Cloud Director issue which was expected as I have upgraded only Cloud Dirctor cells, not NSX-T. 
 
 Thats all. Thanks for reading.
