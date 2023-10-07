@@ -37,12 +37,12 @@
 
     
     
-    <link rel="preload" href="https://danielhanaj.github.io/css/styles.3b8bba1267d315fc2a238cd60528d7d25d09546ea4278107412f86c961bb5022b9678d9ef6aa8c313bc8ef9da8afafade9bd65997f85cc9e4363f3d1609a10a7.css" integrity = "sha512-O4u6EmfTFfwqI4zWBSjX0l0JVG6kJ4EHQS&#43;GyWG7UCK5Z42e9qqMMTvI752or6&#43;t6b1lmX&#43;FzJ5DY/PRYJoQpw==" as="style" crossorigin="anonymous">
+    <link rel="preload" href="https://danielhanaj.github.io/sass/main.sass" integrity = "" as="style" crossorigin="anonymous">
     <link rel="preload" href="https://danielhanaj.github.io/en/js/bundle.19668860ea177cfe8cad686c7464b57e39acde1a4c33f6a1a8c57f7ab127ac39e8330b38e7184422cf0e9351ef3efaf75d122eca818d38a929941b8a5c04b09e.js" as="script" integrity=
     "sha512-GWaIYOoXfP6MrWhsdGS1fjms3hpMM/ahqMV/erEnrDnoMws45xhEIs8Ok1HvPvr3XRIuyoGNOKkplBuKXASwng==" crossorigin="anonymous">
 
     
-    <link rel="stylesheet" type="text/css" href="https://danielhanaj.github.io/css/styles.3b8bba1267d315fc2a238cd60528d7d25d09546ea4278107412f86c961bb5022b9678d9ef6aa8c313bc8ef9da8afafade9bd65997f85cc9e4363f3d1609a10a7.css" integrity="sha512-O4u6EmfTFfwqI4zWBSjX0l0JVG6kJ4EHQS&#43;GyWG7UCK5Z42e9qqMMTvI752or6&#43;t6b1lmX&#43;FzJ5DY/PRYJoQpw==" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://danielhanaj.github.io/sass/main.sass" integrity="" crossorigin="anonymous">
     
   </head>
   
@@ -316,7 +316,7 @@
 <h2 id="infrastricture-as-a-code"><strong>Infrastricture as a code</strong></h2>
 <p>Packer is an infrastructure as a code tool where your entire template configuration is defined within a code. Basically you need only few files and scripts which should be enough to build a template.</p>
 <h2 id="declarative-approach"><strong>Declarative approach</strong></h2>
-<p>To build your images Packer uses a template files that defined declaratively. Declarative, means you tell Packer what you want to get, not how to get it. 
+<p>To build your images Packer uses a template files that defined declaratively. Declarative, means you tell Packer what you want to get, not how to get it.
 That's the difference between imperative and declarative.
 In imperative programing languages, like PowerShell, you need to tell your script what it needs to do step by step. All commands are performed in order defined within the script itself. If you miss one step your entire script will fail.
 In declarative programming languages you only needs to specify what you want to get, so basically you don't need to keep specify any order.</p>
@@ -398,6 +398,9 @@ Variables needs to be defined in packer JSON file within variables section and t
     <h2 class="mt-4">Featured Posts</h2>
     <ul>
       <li>
+        <a href="https://danielhanaj.github.io/post/2023/10/07/ssl_handshake_failure/" class="nav-link" title="SSL Handshake Failure after upgrading to Cloud Director 10.5">SSL Handshake Failure after upgrading to Cloud Director 10.5</a>
+      </li>
+      <li>
         <a href="https://danielhanaj.github.io/post/2021/12/30/horizon_view_direct_connection_to_linux_vm/" class="nav-link" title="Configure VMware Horizon View Direct-Connection Agent for Linux">Configure VMware Horizon View Direct-Connection Agent for Linux</a>
       </li>
       <li>
@@ -421,6 +424,9 @@ Variables needs to be defined in packer JSON file within variables section and t
     </ul>
     <h2 class="mt-4">Recent Posts</h2>
     <ul class="flex-column">
+      <li>
+        <a href="https://danielhanaj.github.io/post/2023/10/07/ssl_handshake_failure/" class="nav-link" title="SSL Handshake Failure after upgrading to Cloud Director 10.5">SSL Handshake Failure after upgrading to Cloud Director 10.5</a>
+      </li>
       <li>
         <a href="https://danielhanaj.github.io/post/2021/12/30/horizon_view_direct_connection_to_linux_vm/" class="nav-link" title="Configure VMware Horizon View Direct-Connection Agent for Linux">Configure VMware Horizon View Direct-Connection Agent for Linux</a>
       </li>
@@ -448,7 +454,7 @@ Variables needs to be defined in packer JSON file within variables section and t
       <nav class="tags_nav">
         <a href='https://danielhanaj.github.io/categories/getting-started/' class="post_tag button button_translucent" title="getting-started">
           GETTING-STARTED
-          <span class="button_tally">8</span>
+          <span class="button_tally">9</span>
         </a>
         
         
@@ -474,6 +480,11 @@ Variables needs to be defined in packer JSON file within variables section and t
         
         <a href='https://danielhanaj.github.io/tags/vmware/' class="post_tag button button_translucent" title="vmware">
           VMWARE
+          <span class="button_tally">3</span>
+        </a>
+        
+        <a href='https://danielhanaj.github.io/tags/linux/' class="post_tag button button_translucent" title="linux">
+          LINUX
           <span class="button_tally">2</span>
         </a>
         
@@ -497,6 +508,11 @@ Variables needs to be defined in packer JSON file within variables section and t
           <span class="button_tally">1</span>
         </a>
         
+        <a href='https://danielhanaj.github.io/tags/cloud-director/' class="post_tag button button_translucent" title="cloud-director">
+          CLOUD-DIRECTOR
+          <span class="button_tally">1</span>
+        </a>
+        
         <a href='https://danielhanaj.github.io/tags/docker/' class="post_tag button button_translucent" title="docker">
           DOCKER
           <span class="button_tally">1</span>
@@ -512,18 +528,8 @@ Variables needs to be defined in packer JSON file within variables section and t
           <span class="button_tally">1</span>
         </a>
         
-        <a href='https://danielhanaj.github.io/tags/linux/' class="post_tag button button_translucent" title="linux">
-          LINUX
-          <span class="button_tally">1</span>
-        </a>
-        
         <a href='https://danielhanaj.github.io/tags/powercli/' class="post_tag button button_translucent" title="powercli">
           POWERCLI
-          <span class="button_tally">1</span>
-        </a>
-        
-        <a href='https://danielhanaj.github.io/tags/role/' class="post_tag button button_translucent" title="role">
-          ROLE
           <span class="button_tally">1</span>
         </a>
         
@@ -545,6 +551,10 @@ Variables needs to be defined in packer JSON file within variables section and t
             </a>
             
             
+            <a href='https://danielhanaj.github.io/tags/cloud-director/' class=" post_tag button button_translucent" data-position=1 title="cloud-director">CLOUD-DIRECTOR<span class="button_tally">1</span>
+            </a>
+            
+            
             <a href='https://danielhanaj.github.io/tags/devops/' class=" post_tag button button_translucent" data-position=5 title="devops">DEVOPS<span class="button_tally">5</span>
             </a>
             
@@ -561,7 +571,7 @@ Variables needs to be defined in packer JSON file within variables section and t
             </a>
             
             
-            <a href='https://danielhanaj.github.io/tags/linux/' class=" post_tag button button_translucent" data-position=1 title="linux">LINUX<span class="button_tally">1</span>
+            <a href='https://danielhanaj.github.io/tags/linux/' class=" post_tag button button_translucent" data-position=2 title="linux">LINUX<span class="button_tally">2</span>
             </a>
             
             
@@ -593,7 +603,7 @@ Variables needs to be defined in packer JSON file within variables section and t
             </a>
             
             
-            <a href='https://danielhanaj.github.io/tags/vmware/' class=" post_tag button button_translucent" data-position=2 title="vmware">VMWARE<span class="button_tally">2</span>
+            <a href='https://danielhanaj.github.io/tags/vmware/' class=" post_tag button button_translucent" data-position=3 title="vmware">VMWARE<span class="button_tally">3</span>
             </a>
             
             
@@ -702,7 +712,7 @@ Variables needs to be defined in packer JSON file within variables section and t
 
     <script type="text/javascript" src="https://danielhanaj.github.io/en/js/bundle.19668860ea177cfe8cad686c7464b57e39acde1a4c33f6a1a8c57f7ab127ac39e8330b38e7184422cf0e9351ef3efaf75d122eca818d38a929941b8a5c04b09e.js" integrity="sha512-GWaIYOoXfP6MrWhsdGS1fjms3hpMM/ahqMV/erEnrDnoMws45xhEIs8Ok1HvPvr3XRIuyoGNOKkplBuKXASwng==" crossorigin="anonymous"></script>
 
-  <script src="https://danielhanaj.github.io/js/search.min.f025654ce47f69b033f46c1264953ad1968323b00f3928e0ecf9b0a73a5b913ed7dfadf8f5164844d4a789b19d3cd81da5f90f925e6d32f4b9e45ab43cf0ba73.js"></script>
+  <script src="https://danielhanaj.github.io/js/search.min.8a7989a3155833e5032fb922caab1294cb74fa70ec9dd2d720a230b8405586447e2e017e6eff69c3d91da71078850ced1543f1cb71d2822e4faab818381c4f1e.js"></script>
 
     
   </body>

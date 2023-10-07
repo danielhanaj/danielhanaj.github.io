@@ -5,9 +5,25 @@
     <link>https://danielhanaj.github.io/tags/linux/</link>
     <description>Recent content in Linux on danielhanaj.com</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
-    <lastBuildDate>Thu, 30 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://danielhanaj.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 07 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://danielhanaj.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SSL Handshake Failure after upgrading to Cloud Director 10.5</title>
+      <link>https://danielhanaj.github.io/post/2023/10/07/ssl_handshake_failure/</link>
+      <pubDate>Sat, 07 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://danielhanaj.github.io/post/2023/10/07/ssl_handshake_failure/</guid>
+      <description>
+        
+          
+            &lt;p&gt;If you use NSX-T Load Balancer to load balance Cloud Director cell traffic you may see SSL Handshake Failure in Server Pools after upgrade to CD 10.5&lt;/p&gt;
+          
+          
+        
+      </description>
+    </item>
+    
     <item>
       <title>Configure VMware Horizon View Direct-Connection Agent for Linux</title>
       <link>https://danielhanaj.github.io/post/2021/12/30/horizon_view_direct_connection_to_linux_vm/</link>

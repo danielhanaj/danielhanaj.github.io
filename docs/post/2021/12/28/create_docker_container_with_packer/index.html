@@ -37,12 +37,12 @@
 
     
     
-    <link rel="preload" href="https://danielhanaj.github.io/css/styles.3b8bba1267d315fc2a238cd60528d7d25d09546ea4278107412f86c961bb5022b9678d9ef6aa8c313bc8ef9da8afafade9bd65997f85cc9e4363f3d1609a10a7.css" integrity = "sha512-O4u6EmfTFfwqI4zWBSjX0l0JVG6kJ4EHQS&#43;GyWG7UCK5Z42e9qqMMTvI752or6&#43;t6b1lmX&#43;FzJ5DY/PRYJoQpw==" as="style" crossorigin="anonymous">
+    <link rel="preload" href="https://danielhanaj.github.io/sass/main.sass" integrity = "" as="style" crossorigin="anonymous">
     <link rel="preload" href="https://danielhanaj.github.io/en/js/bundle.19668860ea177cfe8cad686c7464b57e39acde1a4c33f6a1a8c57f7ab127ac39e8330b38e7184422cf0e9351ef3efaf75d122eca818d38a929941b8a5c04b09e.js" as="script" integrity=
     "sha512-GWaIYOoXfP6MrWhsdGS1fjms3hpMM/ahqMV/erEnrDnoMws45xhEIs8Ok1HvPvr3XRIuyoGNOKkplBuKXASwng==" crossorigin="anonymous">
 
     
-    <link rel="stylesheet" type="text/css" href="https://danielhanaj.github.io/css/styles.3b8bba1267d315fc2a238cd60528d7d25d09546ea4278107412f86c961bb5022b9678d9ef6aa8c313bc8ef9da8afafade9bd65997f85cc9e4363f3d1609a10a7.css" integrity="sha512-O4u6EmfTFfwqI4zWBSjX0l0JVG6kJ4EHQS&#43;GyWG7UCK5Z42e9qqMMTvI752or6&#43;t6b1lmX&#43;FzJ5DY/PRYJoQpw==" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://danielhanaj.github.io/sass/main.sass" integrity="" crossorigin="anonymous">
     
   </head>
   
@@ -162,7 +162,7 @@
 </span>
     <span class="post_date">
       Dec 28, 2021</span>
-    <span class="post_time"> · 10 min read</span><span>&nbsp;· <a href='https://danielhanaj.github.io/tags/packer' title="Packer" class="post_tag button button_translucent">Packer
+    <span class="post_time"> · 11 min read</span><span>&nbsp;· <a href='https://danielhanaj.github.io/tags/packer' title="Packer" class="post_tag button button_translucent">Packer
         </a><a href='https://danielhanaj.github.io/tags/devops' title="DevOps" class="post_tag button button_translucent">DevOps
         </a><a href='https://danielhanaj.github.io/tags/azure' title="Azure" class="post_tag button button_translucent">Azure
         </a><a href='https://danielhanaj.github.io/tags/docker' title="Docker" class="post_tag button button_translucent">Docker
@@ -303,7 +303,7 @@
 <p>To automate Packer image creation process we will utilize Azure DevOps, which is a service hosted in public cloud. What we want to do is to create Packer image on-premise in our datacenter, so there is a problem with communication between vCenter server and Azure DevOps.</p>
 <h1 id="azure-devops-agent">Azure DevOps agent</h1>
 <h2 id="why-azure-devops-agent-is-needed">Why Azure DevOps agent is needed?</h2>
-<p>Normally Azure DevOps does not have any connection with our datacenter. 
+<p>Normally Azure DevOps does not have any connection with our datacenter.
 To establish connection between on-premise vCenter server and Azure DevOps, a dedicated agent placed inside our datacenter is needed. That agent needs to have network connection with our vCenter server and ESXi hosts. It can be placed in different VLAN, but that VLAN needs to be routable with vCenter and ESXi VLAN.</p>
 <h2 id="what-azure-devops-agent-does">What Azure Devops agent does?</h2>
 <p>It actually triggers a tasks initiated from Azure DevOps portal locally in our infrastructure. All files reuired to create our builds needs to be first copied on Azure Devops agent and agent triggers the build job. The files copied on agent from Azure DevOps server are called artifacts.
@@ -678,6 +678,9 @@ Docker Compose relies on Docker Engine for any meaningful work, so make sure you
     <h2 class="mt-4">Featured Posts</h2>
     <ul>
       <li>
+        <a href="https://danielhanaj.github.io/post/2023/10/07/ssl_handshake_failure/" class="nav-link" title="SSL Handshake Failure after upgrading to Cloud Director 10.5">SSL Handshake Failure after upgrading to Cloud Director 10.5</a>
+      </li>
+      <li>
         <a href="https://danielhanaj.github.io/post/2021/12/30/horizon_view_direct_connection_to_linux_vm/" class="nav-link" title="Configure VMware Horizon View Direct-Connection Agent for Linux">Configure VMware Horizon View Direct-Connection Agent for Linux</a>
       </li>
       <li>
@@ -701,6 +704,9 @@ Docker Compose relies on Docker Engine for any meaningful work, so make sure you
     </ul>
     <h2 class="mt-4">Recent Posts</h2>
     <ul class="flex-column">
+      <li>
+        <a href="https://danielhanaj.github.io/post/2023/10/07/ssl_handshake_failure/" class="nav-link" title="SSL Handshake Failure after upgrading to Cloud Director 10.5">SSL Handshake Failure after upgrading to Cloud Director 10.5</a>
+      </li>
       <li>
         <a href="https://danielhanaj.github.io/post/2021/12/30/horizon_view_direct_connection_to_linux_vm/" class="nav-link" title="Configure VMware Horizon View Direct-Connection Agent for Linux">Configure VMware Horizon View Direct-Connection Agent for Linux</a>
       </li>
@@ -728,7 +734,7 @@ Docker Compose relies on Docker Engine for any meaningful work, so make sure you
       <nav class="tags_nav">
         <a href='https://danielhanaj.github.io/categories/getting-started/' class="post_tag button button_translucent" title="getting-started">
           GETTING-STARTED
-          <span class="button_tally">8</span>
+          <span class="button_tally">9</span>
         </a>
         
         
@@ -754,6 +760,11 @@ Docker Compose relies on Docker Engine for any meaningful work, so make sure you
         
         <a href='https://danielhanaj.github.io/tags/vmware/' class="post_tag button button_translucent" title="vmware">
           VMWARE
+          <span class="button_tally">3</span>
+        </a>
+        
+        <a href='https://danielhanaj.github.io/tags/linux/' class="post_tag button button_translucent" title="linux">
+          LINUX
           <span class="button_tally">2</span>
         </a>
         
@@ -777,6 +788,11 @@ Docker Compose relies on Docker Engine for any meaningful work, so make sure you
           <span class="button_tally">1</span>
         </a>
         
+        <a href='https://danielhanaj.github.io/tags/cloud-director/' class="post_tag button button_translucent" title="cloud-director">
+          CLOUD-DIRECTOR
+          <span class="button_tally">1</span>
+        </a>
+        
         <a href='https://danielhanaj.github.io/tags/docker/' class="post_tag button button_translucent" title="docker">
           DOCKER
           <span class="button_tally">1</span>
@@ -792,18 +808,8 @@ Docker Compose relies on Docker Engine for any meaningful work, so make sure you
           <span class="button_tally">1</span>
         </a>
         
-        <a href='https://danielhanaj.github.io/tags/linux/' class="post_tag button button_translucent" title="linux">
-          LINUX
-          <span class="button_tally">1</span>
-        </a>
-        
         <a href='https://danielhanaj.github.io/tags/powercli/' class="post_tag button button_translucent" title="powercli">
           POWERCLI
-          <span class="button_tally">1</span>
-        </a>
-        
-        <a href='https://danielhanaj.github.io/tags/role/' class="post_tag button button_translucent" title="role">
-          ROLE
           <span class="button_tally">1</span>
         </a>
         
@@ -825,6 +831,10 @@ Docker Compose relies on Docker Engine for any meaningful work, so make sure you
             </a>
             
             
+            <a href='https://danielhanaj.github.io/tags/cloud-director/' class=" post_tag button button_translucent" data-position=1 title="cloud-director">CLOUD-DIRECTOR<span class="button_tally">1</span>
+            </a>
+            
+            
             <a href='https://danielhanaj.github.io/tags/devops/' class=" post_tag button button_translucent" data-position=5 title="devops">DEVOPS<span class="button_tally">5</span>
             </a>
             
@@ -841,7 +851,7 @@ Docker Compose relies on Docker Engine for any meaningful work, so make sure you
             </a>
             
             
-            <a href='https://danielhanaj.github.io/tags/linux/' class=" post_tag button button_translucent" data-position=1 title="linux">LINUX<span class="button_tally">1</span>
+            <a href='https://danielhanaj.github.io/tags/linux/' class=" post_tag button button_translucent" data-position=2 title="linux">LINUX<span class="button_tally">2</span>
             </a>
             
             
@@ -873,7 +883,7 @@ Docker Compose relies on Docker Engine for any meaningful work, so make sure you
             </a>
             
             
-            <a href='https://danielhanaj.github.io/tags/vmware/' class=" post_tag button button_translucent" data-position=2 title="vmware">VMWARE<span class="button_tally">2</span>
+            <a href='https://danielhanaj.github.io/tags/vmware/' class=" post_tag button button_translucent" data-position=3 title="vmware">VMWARE<span class="button_tally">3</span>
             </a>
             
             
@@ -982,7 +992,7 @@ Docker Compose relies on Docker Engine for any meaningful work, so make sure you
 
     <script type="text/javascript" src="https://danielhanaj.github.io/en/js/bundle.19668860ea177cfe8cad686c7464b57e39acde1a4c33f6a1a8c57f7ab127ac39e8330b38e7184422cf0e9351ef3efaf75d122eca818d38a929941b8a5c04b09e.js" integrity="sha512-GWaIYOoXfP6MrWhsdGS1fjms3hpMM/ahqMV/erEnrDnoMws45xhEIs8Ok1HvPvr3XRIuyoGNOKkplBuKXASwng==" crossorigin="anonymous"></script>
 
-  <script src="https://danielhanaj.github.io/js/search.min.f025654ce47f69b033f46c1264953ad1968323b00f3928e0ecf9b0a73a5b913ed7dfadf8f5164844d4a789b19d3cd81da5f90f925e6d32f4b9e45ab43cf0ba73.js"></script>
+  <script src="https://danielhanaj.github.io/js/search.min.8a7989a3155833e5032fb922caab1294cb74fa70ec9dd2d720a230b8405586447e2e017e6eff69c3d91da71078850ced1543f1cb71d2822e4faab818381c4f1e.js"></script>
 
     
   </body>
