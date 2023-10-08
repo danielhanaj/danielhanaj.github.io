@@ -133,7 +133,7 @@ The output we got was:
 
 Next we had to repeat this procedure on remaining cells.
 
-No reboot was required on cells.
+Once completed you need to reboot all the cells to apply changes.
 
 After that change the cell status changed to "Up" in NSX-T Load Balancer.
 
