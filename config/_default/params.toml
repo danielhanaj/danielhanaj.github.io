@@ -112,7 +112,7 @@ photo = "images/About/danielhanaj2.png" #include this if you would like to show 
 
 [plausible_analytics]
 enable = false # to enable plausible analytics set to true.
-websiteDomain = "https://blog.danielhanaj.com/" # domain name of your website, most cases same as your base url
+websiteDomain = "https://danielhanaj.github.io/" # domain name of your website, most cases same as your base url
 # plausibleDomain = "plausible.io" # default is set to plausible.io, only required if plausible is selfhosted
 # scritpName = "plausible" # default is set to plausible, only required if using a custome name for script
 
