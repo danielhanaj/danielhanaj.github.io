@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Build complete Windows image - Daniel Hanaj Blog</title><meta name="Description" content="Build complete Windows image"><meta property="og:title" content="Build complete Windows image" />
+<meta property="og:description" content="Build complete Windows image" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://danielhanaj.github.io/posts/build_complete_image/" /><meta property="og:image" content="https://danielhanaj.github.io/tn.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-08-24T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-08-24T00:00:00+00:00" /><meta property="og:site_name" content="danielhanaj.github.io" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://danielhanaj.github.io/tn.png" /><meta name="twitter:title" content="Build complete Windows image"/>
+<meta name="twitter:description" content="Build complete Windows image"/>
+<meta name="twitter:site" content="@donkojott"/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#eee5e5"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://danielhanaj.github.io/posts/build_complete_image/" /><link rel="prev" href="https://danielhanaj.github.io/posts/packer_variables/" /><link rel="next" href="https://danielhanaj.github.io/posts/create_docker_container_with_packer/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Build complete Windows image",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/danielhanaj.github.io\/posts\/build_complete_image\/"
+        },"genre": "posts","keywords": "Packer, DevOps, Automation, Windows, Windows updates","wordcount":  1374 ,
+        "url": "https:\/\/danielhanaj.github.io\/posts\/build_complete_image\/","datePublished": "2021-08-24T00:00:00+00:00","dateModified": "2021-08-24T00:00:00+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License. © All rights reserved -2018","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Danielhanaj"
+            },"description": "Build complete Windows image"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Daniel Hanaj Blog"><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="https://www.credly.com/users/daniel-hanaj" title="Certifications" rel="noopener noreffer" target="_blank"> Certifications </a><a class="menu-item" href="/about/" title="The Author"> About </a><a class="menu-item" href="https://github.com/danielhanaj" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><a class="menu-item" href="https://linkedin.com/in/danielhanaj" title="LinkedIn" rel="noopener noreffer" target="_blank"><i class='fab fa-linkedin fa-fw'></i>  </a><a class="menu-item" href="/twitter.com/donkojott" title="Twitter"><i class='fab fa-twitter fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Daniel Hanaj Blog"><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="https://www.credly.com/users/daniel-hanaj" title="Certifications" rel="noopener noreffer" target="_blank">Certifications</a><a class="menu-item" href="/about/" title="The Author">About</a><a class="menu-item" href="https://github.com/danielhanaj" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a class="menu-item" href="https://linkedin.com/in/danielhanaj" title="LinkedIn" rel="noopener noreffer" target="_blank"><i class='fab fa-linkedin fa-fw'></i></a><a class="menu-item" href="/twitter.com/donkojott" title="Twitter"><i class='fab fa-twitter fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Build complete Windows image</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Danielhanaj</a></span>&nbsp;<span class="post-category">included in <a href="/categories/packer/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Packer</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-08-24">2021-08-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1374 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#apply-windows-updates">Apply Windows updates</a></li>
+    <li><a href="#define-variable-inside-template-file">Define variable inside template file</a></li>
+    <li><a href="#define-variable-values">Define variable values</a></li>
+    <li><a href="#which-values-should-you-store-as-variable">Which values should you store as variable?</a></li>
+    <li><a href="#variables-inside-windows-answer-file">Variables inside Windows answer file</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>In this blog post we will build complete production ready Windows image. Let&rsquo;s crack it out!</p>
+<p>If you had a chance to read my previous posts you should be already aware how to build basic Packer Windows image using variables. This is a good start but we are just at the beginning. Currently our image does not contain any Windows updates installed and still has WinRM enabled which is serious security bridge in term of using it in production. Beside that image that has been created contains two virtual CD-ROM devices which is ok, but the goal is to leave only one virtual CD-ROM. Let&rsquo;s start fixing those gaps.</p>
+<h1 id="production-ready-image">Production ready image</h1>
+<p>Main question is what ideal Packer image should contain? The answer is - it depends on your needs. In my opinion production ready Windows image should not have any third party software installed. Instead security should be our priority. <code>Remember that image you are creating can be used to deploy hundreds production systems!</code>
+The image which will be created will have fallowing features:</p>
+<ul>
+<li>All current Windows updates installed,</li>
+<li>Enable RDP port to allow Remote Desktop connectivity with image that is being created,</li>
+<li>Disable WinRM once all configuration work will be done,</li>
+<li>Install .NET 4.6 on the image,</li>
+<li>Cleanup the image removing windows updates cache,</li>
+<li>Disable WinRM once entire customization will be completed,</li>
+<li>Remove virtual CD-ROM leaving only one drive available</li>
+</ul>
+<p>Of course you can customize your image as you want, it&rsquo;s completely up to you and you have unlimited possibilities with Packer, but try to make it simple as possible.</p>
+<h2 id="apply-windows-updates">Apply Windows updates</h2>
+<p>I will use Windows Update provisioner created by @rgl.
+Simple download</p>
+<p>Packer variables allow you re-use same Packer template file multiple times within different vSphere environments. If we would hardcode all settings inside template file, like we did in my previous <a href="https://blog.danielhanaj.com/post/2021/08/16/build_basic_windows_image_with_packer/" target="_blank" rel="noopener noreffer ">post</a>, we would then have to create Packer template file for each vSphere instance. You will probably agree that this is not very efficient as we need change only few settings inside existing template file , mostly for vCenter server objects, to re-use it within different environment..</p>
+<blockquote>
+<p>My assumption is that you want to build your images across different vCenter instances. Even with single vCenter instance variables can be quite helpful as you could use same template file to build Windows Server 2016 and Windows Server 2019.</p>
+</blockquote>
+<p>Since we want to fully automate image build process using Azure DevOps, it&rsquo;s advised to use variables for security and flexibility reasons.</p>
+<h2 id="define-variable-inside-template-file">Define variable inside template file</h2>
+<p>To define variables we need to first define variables section inside Packer template file. Variable naming convention is up to you, but I suggestto use names that are self explanatory. Also do not use spaces naming your variables.</p>
+<p>Below is an example how to define variable section:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">&#34;variables&#34;: </span>{<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">&#34;vsphere_server&#34;: </span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">&#34;vsphere_user&#34;: </span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">&#34;vsphere_password&#34;: </span><span class="s2">&#34;&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>}<span class="p">,</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>In this example we want to set three variables for vCenter server name, vCenter username and vCenter password. Next we need to define those variables inside Packer template file:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="w"> </span><span class="nt">&#34;builders&#34;: </span><span class="p">[</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>{<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;type&#34;: </span><span class="s2">&#34;vsphere-iso&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;vcenter_server&#34;: </span><span class="w">     </span><span class="s2">&#34;{{user `vsphere_server`}}&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;username&#34;: </span><span class="w">           </span><span class="s2">&#34;{{user `vsphere_user`}}&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;password&#34;: </span><span class="w">           </span><span class="s2">&#34;{{user `vsphere_password`}}&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;insecure_connection&#34;: </span><span class="s2">&#34;true&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>}<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="p">]</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="define-variable-values">Define variable values</h2>
+<p>To define values for our variables we need to create dedicated variable file. Same as Packer template file, variable file is stored in JSON format. You can use random naming convention, but for simplicity, let&rsquo;s name our file <code>vars.json</code> and store it in same directory as Packer template file. Variable file should look like this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl">{<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">&#34;vsphere_server&#34;: </span><span class="s2">&#34;vcsa01.lab.local&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">&#34;vsphere_user&#34;: </span><span class="s2">&#34;packer@vsphere.local&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">&#34;vsphere_password&#34;: </span><span class="s2">&#34;VMware1!&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>}<span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="which-values-should-you-store-as-variable">Which values should you store as variable?</h2>
+<p>Packer is very flexible and allow to store each option in template file as variable. This is very handy. For example, you can store patch to you answer file as variable, place answer files in dedicated directories and point Packer to proper answer file depending which OS you want to create. From the other hand I don&rsquo;t see the point of storing options like CPU number or amount of memory as variable. Basically those values are not important as, at the end, we change those values during provision process based on system/user requirements.
+So what values should be stored as variable? From my experience those should be:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vsphere_server</td>
+<td>Stores vCenter server name.</td>
+</tr>
+<tr>
+<td>vsphere_user</td>
+<td>Stores vCenter username.</td>
+</tr>
+<tr>
+<td>vsphere_password</td>
+<td>vSphere password for account that has required permissions to create images.</td>
+</tr>
+<tr>
+<td>vsphere_folder</td>
+<td>Stores vCenter Folder path where our image will be placed.</td>
+</tr>
+<tr>
+<td>vsphere_dc_name</td>
+<td>Stores vCenter datacenter name.</td>
+</tr>
+<tr>
+<td>vsphere_cluster</td>
+<td>Stores vCenter cluster name where our image will be placed.</td>
+</tr>
+<tr>
+<td>vsphere_host</td>
+<td>Stores ESXi host name where our image will be placed</td>
+</tr>
+<tr>
+<td>vsphere_portgroup_name</td>
+<td>Stores vCenter portgroup name where our image will be connected to.</td>
+</tr>
+<tr>
+<td>vsphere_datastore</td>
+<td>Store vCenter datastore name where our image will be deployed.</td>
+</tr>
+<tr>
+<td>winadmin_password</td>
+<td>Windows password used by WinRM to connect with image to perform customization.</td>
+</tr>
+<tr>
+<td>os_iso_path</td>
+<td>Path to datastore where Windows installation media is placed.</td>
+</tr>
+<tr>
+<td>vmtools_iso_path</td>
+<td>Path to datastore where VMware Tools installation media is placed.</td>
+</tr>
+<tr>
+<td>autounattend_path</td>
+<td>Path to autounattend.xml answer file.</td>
+</tr>
+<tr>
+<td>template_name</td>
+<td>Image name that we want to apply on the image.</td>
+</tr>
+<tr>
+<td>version</td>
+<td>VM hardware version that we want to apply on our image.</td>
+</tr>
+</tbody>
+</table>
+<p>You may wonder why we need to put so many variables into single template file? Well - because each vSphere environment can be different. You may have vSphere 6 and 6.7 that you manage so for each environment image hardware version can be different etc. It will make more sense later on once we start build our images fully automatically, trust me.</p>
+<blockquote>
+<p>Ok, but why I have specified &ldquo;vsphere_host&rdquo; since &ldquo;vSphere _cluster&rdquo; has been set as variable? The thing is that account that we specified and assigned through <a href="https://blog.danielhanaj.com/post/2021/06/25/vcenterrole/" target="_blank" rel="noopener noreffer ">terraform</a>, provides permissions on cluster level without propagation. We assign sufficient permissions on host level to better secure our environment.</p>
+</blockquote>
+<p>At the end you should get one additional file inside your folder and all listed variables should be offloaded from your template file.<br>
+Under <a href="https://github.com/danonh/Packer-vSphere-Windows.git" target="_blank" rel="noopener noreffer ">03 - Packer variables</a> folder you will find working set of files with offloaded variable files. You can simply place your sensitive values inside <code>vars.json</code> file and run: <code>packer build -var-file=&quot;.\vars.json&quot; windows-server-2016.json</code> command once you are in directory with your template file.<br>
+This command will tell Packer to use <em>vars.json</em> as variable file and <em>windows-server-2016.json</em> as main template file.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">PS C:\Packer\Blog_variables&gt; packer build -var-file=&#34;.\vars.json&#34; windows-server-2016.json
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">vsphere-iso: output will be in this color.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Creating VM...
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Customizing hardware...
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Mounting ISO images...
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Adding configuration parameters...
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Creating floppy disk...
+</span></span><span class="line"><span class="cl">    vsphere-iso: Copying files flatly from floppy_files
+</span></span><span class="line"><span class="cl">    vsphere-iso: Copying file: Autounattend_Windows2016/autounattend.xml
+</span></span><span class="line"><span class="cl">    vsphere-iso: Copying file: scripts/winrm.ps1
+</span></span><span class="line"><span class="cl">    vsphere-iso: Copying file: scripts/vmtools.ps1
+</span></span><span class="line"><span class="cl">    vsphere-iso: Done copying files from floppy_files
+</span></span><span class="line"><span class="cl">    vsphere-iso: Collecting paths from floppy_dirs
+</span></span><span class="line"><span class="cl">    vsphere-iso: Resulting paths from floppy_dirs : []
+</span></span><span class="line"><span class="cl">    vsphere-iso: Done copying paths from floppy_dirs
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Uploading created floppy image
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Adding generated Floppy...
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Set boot order temporary...
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Power on VM...
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Waiting for IP...
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: IP address: 192.168.1.88
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Using winrm communicator to connect: 192.168.1.88
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Waiting for WinRM to become available...
+</span></span><span class="line"><span class="cl">    vsphere-iso: WinRM connected.
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Connected to WinRM!
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Shutting down VM...
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Deleting Floppy drives...
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Deleting Floppy image...
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Eject CD-ROM drives...
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Convert VM into template...
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Clear boot order...
+</span></span><span class="line"><span class="cl">Build &#39;vsphere-iso&#39; finished after 18 minutes 28 seconds.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">==&gt; Wait completed after 18 minutes 28 seconds
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">==&gt; Builds finished. The artifacts of successful builds are:
+</span></span><span class="line"><span class="cl">--&gt; vsphere-iso: Windows2016-Template
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="variables-inside-windows-answer-file">Variables inside Windows answer file</h2>
+<p>You are probably wonder if variables can be used inside answer file to re-use autounattend.xml file with different Windows versions? Autounattend.xml does not support variables natively, but with help of Azure DevOps third party tools we can bypass variables into autounattend.xml as well. This will be demonstrated in later posts once we will start to create our images using Azure DevOps.</p>
+<p>In next blog we will tweak our image using provisioners and post-processors.</p>
+<p>Thanks for reading!</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-08-24</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://danielhanaj.github.io/posts/build_complete_image/" data-title="Build complete Windows image" data-via="donkojott" data-hashtags="Packer,DevOps,Automation,Windows,Windows updates"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://danielhanaj.github.io/posts/build_complete_image/" data-hashtag="Packer"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://danielhanaj.github.io/posts/build_complete_image/" data-title="Build complete Windows image"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://danielhanaj.github.io/posts/build_complete_image/" data-title="Build complete Windows image"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://danielhanaj.github.io/posts/build_complete_image/" data-title="Build complete Windows image"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/packer/">Packer</a>,&nbsp;<a href="/tags/devops/">DevOps</a>,&nbsp;<a href="/tags/automation/">Automation</a>,&nbsp;<a href="/tags/windows/">Windows</a>,&nbsp;<a href="/tags/windows-updates/">Windows updates</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/packer_variables/" class="prev" rel="prev" title="Packer variables"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Packer variables</a>
+            <a href="/posts/create_docker_container_with_packer/" class="next" rel="next" title="Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent">Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Daniel Hanaj</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":80},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"Daniel Hanaj","id-2":"Daniel Hanaj"},"lightgallery":true,"search":{"highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":0,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

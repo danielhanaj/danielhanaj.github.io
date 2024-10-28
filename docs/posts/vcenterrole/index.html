@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Create vCenter Role for Packer using Terraform - Daniel Hanaj Blog</title><meta name="Description" content="Create vCenter Role for Packer using Terraform"><meta property="og:title" content="Create vCenter Role for Packer using Terraform" />
+<meta property="og:description" content="Create vCenter Role for Packer using Terraform" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://danielhanaj.github.io/posts/vcenterrole/" /><meta property="og:image" content="https://danielhanaj.github.io/tn.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-06-25T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-06-25T00:00:00+00:00" /><meta property="og:site_name" content="danielhanaj.github.io" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://danielhanaj.github.io/tn.png" /><meta name="twitter:title" content="Create vCenter Role for Packer using Terraform"/>
+<meta name="twitter:description" content="Create vCenter Role for Packer using Terraform"/>
+<meta name="twitter:site" content="@donkojott"/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#eee5e5"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://danielhanaj.github.io/posts/vcenterrole/" /><link rel="prev" href="https://danielhanaj.github.io/posts/intoduction/" /><link rel="next" href="https://danielhanaj.github.io/posts/packer_explained/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Create vCenter Role for Packer using Terraform",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/danielhanaj.github.io\/posts\/vcenterrole\/"
+        },"genre": "posts","keywords": "Packer, vCenter, Role, Terraform, vSphere","wordcount":  1435 ,
+        "url": "https:\/\/danielhanaj.github.io\/posts\/vcenterrole\/","datePublished": "2021-06-25T00:00:00+00:00","dateModified": "2021-06-25T00:00:00+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License. © All rights reserved -2018","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Danielhanaj"
+            },"description": "Create vCenter Role for Packer using Terraform"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Daniel Hanaj Blog"><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="https://www.credly.com/users/daniel-hanaj" title="Certifications" rel="noopener noreffer" target="_blank"> Certifications </a><a class="menu-item" href="/about/" title="The Author"> About </a><a class="menu-item" href="https://github.com/danielhanaj" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><a class="menu-item" href="https://linkedin.com/in/danielhanaj" title="LinkedIn" rel="noopener noreffer" target="_blank"><i class='fab fa-linkedin fa-fw'></i>  </a><a class="menu-item" href="/twitter.com/donkojott" title="Twitter"><i class='fab fa-twitter fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Daniel Hanaj Blog"><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="https://www.credly.com/users/daniel-hanaj" title="Certifications" rel="noopener noreffer" target="_blank">Certifications</a><a class="menu-item" href="/about/" title="The Author">About</a><a class="menu-item" href="https://github.com/danielhanaj" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a class="menu-item" href="https://linkedin.com/in/danielhanaj" title="LinkedIn" rel="noopener noreffer" target="_blank"><i class='fab fa-linkedin fa-fw'></i></a><a class="menu-item" href="/twitter.com/donkojott" title="Twitter"><i class='fab fa-twitter fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Create vCenter Role for Packer using Terraform</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Danielhanaj</a></span>&nbsp;<span class="post-category">included in <a href="/categories/packer/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Packer</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-06-25">2021-06-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1435 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#custom-packer-role"><strong>Custom Packer Role</strong></a></li>
+    <li><a href="#square-brackets-values"><strong>Square Brackets Values</strong></a></li>
+    <li><a href="#apply-configuration"><strong>Apply configuration</strong></a></li>
+    <li><a href="#results"><strong>Results</strong></a></li>
+    <li><a href="#multiple-datacenters"><strong>Multiple datacenters</strong></a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>In this blog post I would like to demonstrate how to create dedicated role for HashiCorp Packer and assign permissions on vCenter objects using Terraform.</p>
+<h2 id="custom-packer-role"><strong>Custom Packer Role</strong></h2>
+<p>Most posts that demonstrate Packer use Administrator vCenter role to provision your Packer Images. This is good for demo or home lab usage, but not necessarily for production. In production you want to have just limited permission for account that provision your Packer Templates.
+In old times where Packer vSphere-iso provisioner was delivered and maintained by JetBrains group, a few people asked that question. What is minimum access rights that needs to be assigned to make Packer to provision VM images? The answer was create role named Packer and assign fallowing permissions to that role:</p>
+<ul>
+<li>Datastore
+<ul>
+<li>Allocate space</li>
+<li>Browse datastore</li>
+<li>Low level file operations</li>
+</ul>
+</li>
+<li>Host
+<ul>
+<li>Configuration -&gt; System Management</li>
+</ul>
+</li>
+<li>Network
+<ul>
+<li>Assign Network</li>
+</ul>
+</li>
+<li>Resource
+<ul>
+<li>Assign virtual machine to resource pool</li>
+</ul>
+</li>
+<li>Virtual Machine
+<ul>
+<li>All</li>
+</ul>
+</li>
+</ul>
+<p>Next assign vSphere account to that role as fallowing:</p>
+<table>
+<thead>
+<tr>
+<th>Object</th>
+<th>Role</th>
+<th>Propagation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Datacenter</td>
+<td>Read-Only</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Host</td>
+<td>packer</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Network</td>
+<td>packer</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Datastore</td>
+<td>packer</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Folder</td>
+<td>packer</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p>I&rsquo;ve decided to automate that process as much as possible using Terraform. Probably it would be easier to do it with PowerCLI but my goal is to learn Terraform as much as possible.</p>
+<p>For this reason I&rsquo;ve used Terrafrom vSphere Provider version 1.26</p>
+<p>Unfortunately at time of writing this article Terraform vSphere Provider does not allowed me to create local vSphere accounts so you have to do it manually in vCenter Inventory. You can also use PowerCLI for that. In my example I&rsquo;ve created local account named <a href="mailto:Packer@vsphere.local" rel="">Packer@vsphere.local</a>. Hopefully that&rsquo;s the only manual step you need to do, rest will be done by Terraform.</p>
+<p>First, install Terraform. I use Windows so used Chocolatey to install Terraform binary. Once you have it, clone <a href="https://github.com/danonh/Packer-vSphere-Windows.git" target="_blank" rel="noopener noreffer ">my</a> GitHub repo.  Under &ldquo;01 - Terraform vCenter Role&rdquo; you will find three files: main.tf file and two variable files. The one you are interested with is terrafrom.tfvars where you need to specify your vSphere objects values. In my case file looks like this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="line"><span class="cl"><span class="n">username</span>       <span class="o">=</span> <span class="s2">&#34;administrator@vsphere.local&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">password</span>       <span class="o">=</span> <span class="s2">&#34;VMware1!&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">vcenter</span>        <span class="o">=</span> <span class="s2">&#34;vcsa01.lab.local&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">datacenter</span>     <span class="o">=</span> <span class="s2">&#34;DC01&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">cluster</span>        <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;CL01&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">esxihost</span>       <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;esx01.lab.local&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">datastore</span>      <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;datastore1&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">network</span>        <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;VM Network&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">folder</span>         <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;/DC01/vm/Packer&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">vsphereaccount</span> <span class="o">=</span> <span class="s2">&#34;vsphere.local\\Packer&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="square-brackets-values"><strong>Square Brackets Values</strong></h2>
+<p>You may wonder what the square brackets are and what they are for? Square brackets in variable file means those are treated as lists of values. Your Datacenter object may contain multiple clusters and those contain multiple ESXi hosts. Additionally different clusters usually contain different datastores, networks and folder structures.
+Normally you want to assign extended rights to be assigned on single ESXi object. This script supports it so means you can put multiple clusters, ESXihosts, datastores, networks and folders. The condition is that those must belong to same Datacenter object. So considering single DC that contain multiple clusters you put fallowing values:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="line"><span class="cl"><span class="n">username</span>       <span class="o">=</span> <span class="s2">&#34;administrator@vsphere.local&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">password</span>       <span class="o">=</span> <span class="s2">&#34;VMware1!&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">vcenter</span>        <span class="o">=</span> <span class="s2">&#34;vcsa01.lab.local&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">datacenter</span>     <span class="o">=</span> <span class="s2">&#34;DC01&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">cluster</span>        <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;CL01&#34;, &#34;CL02&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">esxihost</span>       <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;esx01.lab.local&#34;, &#34;esx02.lab.local&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">datastore</span>      <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;datastore1&#34;, &#34;datrastore2&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">network</span>        <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;VM Network&#34;, &#34;DPortGroup&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">folder</span>         <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;/DC01/vm/Packer&#34;, &#34;/DC01/vm/Packer1&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">vsphereaccount</span> <span class="o">=</span> <span class="s2">&#34;vsphere.local\\Packer&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="apply-configuration"><strong>Apply configuration</strong></h2>
+<p>Open folder where your Terraform configuration is stored and run <code>terraform init</code> command:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">PS C:\Terraform\Role1\Packer vSphere Role&gt; terraform init
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Initializing the backend...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Initializing provider plugins...
+</span></span><span class="line"><span class="cl">- Checking for available provider plugins...
+</span></span><span class="line"><span class="cl">- Downloading plugin for provider &#34;vsphere&#34; (hashicorp/vsphere) 1.26.0...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">The following providers do not have any version constraints in configuration,
+</span></span><span class="line"><span class="cl">so the latest version was installed.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">To prevent automatic upgrades to new major versions that may contain breaking
+</span></span><span class="line"><span class="cl">changes, it is recommended to add version = &#34;...&#34; constraints to the
+</span></span><span class="line"><span class="cl">corresponding provider blocks in configuration, with the constraint strings
+</span></span><span class="line"><span class="cl">suggested below.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">* provider.vsphere: version = &#34;~&gt; 1.26&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Warning: registry.terraform.io: This version of Terraform has an outdated GPG key and is unable to verify new provider releases. Please upgrade Terraform to at least 0.12.31 to receive new provider updates. For details see: https://discuss.hashicorp.com/t/hcsec-2021-12-codecov-security-event-and-hashicorp-gpg-key-exposure/23512
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Warning: Interpolation-only expressions are deprecated
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  on main.tf line 3, in provider &#34;vsphere&#34;:
+</span></span><span class="line"><span class="cl">   3:   password       = &#34;${var.password}&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Terraform 0.11 and earlier required all non-constant expressions to be
+</span></span><span class="line"><span class="cl">provided via interpolation syntax, but this pattern is now deprecated. To
+</span></span><span class="line"><span class="cl">silence this warning, remove the &#34;${ sequence from the start and the }&#34;
+</span></span><span class="line"><span class="cl">sequence from the end of this expression, leaving just the inner expression.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Template interpolation syntax is still used to construct strings from
+</span></span><span class="line"><span class="cl">expressions when the template includes multiple interpolation sequences or a
+</span></span><span class="line"><span class="cl">mixture of literal strings and interpolations. This deprecation applies only
+</span></span><span class="line"><span class="cl">to templates that consist entirely of a single interpolation sequence.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">(and 7 more similar warnings elsewhere)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Terraform has been successfully initialized!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">You may now begin working with Terraform. Try running &#34;terraform plan&#34; to see
+</span></span><span class="line"><span class="cl">any changes that are required for your infrastructure. All Terraform commands
+</span></span><span class="line"><span class="cl">should now work.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">If you ever set or change modules or backend configuration for Terraform,
+</span></span><span class="line"><span class="cl">rerun this command to reinitialize your working directory. If you forget, other
+</span></span><span class="line"><span class="cl">commands will detect it and remind you to do so if necessary.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Once done, Terraform vSphere provider should be downloaded and placed in same directory as your terraform configuration files.</p>
+<p>Next run <code>terraform plan</code> command. The output will tell you what and how it will be generated.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">PS C:\Terraform\Role1\Packer vSphere Role&gt; terraform plan
+</span></span><span class="line"><span class="cl">Refreshing Terraform state in-memory prior to plan...
+</span></span><span class="line"><span class="cl">The refreshed state will be used to calculate this plan, but will not be
+</span></span><span class="line"><span class="cl">persisted to local or remote state storage.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">data.vsphere_folder.folder[&#34;/DC01/vm/Packer&#34;]: Refreshing state...
+</span></span><span class="line"><span class="cl">data.vsphere_role.readonly: Refreshing state...
+</span></span><span class="line"><span class="cl">data.vsphere_datacenter.dc: Refreshing state...
+</span></span><span class="line"><span class="cl">data.vsphere_datastore.datastore[&#34;datastore1&#34;]: Refreshing state...
+</span></span><span class="line"><span class="cl">data.vsphere_host.host[&#34;esx01.lab.local&#34;]: Refreshing state...
+</span></span><span class="line"><span class="cl">data.vsphere_network.net[&#34;VM Network&#34;]: Refreshing state...
+</span></span><span class="line"><span class="cl">data.vsphere_compute_cluster.cluster[&#34;CL01&#34;]: Refreshing state...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">------------------------------------------------------------------------
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">An execution plan has been generated and is shown below.
+</span></span><span class="line"><span class="cl">Resource actions are indicated with the following symbols:
+</span></span><span class="line"><span class="cl">  + create
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Terraform will perform the following actions:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  # vsphere_entity_permissions.p1 will be created
+</span></span><span class="line"><span class="cl">  + resource &#34;vsphere_entity_permissions&#34; &#34;p1&#34; {
+</span></span><span class="line"><span class="cl">      + entity_id   = &#34;datacenter-2&#34;
+</span></span><span class="line"><span class="cl">      + entity_type = &#34;Datacenter&#34;
+</span></span><span class="line"><span class="cl">      + id          = (known after apply)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      + permissions {
+</span></span><span class="line"><span class="cl">          + is_group      = false
+</span></span><span class="line"><span class="cl">          + propagate     = false
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Finally run <code>terraform apply --auto-approve</code> command and this will apply configuration on your vCenter server:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">PS C:\Terraform\Role1\Packer vSphere Role&gt; terraform apply --auto-approve
+</span></span><span class="line"><span class="cl">data.vsphere_datacenter.dc: Refreshing state...
+</span></span><span class="line"><span class="cl">data.vsphere_folder.folder[&#34;/DC01/vm/Packer&#34;]: Refreshing state...
+</span></span><span class="line"><span class="cl">data.vsphere_role.readonly: Refreshing state...
+</span></span><span class="line"><span class="cl">data.vsphere_host.host[&#34;esx01.lab.local&#34;]: Refreshing state...
+</span></span><span class="line"><span class="cl">data.vsphere_network.net[&#34;VM Network&#34;]: Refreshing state...
+</span></span><span class="line"><span class="cl">data.vsphere_datastore.datastore[&#34;datastore1&#34;]: Refreshing state...
+</span></span><span class="line"><span class="cl">data.vsphere_compute_cluster.cluster[&#34;CL01&#34;]: Refreshing state...
+</span></span><span class="line"><span class="cl">vsphere_entity_permissions.p1: Creating...
+</span></span><span class="line"><span class="cl">vsphere_role.role2: Creating...
+</span></span><span class="line"><span class="cl">vsphere_entity_permissions.p1: Creation complete after 1s [id=datacenter-2]
+</span></span><span class="line"><span class="cl">vsphere_role.role2: Creation complete after 1s [id=-1879812451]
+</span></span><span class="line"><span class="cl">vsphere_entity_permissions.p4[&#34;datastore1&#34;]: Creating...
+</span></span><span class="line"><span class="cl">vsphere_entity_permissions.p6[&#34;/DC01/vm/Packer&#34;]: Creating...
+</span></span><span class="line"><span class="cl">vsphere_entity_permissions.p3[&#34;esx01.lab.local&#34;]: Creating...
+</span></span><span class="line"><span class="cl">vsphere_entity_permissions.p2[&#34;CL01&#34;]: Creating...
+</span></span><span class="line"><span class="cl">vsphere_entity_permissions.p5[&#34;VM Network&#34;]: Creating...
+</span></span><span class="line"><span class="cl">vsphere_entity_permissions.p6[&#34;/DC01/vm/Packer&#34;]: Creation complete after 0s [id=group-v82]
+</span></span><span class="line"><span class="cl">vsphere_entity_permissions.p4[&#34;datastore1&#34;]: Creation complete after 0s [id=datastore-54]
+</span></span><span class="line"><span class="cl">vsphere_entity_permissions.p2[&#34;CL01&#34;]: Creation complete after 0s [id=domain-c7]
+</span></span><span class="line"><span class="cl">vsphere_entity_permissions.p3[&#34;esx01.lab.local&#34;]: Creation complete after 0s [id=host-12]
+</span></span><span class="line"><span class="cl">vsphere_entity_permissions.p5[&#34;VM Network&#34;]: Creation complete after 0s [id=network-17]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Warning: Interpolation-only expressions are deprecated
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  on main.tf line 3, in provider &#34;vsphere&#34;:
+</span></span><span class="line"><span class="cl">   3:   password       = &#34;${var.password}&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Terraform 0.11 and earlier required all non-constant expressions to be
+</span></span><span class="line"><span class="cl">provided via interpolation syntax, but this pattern is now deprecated. To
+</span></span><span class="line"><span class="cl">silence this warning, remove the &#34;${ sequence from the start and the }&#34;
+</span></span><span class="line"><span class="cl">sequence from the end of this expression, leaving just the inner expression.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Template interpolation syntax is still used to construct strings from
+</span></span><span class="line"><span class="cl">expressions when the template includes multiple interpolation sequences or a
+</span></span><span class="line"><span class="cl">mixture of literal strings and interpolations. This deprecation applies only
+</span></span><span class="line"><span class="cl">to templates that consist entirely of a single interpolation sequence.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">(and 7 more similar warnings elsewhere)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Apply complete! Resources: 7 added, 0 changed, 0 destroyed.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="results"><strong>Results</strong></h2>
+<p>As you can see Terraform has successfully created 7 resources and you can verify those under vCenter that Packer role has been created and <a href="mailto:Packer@vsphere.local" rel="">Packer@vsphere.local</a> account has that role assigned on lister vSphere objects.</p>
+<h2 id="multiple-datacenters"><strong>Multiple datacenters</strong></h2>
+<p>You may manage multiple datacenter objects under single vCenter server. My Terraform configuration allow you to specify only single datacenter objects and does not allow you to specify multiple datacenter objects.. So what to when you want to assign Packer role on multiple datacenter objects? Simply delete .tfstate file and re-run configuration specify new datacenter values in terrafrom.tfvars.</p>
+<p>Thanks,</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-06-25</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://danielhanaj.github.io/posts/vcenterrole/" data-title="Create vCenter Role for Packer using Terraform" data-via="donkojott" data-hashtags="Packer,vCenter,Role,Terraform,vSphere"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://danielhanaj.github.io/posts/vcenterrole/" data-hashtag="Packer"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://danielhanaj.github.io/posts/vcenterrole/" data-title="Create vCenter Role for Packer using Terraform"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://danielhanaj.github.io/posts/vcenterrole/" data-title="Create vCenter Role for Packer using Terraform"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://danielhanaj.github.io/posts/vcenterrole/" data-title="Create vCenter Role for Packer using Terraform"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/packer/">Packer</a>,&nbsp;<a href="/tags/vcenter/">vCenter</a>,&nbsp;<a href="/tags/role/">Role</a>,&nbsp;<a href="/tags/terraform/">Terraform</a>,&nbsp;<a href="/tags/vsphere/">vSphere</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/intoduction/" class="prev" rel="prev" title="Fully automated Windows Templates with Packer, Terraform and Azure DevOps"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Fully automated Windows Templates with Packer, Terraform and Azure DevOps</a>
+            <a href="/posts/packer_explained/" class="next" rel="next" title="Packer Explained">Packer Explained<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Daniel Hanaj</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":80},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"Daniel Hanaj","id-2":"Daniel Hanaj"},"lightgallery":true,"search":{"highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":0,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

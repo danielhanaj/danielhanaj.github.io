@@ -1,0 +1,72 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Packer - Category - Daniel Hanaj Blog</title>
+        <link>https://danielhanaj.github.io/categories/packer/</link>
+        <description>Packer - Category - Daniel Hanaj Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>daniel.hanaj@gmail.com (Daniel Hanaj)</managingEditor>
+            <webMaster>daniel.hanaj@gmail.com (Daniel Hanaj)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License. © All rights reserved -2018</copyright><lastBuildDate>Tue, 28 Dec 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://danielhanaj.github.io/categories/packer/" rel="self" type="application/rss+xml" /><item>
+    <title>Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent</title>
+    <link>https://danielhanaj.github.io/posts/create_docker_container_with_packer/</link>
+    <pubDate>Tue, 28 Dec 2021 00:00:00 &#43;0000</pubDate>
+    <author>Danielhanaj</author>
+    <guid>https://danielhanaj.github.io/posts/create_docker_container_with_packer/</guid>
+    <description><![CDATA[<p>Today we will create a Docker image that will contain Packer, Windows Update Provisioner for Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent.</p>]]></description>
+</item>
+<item>
+    <title>Build complete Windows image</title>
+    <link>https://danielhanaj.github.io/posts/build_complete_image/</link>
+    <pubDate>Tue, 24 Aug 2021 00:00:00 &#43;0000</pubDate>
+    <author>Danielhanaj</author>
+    <guid>https://danielhanaj.github.io/posts/build_complete_image/</guid>
+    <description><![CDATA[<p>In this blog post we will build complete production ready Windows image. Let&rsquo;s crack it out!</p>]]></description>
+</item>
+<item>
+    <title>Packer variables</title>
+    <link>https://danielhanaj.github.io/posts/packer_variables/</link>
+    <pubDate>Tue, 24 Aug 2021 00:00:00 &#43;0000</pubDate>
+    <author>Danielhanaj</author>
+    <guid>https://danielhanaj.github.io/posts/packer_variables/</guid>
+    <description><![CDATA[<p>This blog entry will demonstrate how to use variables inside Packer Template file.</p>]]></description>
+</item>
+<item>
+    <title>Build basic Windows image with Packer on vSphere</title>
+    <link>https://danielhanaj.github.io/posts/build_basic_windows_image_with_packer/</link>
+    <pubDate>Mon, 16 Aug 2021 00:00:00 &#43;0000</pubDate>
+    <author>Danielhanaj</author>
+    <guid>https://danielhanaj.github.io/posts/build_basic_windows_image_with_packer/</guid>
+    <description><![CDATA[<p>In this blog post I will demonstrate how to build basic Windows 2016 image on vSphere using Packer.</p>]]></description>
+</item>
+<item>
+    <title>Packer resources for Windows images</title>
+    <link>https://danielhanaj.github.io/posts/packer_resources_for_windows_images/</link>
+    <pubDate>Tue, 03 Aug 2021 00:00:00 &#43;0000</pubDate>
+    <author>Danielhanaj</author>
+    <guid>https://danielhanaj.github.io/posts/packer_resources_for_windows_images/</guid>
+    <description><![CDATA[<p>In this blog post I will try to provide you some interesting links related to Packer and Windows server builds. Using those and modifying according your needs will make your life much simpler when creating your first Packer image.</p>]]></description>
+</item>
+<item>
+    <title>Packer Explained</title>
+    <link>https://danielhanaj.github.io/posts/packer_explained/</link>
+    <pubDate>Mon, 02 Aug 2021 00:00:00 &#43;0000</pubDate>
+    <author>Danielhanaj</author>
+    <guid>https://danielhanaj.github.io/posts/packer_explained/</guid>
+    <description><![CDATA[<p>In this blog post I will explain what Packer is and basic terminology that you need to get fimiliar with before we will start using it.</p>]]></description>
+</item>
+<item>
+    <title>Create vCenter Role for Packer using Terraform</title>
+    <link>https://danielhanaj.github.io/posts/vcenterrole/</link>
+    <pubDate>Fri, 25 Jun 2021 00:00:00 &#43;0000</pubDate>
+    <author>Danielhanaj</author>
+    <guid>https://danielhanaj.github.io/posts/vcenterrole/</guid>
+    <description><![CDATA[<p>In this blog post I would like to demonstrate how to create dedicated role for HashiCorp Packer and assign permissions on vCenter objects using Terraform.</p>]]></description>
+</item>
+<item>
+    <title>Fully automated Windows Templates with Packer, Terraform and Azure DevOps</title>
+    <link>https://danielhanaj.github.io/posts/intoduction/</link>
+    <pubDate>Mon, 21 Jun 2021 00:00:00 &#43;0000</pubDate>
+    <author>Danielhanaj</author>
+    <guid>https://danielhanaj.github.io/posts/intoduction/</guid>
+    <description><![CDATA[<p>This is my first blog post and in next few blog entries I will demonstrate entire process how you can fully automatically build and customize vSphere Windows templates using Terraform, Packer and Azure DevOps. My goal is to deliver Windows templates that will be production ready - meaning, you will be able use those to provision production systems. Windows templates will be always up to date since we will rebuild those every month once Microsoft will release their patches. Let&rsquo;s get started then!</p>]]></description>
+</item>
+</channel>
+</rss>

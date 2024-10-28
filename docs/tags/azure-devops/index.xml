@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Azure DevOps - Tag - Daniel Hanaj Blog</title>
+        <link>https://danielhanaj.github.io/tags/azure-devops/</link>
+        <description>Azure DevOps - Tag - Daniel Hanaj Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>daniel.hanaj@gmail.com (Daniel Hanaj)</managingEditor>
+            <webMaster>daniel.hanaj@gmail.com (Daniel Hanaj)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License. © All rights reserved -2018</copyright><lastBuildDate>Mon, 21 Jun 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://danielhanaj.github.io/tags/azure-devops/" rel="self" type="application/rss+xml" /><item>
+    <title>Fully automated Windows Templates with Packer, Terraform and Azure DevOps</title>
+    <link>https://danielhanaj.github.io/posts/intoduction/</link>
+    <pubDate>Mon, 21 Jun 2021 00:00:00 &#43;0000</pubDate>
+    <author>Danielhanaj</author>
+    <guid>https://danielhanaj.github.io/posts/intoduction/</guid>
+    <description><![CDATA[<p>This is my first blog post and in next few blog entries I will demonstrate entire process how you can fully automatically build and customize vSphere Windows templates using Terraform, Packer and Azure DevOps. My goal is to deliver Windows templates that will be production ready - meaning, you will be able use those to provision production systems. Windows templates will be always up to date since we will rebuild those every month once Microsoft will release their patches. Let&rsquo;s get started then!</p>]]></description>
+</item>
+</channel>
+</rss>

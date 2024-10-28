@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent - Daniel Hanaj Blog</title><meta name="Description" content="Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent"><meta property="og:title" content="Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent" />
+<meta property="og:description" content="Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.org/posts/create_docker_container_with_packer/" /><meta property="og:image" content="https://example.org/tn.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-28T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-12-28T00:00:00+00:00" /><meta property="og:site_name" content="danielhanaj.github.io" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://example.org/tn.png" /><meta name="twitter:title" content="Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent"/>
+<meta name="twitter:description" content="Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent"/>
+<meta name="twitter:site" content="@donkojott"/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#eee5e5"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://example.org/posts/create_docker_container_with_packer/" /><link rel="prev" href="https://example.org/posts/build_complete_image/" /><link rel="next" href="https://example.org/posts/horizon_view_direct_connection_to_linux_vm/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/example.org\/posts\/create_docker_container_with_packer\/"
+        },"genre": "posts","keywords": "Packer, DevOps, Azure, Docker, PowerCLI, Automation","wordcount":  2318 ,
+        "url": "https:\/\/example.org\/posts\/create_docker_container_with_packer\/","datePublished": "2021-12-28T00:00:00+00:00","dateModified": "2021-12-28T00:00:00+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License. © All rights reserved -2018","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Danielhanaj"
+            },"description": "Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Daniel Hanaj Blog"><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="https://www.credly.com/users/daniel-hanaj" title="Certifications" rel="noopener noreffer" target="_blank"> Certifications </a><a class="menu-item" href="/about/" title="The Author"> About </a><a class="menu-item" href="https://github.com/danielhanaj" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><a class="menu-item" href="https://linkedin.com/in/danielhanaj" title="LinkedIn" rel="noopener noreffer" target="_blank"><i class='fab fa-linkedin fa-fw'></i>  </a><a class="menu-item" href="/twitter.com/donkojott" title="Twitter"><i class='fab fa-twitter fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Daniel Hanaj Blog"><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="https://www.credly.com/users/daniel-hanaj" title="Certifications" rel="noopener noreffer" target="_blank">Certifications</a><a class="menu-item" href="/about/" title="The Author">About</a><a class="menu-item" href="https://github.com/danielhanaj" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a class="menu-item" href="https://linkedin.com/in/danielhanaj" title="LinkedIn" rel="noopener noreffer" target="_blank"><i class='fab fa-linkedin fa-fw'></i></a><a class="menu-item" href="/twitter.com/donkojott" title="Twitter"><i class='fab fa-twitter fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Danielhanaj</a></span>&nbsp;<span class="post-category">included in <a href="/categories/packer/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Packer</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-12-28">2021-12-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2318 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;11 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-azure-devops-agent-is-needed">Why Azure DevOps agent is needed?</a></li>
+    <li><a href="#what-azure-devops-agent-does">What Azure Devops agent does?</a></li>
+    <li><a href="#self-hosted-azure-devops-agent">Self-hosted Azure DevOps agent</a></li>
+    <li><a href="#support-platforms-for-devops-agents">Support platforms for DevOps agents</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#create-ubuntu-2104-packer-image">Create Ubuntu 21.04 Packer image</a></li>
+    <li><a href="#customize-ubuntu-vm">Customize Ubuntu VM</a>
+      <ul>
+        <li><a href="#set-static-ip">Set static IP</a></li>
+        <li><a href="#change-hostname">Change hostname</a></li>
+        <li><a href="#upgrade-system">Upgrade system</a></li>
+      </ul>
+    </li>
+    <li><a href="#install-docker-engine-and-docker-compose">Install Docker Engine and Docker Compose</a>
+      <ul>
+        <li><a href="#install-docker-engine">Install Docker Engine</a></li>
+        <li><a href="#install-docker-compose">Install Docker Compose</a></li>
+      </ul>
+    </li>
+    <li><a href="#preparing-for-docker-container-image-creation">Preparing for Docker container image creation</a>
+      <ul>
+        <li><a href="#changing-product-versions">Changing product versions</a></li>
+      </ul>
+    </li>
+    <li><a href="#build-docker-image">Build Docker image</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Today we will create a Docker image that will contain Packer, Windows Update Provisioner for Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent.</p>
+<p>To automate Packer image creation process we will utilize Azure DevOps, which is a service hosted in public cloud. What we want to do is to create Packer image on-premise in our datacenter, so there is a problem with communication between vCenter server and Azure DevOps.</p>
+<h1 id="azure-devops-agent">Azure DevOps agent</h1>
+<h2 id="why-azure-devops-agent-is-needed">Why Azure DevOps agent is needed?</h2>
+<p>Normally Azure DevOps does not have any connection with our datacenter.
+To establish connection between on-premise vCenter server and Azure DevOps, a dedicated agent placed inside our datacenter is needed. That agent needs to have network connection with our vCenter server and ESXi hosts. It can be placed in different VLAN, but that VLAN needs to be routable with vCenter and ESXi VLAN.</p>
+<h2 id="what-azure-devops-agent-does">What Azure Devops agent does?</h2>
+<p>It actually triggers a tasks initiated from Azure DevOps portal locally in our infrastructure. All files reuired to create our builds needs to be first copied on Azure Devops agent and agent triggers the build job. The files copied on agent from Azure DevOps server are called artifacts.
+Because agent triggers a build jobs, it needs to be equipped with all necessary tools that are required to create Packer template.
+Those are:</p>
+<ul>
+<li>Packer</li>
+<li>Packer Windows Update provisioner</li>
+<li>PowerShell</li>
+<li>PowerCLI</li>
+</ul>
+<h2 id="self-hosted-azure-devops-agent">Self-hosted Azure DevOps agent</h2>
+<p>Azure DevOps agent can be hosted in Azure or it can be hosted locally in our DC. Obviously we will need self-hosted agent.<br>
+First of all it allows direct communication with our datacenter. Second thing - it&rsquo;s free. For Azure DevOps agent hosted in Azure you normally needs to pay some money.<br>
+Of course everything depends on subscription level you own, but my assumption is that you don&rsquo;t have any available subscription and want to minimize operational costs.<br>
+<code>Remember, or goal is to build secure templates and minimize operational costs!</code><br>
+To establish communication between DevOps server and on-premise vCenter server a dedicated token will be used. This token will have to be generated on Azure Devops portal.</p>
+<h2 id="support-platforms-for-devops-agents">Support platforms for DevOps agents</h2>
+<p>Azure DevOps agent can be installed on Windows or on Linux. We will choose Linux as our destination platform and there is few reasons for that:</p>
+<ul>
+<li>When utilizing Linux you don&rsquo;t need to pay for Windows license. Since Azure DevOps agent will just trigger our build tasks, there is no need to pay Windows license for such service.</li>
+<li>When using Linux as agent platform we can utlize Docker and automate process of creating a docker image will all necessary tools.</li>
+</ul>
+<blockquote>
+<p>You could probably use some bash script to automate process of installing and configuring all necessary tools on Linux, but using Docker will be much faster and efficient way to achieve expected result.</p>
+</blockquote>
+<ul>
+<li>Since DevOps agent keeps all artifacts locally in clear text (including passwords), security is a major concern here. It&rsquo;s very easy to erase Windows password using some small 3rd party tool and get access to all artifacts and all passwords on that agent. Using Linux and Docker container make a things much harder for potential attacker. We will use other methods to secure data on agent machine but Linux is much better option in terms of security.</li>
+</ul>
+<h1 id="build-ubuntu-vm">Build Ubuntu VM</h1>
+<h2 id="create-ubuntu-2104-packer-image">Create Ubuntu 21.04 Packer image</h2>
+<p>We could use Windows Subsystem for Linux (WSL) to speedup Docker image creation process but we want to build our final solution which will utilize Ubuntu VM. For this reason we will use Ubuntu 21.04. To create Ubuntu VM Template using Packer use this <a href="https://www.virtualizationhowto.com/2021/05/packer-build-ubuntu-21-04-for-vmware-vsphere/" target="_blank" rel="noopener noreffer ">link</a>.</p>
+<h2 id="customize-ubuntu-vm">Customize Ubuntu VM</h2>
+<p>To make life easier first enable root account and setup new root account password.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">sudo passwd root
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Once done switch to root account typing command:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">su root
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Username will change from your existing user to root. This means we have elevated privileges on the system.</p>
+<h3 id="set-static-ip">Set static IP</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">cd /etc/netplan/
+</span></span></span><span class="line"><span class="cl"><span class="go">ls
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Once done a configuration file will be displayed</p>
+<p>Edit the file using nano editor:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">nano 00-installer-config.yaml
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Edit IP, gateway and DNS settings to match your network configuration:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c"># This is the network config written by &#39;subiquity&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">network</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">ethernets</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">ens192</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">addresses</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="m">192.168.1.222</span><span class="l">/24</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">gateway4</span><span class="p">:</span><span class="w"> </span><span class="m">192.168.1.1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">nameservers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">addresses</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="m">192.168.1.1</span><span class="p">,</span><span class="w"> </span><span class="m">8.8.8.8</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">search</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">lab.local]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Type Ctrl+x and confirm saving changes typing y.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">netplan apply
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>This will apply network settings that has been modified.
+From now putty can be used to interact with VM through SSH console</p>
+<h3 id="change-hostname">Change hostname</h3>
+<p>Perform fallowing command to change hostname to ld9-vcsabackups01</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">sudo hostnamectl set-hostname devopsagent01
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Provide server description using fallowing command:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">sudo hostnamectl set-hostname &#34;Azure DevOps Self-hosted Agent&#34; --pretty
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Once applied verify that changes have been applied</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">hostnamectl
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="upgrade-system">Upgrade system</h3>
+<p>Perform server upgrade</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">sudo apt-get update
+</span></span></span><span class="line"><span class="cl"><span class="go">sudo apt-get-upgrade
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="install-docker-engine-and-docker-compose">Install Docker Engine and Docker Compose</h2>
+<h3 id="install-docker-engine">Install Docker Engine</h3>
+<p>Docker Engine allow us to run standalone containers.</p>
+<p>First remove existing Docker Engine if exists:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">sudo apt-get remove docker docker-engine docker.io containerd runc
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Update the apt package index and install packages to allow apt to use a repository over HTTPS:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go"> sudo apt-get update
+</span></span></span><span class="line"><span class="cl"><span class="go"> sudo apt-get install \
+</span></span></span><span class="line"><span class="cl"><span class="go">    ca-certificates \
+</span></span></span><span class="line"><span class="cl"><span class="go">    curl \
+</span></span></span><span class="line"><span class="cl"><span class="go">    gnupg \
+</span></span></span><span class="line"><span class="cl"><span class="go">    lsb-release
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Add Docker’s official GPG key:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Use the following command to set up the stable repository.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">echo \
+</span></span></span><span class="line"><span class="cl"><span class="go">  &#34;deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+</span></span></span><span class="line"><span class="cl"><span class="go">  $(lsb_release -cs) stable&#34; | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Install Docker Engine</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">sudo apt-get update
+</span></span></span><span class="line"><span class="cl"><span class="go">sudo apt-get install docker-ce docker-ce-cli containerd.io
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Check Docker version:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">docker --version
+</span></span></span><span class="line"><span class="cl"><span class="go"></span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="go">Docker version 20.10.10, build b485636
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="install-docker-compose">Install Docker Compose</h3>
+<p>Compose is a file format for describing distributed Docker apps, and it’s a tool for managing them.
+Docker Compose relies on Docker Engine for any meaningful work, so make sure you have Docker Engine installed either locally or remote.</p>
+<p>On Linux, you can download the Docker Compose binary from the <a href="https://github.com/docker/compose/releases" target="_blank" rel="noopener noreffer ">Compose repository release page on GitHub</a>.</p>
+<p>Run this command to download the current stable release of Docker Compose:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">sudo curl -L &#34;https://github.com/docker/compose/releases/download/v2.2.2/docker-compose-$(uname -s)-$(uname -m)&#34; -o /usr/local/bin/docker-compose
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Apply executable permissions to the binary:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">sudo chmod +x /usr/local/bin/docker-compose
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Note: If the command docker-compose fails after installation, check your path. You can also create a symbolic link to /usr/bin or any other directory in your path.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Test the installation:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">docker-compose --version
+</span></span></span><span class="line"><span class="cl"><span class="go"></span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="go">Docker Compose version v2.2.2
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Once Docker Engine and Docker Compose will be installed we need to add existing, non-root user to docker group to perform docker tasks without privileged mode:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">sudo usermod -aG docker your-user-name
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Once added, restart your SSH session to apply changes.</p>
+<h2 id="preparing-for-docker-container-image-creation">Preparing for Docker container image creation</h2>
+<p>Inside your home directory create new folder named &ldquo;Azure-DevOps-Agent&rdquo;:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">mkdir Azure-DevOps-Agent
+</span></span></span><span class="line"><span class="cl"><span class="go">cd Azure-DevOps-Agent/
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Once we are inside devopsagent folder create new file named <code>Dockerfile</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">nano Dockefile
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>To build container image we need a file named <code>Dockerfile</code> which will include fallowing content:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-docker" data-lang="docker"><span class="line"><span class="cl"><span class="c"># Indicates the base image.</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">FROM</span><span class="s"> ubuntu:18.04</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c"># Define Args for the needed to add the package</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">ARG</span> <span class="nv">PACKER_VERSION</span><span class="o">=</span><span class="s2">&#34;1.7.8&#34;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">ARG</span> <span class="nv">PACKER_WINDOWSUPDATE_VERSION</span><span class="o">=</span><span class="s2">&#34;0.14.0&#34;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">ARG</span> <span class="nv">PS_VERSION</span><span class="o">=</span><span class="m">7</span>.1.3<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">ARG</span> <span class="nv">PS_PACKAGE</span><span class="o">=</span>powershell_<span class="si">${</span><span class="nv">PS_VERSION</span><span class="si">}</span>-1.ubuntu.18.04_amd64.deb<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">ARG</span> <span class="nv">PS_PACKAGE_URL</span><span class="o">=</span>https://github.com/PowerShell/PowerShell/releases/download/v<span class="si">${</span><span class="nv">PS_VERSION</span><span class="si">}</span>/<span class="si">${</span><span class="nv">PS_PACKAGE</span><span class="si">}</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">ARG</span> <span class="nv">TARGETARCH</span><span class="o">=</span>amd64
+</span></span><span class="line"><span class="cl"><span class="k">ARG</span> <span class="nv">AGENT_VERSION</span><span class="o">=</span><span class="s2">&#34;2.195.2&#34;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c"># Define ENVs for Localization/Globalization</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">ENV</span> <span class="nv">DOTNET_SYSTEM_GLOBALIZATION_INVARIANT</span><span class="o">=</span><span class="nb">false</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="nv">LC_ALL</span><span class="o">=</span>en_US.UTF-8 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="c1"># set a fixed location for the Module analysis cache</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    <span class="nv">PSModuleAnalysisCachePath</span><span class="o">=</span>/var/cache/microsoft/powershell/PSModuleAnalysisCache/ModuleAnalysisCache <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="nv">POWERSHELL_DISTRIBUTION_CHANNEL</span><span class="o">=</span>PSDocker-Ubuntu-18.04<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">ENV</span> <span class="nv">PACKER_VERSION</span><span class="o">=</span><span class="si">${</span><span class="nv">PACKER_VERSION</span><span class="si">}</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">ENV</span> <span class="nv">PACKER_WINDOWSUPDATE_VERSION</span><span class="o">=</span><span class="si">${</span><span class="nv">PACKER_WINDOWSUPDATE_VERSION</span><span class="si">}</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">ENV</span> <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive
+</span></span><span class="line"><span class="cl"><span class="k">RUN</span> <span class="nb">echo</span> <span class="s2">&#34;APT::Get::Assume-Yes \&#34;true\&#34;;&#34;</span> &gt; /etc/apt/apt.conf.d/90assumeyes<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c"># Install dependencies and clean up</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">RUN</span> apt-get update <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> apt-get install --no-install-recommends -y <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="c1"># curl is required to grab the Linux package</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>        curl <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="c1"># less is required for help in powershell</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>        less <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="c1"># requied to setup the locale</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>        locales <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="c1"># required for SSL</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>        ca-certificates <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>        gss-ntlmssp <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="c1"># PowerShell remoting over SSH dependencies</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>        openssh-client <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="c1"># Install python</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    python3 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    python3-pip<span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    python3-boto<span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="c1"># Install unzip</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    unzip <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="c1"># Install DevOps Agent packages</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    jq <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    git <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    iputils-ping <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    libcurl4 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    libicu60 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    libunwind8 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    netcat <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    libssl1.0 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="c1"># Download the Linux package and save it</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="si">${</span><span class="nv">PS_PACKAGE_URL</span><span class="si">}</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> curl -sSL <span class="si">${</span><span class="nv">PS_PACKAGE_URL</span><span class="si">}</span> -o /tmp/powershell.deb <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> curl -LO https://releases.hashicorp.com/packer/<span class="si">${</span><span class="nv">PACKER_VERSION</span><span class="si">}</span>/packer_<span class="si">${</span><span class="nv">PACKER_VERSION</span><span class="si">}</span>_linux_amd64.zip <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> curl -LO https://github.com/rgl/packer-plugin-windows-update/releases/download/v<span class="si">${</span><span class="nv">PACKER_WINDOWSUPDATE_VERSION</span><span class="si">}</span>/packer-plugin-windows-update_v<span class="si">${</span><span class="nv">PACKER_WINDOWSUPDATE_VERSION</span><span class="si">}</span>_x5.0_linux_amd64.zip <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> unzip <span class="s1">&#39;*.zip&#39;</span> -d /usr/bin <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> chmod +x /usr/bin/packer-plugin-windows-update_v<span class="si">${</span><span class="nv">PACKER_WINDOWSUPDATE_VERSION</span><span class="si">}</span>_x5.0_linux_amd64 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> rm *.zip <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> mv /usr/bin/packer-plugin-windows-update_v<span class="si">${</span><span class="nv">PACKER_WINDOWSUPDATE_VERSION</span><span class="si">}</span>_x5.0_linux_amd64 /usr/bin/packer-plugin-windows-update <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> curl -LsS https://aka.ms/InstallAzureCLIDeb <span class="p">|</span> bash <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> apt-get install --no-install-recommends -y /tmp/powershell.deb <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> apt-get dist-upgrade -y <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> apt-get clean <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> rm -rf /var/lib/apt/lists/* <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> locale-gen <span class="nv">$LANG</span> <span class="o">&amp;&amp;</span> update-locale <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="c1"># remove powershell package</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    <span class="o">&amp;&amp;</span> rm /tmp/powershell.deb <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="c1"># intialize powershell module cache</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    <span class="c1"># and disable telemetry</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    <span class="o">&amp;&amp;</span> <span class="nb">export</span> <span class="nv">POWERSHELL_TELEMETRY_OPTOUT</span><span class="o">=</span><span class="m">1</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> pwsh <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>        -NoLogo <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>        -NoProfile <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>        -Command <span class="s2">&#34; \
+</span></span></span><span class="line"><span class="cl"><span class="s2">          \$ErrorActionPreference = &#39;Stop&#39; ; \
+</span></span></span><span class="line"><span class="cl"><span class="s2">          \$ProgressPreference = &#39;SilentlyContinue&#39; ; \
+</span></span></span><span class="line"><span class="cl"><span class="s2">          while(!(Test-Path -Path \$env:PSModuleAnalysisCachePath)) {  \
+</span></span></span><span class="line"><span class="cl"><span class="s2">            Write-Host &#34;</span><span class="s1">&#39;Waiting for $env:PSModuleAnalysisCachePath&#39;</span><span class="s2">&#34; ; \
+</span></span></span><span class="line"><span class="cl"><span class="s2">            Start-Sleep -Seconds 6 ; \
+</span></span></span><span class="line"><span class="cl"><span class="s2">          }&#34;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">RUN</span> apt-get clean <span class="o">&amp;&amp;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">WORKDIR</span><span class="s"> /azp</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">RUN</span> <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$TARGETARCH</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;amd64&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>      <span class="nv">AZP_AGENTPACKAGE_URL</span><span class="o">=</span>https://vstsagentpackage.azureedge.net/agent/<span class="si">${</span><span class="nv">AGENT_VERSION</span><span class="si">}</span>/vsts-agent-linux-x64-<span class="si">${</span><span class="nv">AGENT_VERSION</span><span class="si">}</span>.tar.gz<span class="p">;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="k">else</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>      <span class="nv">AZP_AGENTPACKAGE_URL</span><span class="o">=</span>https://vstsagentpackage.azureedge.net/agent/<span class="si">${</span><span class="nv">AGENT_VERSION</span><span class="si">}</span>/vsts-agent-linux-<span class="si">${</span><span class="nv">TARGETARCH</span><span class="si">}</span>-<span class="si">${</span><span class="nv">AGENT_VERSION</span><span class="si">}</span>.tar.gz<span class="p">;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="k">fi</span><span class="p">;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    curl -LsS <span class="s2">&#34;</span><span class="nv">$AZP_AGENTPACKAGE_URL</span><span class="s2">&#34;</span> <span class="p">|</span> tar -xz<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">COPY</span> ./start.sh .<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">RUN</span> chmod +x start.sh<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c"># Install the VMware.PowerCLI Module</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">SHELL</span> <span class="p">[</span> <span class="s2">&#34;pwsh&#34;</span><span class="p">,</span> <span class="s2">&#34;-command&#34;</span> <span class="p">]</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">RUN</span> Install-Module VMware.PowerCLI, PowerNSX -Force -Confirm:0<span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">RUN</span> Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -confirm:<span class="nv">$false</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c">## Install DevOps Agnet</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c">#CMD [ &#34;pwsh&#34; ]</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c">#CMD    [&#34;/bin/bash&#34;]</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">ENTRYPOINT</span> <span class="p">[</span> <span class="s2">&#34;./start.sh&#34;</span> <span class="p">]</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>In same directory as <code>Dockerfile</code> create new file named <code>start.sh</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="gp">$</span> nano start.sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>and paste there fallowing content:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nb">set</span> -e
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$AZP_URL</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="nb">echo</span> 1&gt;<span class="p">&amp;</span><span class="m">2</span> <span class="s2">&#34;error: missing AZP_URL environment variable&#34;</span>
+</span></span><span class="line"><span class="cl">	    <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$AZP_TOKEN_FILE</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$AZP_TOKEN</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		      <span class="nb">echo</span> 1&gt;<span class="p">&amp;</span><span class="m">2</span> <span class="s2">&#34;error: missing AZP_TOKEN environment variable&#34;</span>
+</span></span><span class="line"><span class="cl">		          <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">			    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">			      <span class="nv">AZP_TOKEN_FILE</span><span class="o">=</span>/azp/.token
+</span></span><span class="line"><span class="cl">			        <span class="nb">echo</span> -n <span class="nv">$AZP_TOKEN</span> &gt; <span class="s2">&#34;</span><span class="nv">$AZP_TOKEN_FILE</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="nb">unset</span> AZP_TOKEN
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -n <span class="s2">&#34;</span><span class="nv">$AZP_WORK</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	  mkdir -p <span class="s2">&#34;</span><span class="nv">$AZP_WORK</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">AGENT_ALLOW_RUNASROOT</span><span class="o">=</span><span class="s2">&#34;1&#34;</span>
+</span></span><span class="line"><span class="cl">cleanup<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	  <span class="k">if</span> <span class="o">[</span> -e config.sh <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		      print_header <span class="s2">&#34;Cleanup. Removing Azure Pipelines agent...&#34;</span>
+</span></span><span class="line"><span class="cl">		          <span class="c1"># If the agent has some running jobs, the configuration removal process will fail.</span>
+</span></span><span class="line"><span class="cl">			      <span class="c1"># So, give it some time to finish the job.</span>
+</span></span><span class="line"><span class="cl">			          <span class="k">while</span> true<span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">					        ./config.sh remove --unattended --auth PAT --token <span class="k">$(</span>cat <span class="s2">&#34;</span><span class="nv">$AZP_TOKEN_FILE</span><span class="s2">&#34;</span><span class="k">)</span> <span class="o">&amp;&amp;</span> <span class="nb">break</span>
+</span></span><span class="line"><span class="cl">						      <span class="nb">echo</span> <span class="s2">&#34;Retrying in 30 seconds...&#34;</span>
+</span></span><span class="line"><span class="cl">						            sleep <span class="m">30</span>
+</span></span><span class="line"><span class="cl">							        <span class="k">done</span>
+</span></span><span class="line"><span class="cl">								  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">							  <span class="o">}</span>
+</span></span><span class="line"><span class="cl">						  print_header<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">							    <span class="nv">lightcyan</span><span class="o">=</span><span class="s1">&#39;\033[1;36m&#39;</span>
+</span></span><span class="line"><span class="cl">							      <span class="nv">nocolor</span><span class="o">=</span><span class="s1">&#39;\033[0m&#39;</span>
+</span></span><span class="line"><span class="cl">							        <span class="nb">echo</span> -e <span class="s2">&#34;</span><span class="si">${</span><span class="nv">lightcyan</span><span class="si">}</span><span class="nv">$1</span><span class="si">${</span><span class="nv">nocolor</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">							<span class="o">}</span>
+</span></span><span class="line"><span class="cl">						<span class="c1"># Let the agent ignore the token env variables</span>
+</span></span><span class="line"><span class="cl">						<span class="nb">export</span> <span class="nv">VSO_AGENT_IGNORE</span><span class="o">=</span>AZP_TOKEN,AZP_TOKEN_FILE
+</span></span><span class="line"><span class="cl">						<span class="nb">source</span> ./env.sh
+</span></span><span class="line"><span class="cl">						print_header <span class="s2">&#34;1. Configuring Azure Pipelines agent...&#34;</span>
+</span></span><span class="line"><span class="cl">						./config.sh --unattended <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>							  --agent <span class="s2">&#34;</span><span class="si">${</span><span class="nv">AZP_AGENT_NAME</span><span class="k">:-$(</span>hostname<span class="k">)</span><span class="si">}</span><span class="s2">&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>							    --url <span class="s2">&#34;</span><span class="nv">$AZP_URL</span><span class="s2">&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>							      --auth PAT <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>							        --token <span class="k">$(</span>cat <span class="s2">&#34;</span><span class="nv">$AZP_TOKEN_FILE</span><span class="s2">&#34;</span><span class="k">)</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>								  --pool <span class="s2">&#34;</span><span class="si">${</span><span class="nv">AZP_POOL</span><span class="k">:-</span><span class="nv">Default</span><span class="si">}</span><span class="s2">&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>								    --work <span class="s2">&#34;</span><span class="si">${</span><span class="nv">AZP_WORK</span><span class="k">:-</span><span class="nv">_work</span><span class="si">}</span><span class="s2">&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>								      --replace <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>								        --acceptTeeEula <span class="p">&amp;</span> <span class="nb">wait</span> <span class="nv">$!</span>
+</span></span><span class="line"><span class="cl">						print_header <span class="s2">&#34;2. Running Azure Pipelines agent...&#34;</span>
+</span></span><span class="line"><span class="cl">						<span class="nb">trap</span> <span class="s1">&#39;cleanup; exit 0&#39;</span> EXIT
+</span></span><span class="line"><span class="cl">						<span class="nb">trap</span> <span class="s1">&#39;cleanup; exit 130&#39;</span> INT
+</span></span><span class="line"><span class="cl">						<span class="nb">trap</span> <span class="s1">&#39;cleanup; exit 143&#39;</span> TERM
+</span></span><span class="line"><span class="cl">						<span class="c1"># To be aware of TERM and INT signals call run.sh</span>
+</span></span><span class="line"><span class="cl">						<span class="c1"># Running it with the --once flag at the end will shut down the agent after the build is executed</span>
+</span></span><span class="line"><span class="cl">						./run.sh <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span> --once <span class="p">&amp;</span>
+</span></span><span class="line"><span class="cl">						<span class="nb">wait</span> <span class="nv">$!</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Alternatively once you are under your home directory run fallowing command:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">git clone https://github.com/danonh/Azure-DevOps-Agent
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Once done you should see Azure-DevOps-Agent folder which will contain three files:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">├── Dockerfile
+</span></span><span class="line"><span class="cl">├── Readme.md
+</span></span><span class="line"><span class="cl">└── start.sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>You can find both files on my <a href="https://github.com/danonh/Azure-DevOps-Agent" target="_blank" rel="noopener noreffer ">GitHub account</a></p>
+<h3 id="changing-product-versions">Changing product versions</h3>
+<p>Within Dockerfile I&rsquo;ve hardcoded particular product versions:</p>
+<ul>
+<li>Packer version 1.7.8</li>
+<li>Windows Update Provisioner version 0.14.0</li>
+<li>PowerShell version 7.1.3</li>
+<li>Azure DevOps agent version 2.195.2</li>
+</ul>
+<p>Obviously you may change product versions according your needs. This can be done modifying ARG values directly in the Dockerfile or provide alternative values during building process which will be passed to Dockerfile.</p>
+<h2 id="build-docker-image">Build Docker image</h2>
+<p>Finally we are at stage where building process can be initiated.</p>
+<p>If product versions has been manually changed directly inside Dockerfile then you can simply run fallowing command:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">cd Azure-DevOps-Agent/
+</span></span></span><span class="line"><span class="cl"><span class="go">docker build -t packercontainer:local .
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>This will initiate building process that may take up to 15 minutes.</p>
+<p>Alternatively you can pass particular product versions into docker build command:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">docker build -t packercontainer:local --build-arg PS_VERSION=&#34;7.1.4&#34; --build-arg PACKER_VERSION=&#34;1.7.7&#34; .
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>With those arguments we are telling Docker to include PowerShell version 7.1.4 instead 7.1.3 and Packer version 1.7.7 instead 1.7.8.</p>
+<p>Don&rsquo;t forget to include <code>.</code> at the end of build command. This tells where Docker should look for Dockerfile.</p>
+<p>Now sit down and relax.</p>
+<p>If everything will go well you should see fallowing console output:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">Removing intermediate container 281635ad7c01
+</span></span></span><span class="line"><span class="cl"><span class="go"> ---&gt; fc1495d19d30
+</span></span></span><span class="line"><span class="cl"><span class="go">Step 24/24 : ENTRYPOINT [ &#34;./start.sh&#34; ]
+</span></span></span><span class="line"><span class="cl"><span class="go"> ---&gt; Running in f2d498a10b01
+</span></span></span><span class="line"><span class="cl"><span class="go">Removing intermediate container f2d498a10b01
+</span></span></span><span class="line"><span class="cl"><span class="go"> ---&gt; ae65ba27dd06
+</span></span></span><span class="line"><span class="cl"><span class="go">Successfully built ae65ba27dd06
+</span></span></span><span class="line"><span class="cl"><span class="go">Successfully tagged packercontainer:local
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>This would mean that our docker image has been created successfully. You can check if container image is visible running fallowing command:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">docker images
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>The output should look like this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="go">docker images
+</span></span></span><span class="line"><span class="cl"><span class="go">REPOSITORY        TAG       IMAGE ID       CREATED          SIZE
+</span></span></span><span class="line"><span class="cl"><span class="go">packercontainer   local     ae65ba27dd06   15 minutes ago   2.25GB
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>To run the container we would have to pass few specific values from our Azure DevOps account, but that will be topic for some other blog entry.</p>
+<p>Thanks for reading.</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-12-28</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://example.org/posts/create_docker_container_with_packer/" data-title="Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent" data-via="donkojott" data-hashtags="Packer,DevOps,Azure,Docker,PowerCLI,Automation"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://example.org/posts/create_docker_container_with_packer/" data-hashtag="Packer"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://example.org/posts/create_docker_container_with_packer/" data-title="Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://example.org/posts/create_docker_container_with_packer/" data-title="Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://example.org/posts/create_docker_container_with_packer/" data-title="Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/packer/">Packer</a>,&nbsp;<a href="/tags/devops/">DevOps</a>,&nbsp;<a href="/tags/azure/">Azure</a>,&nbsp;<a href="/tags/docker/">Docker</a>,&nbsp;<a href="/tags/powercli/">PowerCLI</a>,&nbsp;<a href="/tags/automation/">Automation</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/build_complete_image/" class="prev" rel="prev" title="Build complete Windows image"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Build complete Windows image</a>
+            <a href="/posts/horizon_view_direct_connection_to_linux_vm/" class="next" rel="next" title="Configure VMware Horizon View Direct-Connection Agent for Linux">Configure VMware Horizon View Direct-Connection Agent for Linux<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Daniel Hanaj</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":80},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"Daniel Hanaj","id-2":"Daniel Hanaj"},"lightgallery":true,"search":{"highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":0,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

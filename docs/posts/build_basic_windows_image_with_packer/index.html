@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Build basic Windows image with Packer on vSphere - Daniel Hanaj Blog</title><meta name="Description" content="Build basic Windows image with Packer on vSphere"><meta property="og:title" content="Build basic Windows image with Packer on vSphere" />
+<meta property="og:description" content="Build basic Windows image with Packer on vSphere" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://danielhanaj.github.io/posts/build_basic_windows_image_with_packer/" /><meta property="og:image" content="https://danielhanaj.github.io/tn.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-08-16T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-08-16T00:00:00+00:00" /><meta property="og:site_name" content="danielhanaj.github.io" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://danielhanaj.github.io/tn.png" /><meta name="twitter:title" content="Build basic Windows image with Packer on vSphere"/>
+<meta name="twitter:description" content="Build basic Windows image with Packer on vSphere"/>
+<meta name="twitter:site" content="@donkojott"/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#eee5e5"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://danielhanaj.github.io/posts/build_basic_windows_image_with_packer/" /><link rel="prev" href="https://danielhanaj.github.io/posts/packer_resources_for_windows_images/" /><link rel="next" href="https://danielhanaj.github.io/posts/packer_variables/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Build basic Windows image with Packer on vSphere",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/danielhanaj.github.io\/posts\/build_basic_windows_image_with_packer\/"
+        },"genre": "posts","keywords": "Packer, DevOps, Automation, VMware, vSphere, Windows","wordcount":  2159 ,
+        "url": "https:\/\/danielhanaj.github.io\/posts\/build_basic_windows_image_with_packer\/","datePublished": "2021-08-16T00:00:00+00:00","dateModified": "2021-08-16T00:00:00+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License. © All rights reserved -2018","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Danielhanaj"
+            },"description": "Build basic Windows image with Packer on vSphere"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Daniel Hanaj Blog"><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="https://www.credly.com/users/daniel-hanaj" title="Certifications" rel="noopener noreffer" target="_blank"> Certifications </a><a class="menu-item" href="/about/" title="The Author"> About </a><a class="menu-item" href="https://github.com/danielhanaj" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><a class="menu-item" href="https://linkedin.com/in/danielhanaj" title="LinkedIn" rel="noopener noreffer" target="_blank"><i class='fab fa-linkedin fa-fw'></i>  </a><a class="menu-item" href="/twitter.com/donkojott" title="Twitter"><i class='fab fa-twitter fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Daniel Hanaj Blog"><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="https://www.credly.com/users/daniel-hanaj" title="Certifications" rel="noopener noreffer" target="_blank">Certifications</a><a class="menu-item" href="/about/" title="The Author">About</a><a class="menu-item" href="https://github.com/danielhanaj" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a class="menu-item" href="https://linkedin.com/in/danielhanaj" title="LinkedIn" rel="noopener noreffer" target="_blank"><i class='fab fa-linkedin fa-fw'></i></a><a class="menu-item" href="/twitter.com/donkojott" title="Twitter"><i class='fab fa-twitter fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Build basic Windows image with Packer on vSphere</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Danielhanaj</a></span>&nbsp;<span class="post-category">included in <a href="/categories/packer/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Packer</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-08-16">2021-08-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2159 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;11 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#installing-packer-on-windows">Installing Packer on Windows</a></li>
+    <li><a href="#installing-packer-on-linux">Installing Packer on Linux</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#packer-template-file">Packer Template File</a></li>
+    <li><a href="#windows-answer-file-for-unattended-installation">Windows answer file for unattended installation</a></li>
+    <li><a href="#windows-server-2016-installation-iso-file">Windows Server 2016 installation iso file</a></li>
+    <li><a href="#vmware-tools-iso-file">VMware Tools iso file</a></li>
+    <li><a href="#winrm-enable-script">WinRM enable script</a></li>
+    <li><a href="#vmware-tools-install-script">VMware Tools install script</a></li>
+    <li><a href="#packer-and-ip-address">Packer and IP Address</a></li>
+    <li><a href="#perform-build-process">Perform build process</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>In this blog post I will demonstrate how to build basic Windows 2016 image on vSphere using Packer.</p>
+<p>This will be very simple Windows installation to demonstrate how Packer works. In this blog post we will use only Packer vSphere builder, without any provisioner, post-processor or variables. This mean our image won&rsquo;t be customized at all. We will look how to use provisioners, post-processors and variables in later posts. If you don&rsquo;t know what Packer builders, provisioners or post-processors are, check out my previous <a href="https://blog.danielhanaj.com/post/2021/08/02/packer_explained/" target="_blank" rel="noopener noreffer ">blog</a> entry.</p>
+<h1 id="installing-hashicorp-packer">Installing HashiCorp Packer</h1>
+<p>Packer is delivered as single binary that is available for Windows, Linux or Mac.</p>
+<h2 id="installing-packer-on-windows">Installing Packer on Windows</h2>
+<p>Before we dive in into building our first image we need to install Packer on our machine.<br>
+If you use Windows as I am, simplest way to install Packer is to use <a href="https://chocolatey.org/install" target="_blank" rel="noopener noreffer ">Chocolatey</a>.
+If you are not familiar with Chocolatey, it&rsquo;s a package manager for Windows. On Linux you use yum or apt to obtain packages on your machine. Chocolatey use same concept, but on Windows. I guarantee that once you will start using Chocolatey you will never again go back and install applications through Windows installer.
+After you install Chocolatey, run fallowing command from PowerShell:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ps" data-lang="ps"><span class="line"><span class="cl"><span class="nf">choco</span> <span class="nf">install</span> <span class="nf">-y</span> <span class="nf">packer</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>It&rsquo;s a good practice to install Visual Studio Code and Git to edit Packer files and obtain my github repositories. Using Chocolatey you can install multiple packages with single command:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ps" data-lang="ps"><span class="line"><span class="cl"><span class="nf">choco</span> <span class="nf">install</span> <span class="nf">-y</span> <span class="nf">packer,</span> <span class="nf">visualstudiocode,</span> <span class="nf">git</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>With this command Chocolatey will install Packer, Visual Studio Code and Git packages on your Windows machine.<br>
+You can verify that packer has been installed running fallowing command:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">&gt;packer version
+</span></span><span class="line"><span class="cl">Packer v1.7.4
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>If you install Packer through Chocolatey, packer will be automatically added to environment variables on your local PC, means you can use packer command from any path on your Windows.</p>
+<h2 id="installing-packer-on-linux">Installing Packer on Linux</h2>
+<p>Run fallowing commands from your Linux session:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -fsSL https://apt.releases.hashicorp.com/gpg <span class="p">|</span> sudo apt-key add -
+</span></span><span class="line"><span class="cl">sudo apt-add-repository <span class="s2">&#34;deb [arch=amd64] https://apt.releases.hashicorp.com </span><span class="k">$(</span>lsb_release -cs<span class="k">)</span><span class="s2"> main&#34;</span>
+</span></span><span class="line"><span class="cl">sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get install packer
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="build-basic-windows-2016-image-on-vsphere">Build basic Windows 2016 image on vSphere</h1>
+<p>I assume you have already created dedicated account with proper role and permissions on your vSphere environment. If you didn&rsquo;t check <a href="https://blog.danielhanaj.com/post/2021/06/25/vcenterrole/" target="_blank" rel="noopener noreffer ">this</a> blog post how to create it using Terraform.<br>
+To build very basic Windows image using Packer we will need just few files. Those are:</p>
+<ul>
+<li><a href="/post/2021/08/16/build_basic_windows_image_with_packer/#packer-template-file" rel="">Packer Template File</a></li>
+<li><a href="/post/2021/08/16/build_basic_windows_image_with_packer/#windows-answer-file-for-unattended-installation" rel="">Windows answer file for unattended installation</a></li>
+<li><a href="/post/2021/08/16/build_basic_windows_image_with_packer/#windows-server-2016-installation-iso-file" rel="">Windows Server 2016 installation iso file</a></li>
+<li><a href="/post/2021/08/16/build_basic_windows_image_with_packer/#vmware-tools-iso-file" rel="">VMware Tools iso file</a></li>
+<li><a href="/post/2021/08/16/build_basic_windows_image_with_packer/#winrm-enable-script" rel="">WinRM enable script</a></li>
+<li><a href="/post/2021/08/16/build_basic_windows_image_with_packer/#vmware-tools-install-script" rel="">VMware Tools install script</a></li>
+</ul>
+<h2 id="packer-template-file">Packer Template File</h2>
+<p>Main JSON template file where we specify your image configuration and parameters. This file is quite simple to read. First we define <a href="https://blog.danielhanaj.com/post/020821_packer_explained/#packer-builder" target="_blank" rel="noopener noreffer ">builder</a> that we want to use.</p>
+<blockquote>
+<p>HashiCorp delivers vmware, vsphere-iso and vsphere-clone builders. VMware builder is used to build images on VMware Workstation/Fusion platforms. A vsphere-iso and vsphere-clone builders are designed for vSphere environment although those are used for different purposes. vSphere-iso is used to build the image from iso file, and we will use this in our case. The vsphere-clone builder is used to clone existing image and perform necessary changes on existing template.</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">&#34;builders&#34;: </span><span class="p">[</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>{<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;type&#34;: </span><span class="s2">&#34;vsphere-iso&#34;</span><span class="p">,</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>We use proper configuration options to establish communication with our vSphere environment using <a href="mailto:packer@vsphere.local" rel="">packer@vsphere.local</a> account, then we define parameters for our image:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">&#34;vcenter_server&#34;: </span><span class="s2">&#34;vcsa01.lab.local&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;username&#34;: </span><span class="s2">&#34;packer@vsphere.local&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;password&#34;: </span><span class="s2">&#34;VMware1!&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;insecure_connection&#34;: </span><span class="s2">&#34;true&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;vm_name&#34;: </span><span class="s2">&#34;Windows2016-Template&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;folder&#34;: </span><span class="s2">&#34;Packer&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;datacenter&#34;: </span><span class="s2">&#34;DC01&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;cluster&#34;: </span><span class="s2">&#34;CL01&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;datastore&#34;: </span><span class="s2">&#34;DS-Intel-SSD&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;network_adapters&#34;: </span><span class="p">[</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>{<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">&#34;network&#34;: </span><span class="s2">&#34;VMNetwork&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">&#34;network_card&#34;: </span><span class="s2">&#34;vmxnet3&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>}<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">],</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;convert_to_template&#34;: </span><span class="s2">&#34;true&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;vm_version&#34;: </span><span class="s2">&#34;15&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;guest_os_type&#34;: </span><span class="s2">&#34;windows9Server64Guest&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;communicator&#34;: </span><span class="s2">&#34;winrm&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;winrm_username&#34;: </span><span class="s2">&#34;Admin&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;winrm_password&#34;: </span><span class="s2">&#34;VMware1!&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;CPUs&#34;: </span><span class="s2">&#34;2&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;CPU_hot_plug&#34;: </span><span class="s2">&#34;true&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;RAM&#34;: </span><span class="s2">&#34;4096&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;RAM_hot_plug&#34;: </span><span class="s2">&#34;true&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;RAM_reserve_all&#34;: </span><span class="kc">false</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;firmware&#34;: </span><span class="s2">&#34;bios&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;disk_controller_type&#34;: </span><span class="s2">&#34;lsilogic-sas&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;storage&#34;: </span><span class="p">[</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>{<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">&#34;disk_size&#34;: </span><span class="m">40960</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">&#34;disk_thin_provisioned&#34;: </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>}<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">],</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;ip_settle_timeout&#34;: </span><span class="s2">&#34;120s&#34;</span><span class="p">,</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Most of options are self-explanatory. The <code>ip_settle_timeout</code> defines amount of time to wait for VM&rsquo;s IP to settle down, sometimes VM may report incorrect IP initially, then its recommended to set that parameter to apx. 2 minutes.</p>
+<p>Next we define iso paths for Windows and VMware Tools:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">&#34;iso_paths&#34;: </span><span class="p">[</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;[DS-Intel-SSD] iso/en_windows_server_2016_vl_x64_dvd_11636701.iso&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;[DS-Intel-SSD] iso/VMwareTools_11_0_1.iso&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">],</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Last part is to provide path to scripts that will be included on virtual floppy disk:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="w"> </span><span class="nt">&#34;floppy_files&#34;: </span><span class="p">[</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;Autounattend_Windows2016/autounattend.xml&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;scripts/winrm.ps1&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;scripts/vmtools.ps1&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">]</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>To configure our basic image we need answer file with two scripts to configure WinRM and VMware Tools installation.</p>
+<blockquote>
+<p>It&rsquo;s a good practice to keep configuration files in separate folders. This will make more sense when you start using variables. Using variables you will be able to point Packer to different folder to obtain different answer file.</p>
+</blockquote>
+<h2 id="windows-answer-file-for-unattended-installation">Windows answer file for unattended installation</h2>
+<p>Autounattend.xml file which is answer file used by windows for unattended installation. Answer file is very sensitive and can be very complex. It may contain a lot of settings that can be configured during image creation. Answer file can also contain a list of scripts that can be triggered automatically during image creation. Those scripts needs to exist on virtual floppy disk that is attached to your image. A good thing is that Packer creates such virtual floppy disk for you once specifying file paths and attach it automatically during image creation. Another good thing about scripts specified in answer file is that those do not need to use any Packer provisioners to make initial image configuration. In our example we will enable WinRM communicator on VM through script that will be triggered by autounattend.xml. Same thing will do for VMware Tools installation.<br>
+You can build your own autounattend.xml file using dedicated tool called <a href="https://docs.microsoft.com/en-us/windows-hardware/get-started/adk-install" target="_blank" rel="noopener noreffer ">Windows System Image Manager</a>, but this task is quite complex and requires a lot of time. I suggest to use my answer file or use one which you will find here <a href="https://github.com/danonh/Packer-vSphere-Windows.git" target="_blank" rel="noopener noreffer ">Windows Packer github repos</a> under section &ldquo;02 - Basic Windows Template with Packer/Autounattend_Windows2016/&rdquo;. If you want to check other answer files created, check my previous <a href="https://blog.danielhanaj.com/post/2021/08/03/packer_resources_for_windows_images/" target="_blank" rel="noopener noreffer ">blog entry</a>, where I lisk a useful Packer repositories.
+There is no point to invent the wheel if others did great work creating those for us and sharing with community.</p>
+<blockquote>
+<p>Windows 2016 and Windows 2019 answer files are almost identical so you can use it to build both types of images. The only difference are Windows versions that needs to be specified in two places under answer file and license key that is OS specific. Windows Server 2012, Windows10 answer files are completely different, so if you decide to build those, use dedicated answer files.</p>
+</blockquote>
+<h2 id="windows-server-2016-installation-iso-file">Windows Server 2016 installation iso file</h2>
+<p>You can specify iso path directly in Packer Template File using evaluation media provided by Microsoft. Packer will then download file locally on your machine and attach it to VM during image creation. It&rsquo;s quite convenient functionality but I prefer to download iso first, and then upload it on vSphere datastore. I know, that&rsquo;s one additional manual step you need to do, but this iso file will be used multiple times by Packer so it&rsquo;s worth spend some additional effort and do it prior image creation.</p>
+<h2 id="vmware-tools-iso-file">VMware Tools iso file</h2>
+<p>VMware Tools are released separately from ESXi and you can grab proper version <a href="https://packages.vmware.com/tools/esx/index.html" target="_blank" rel="noopener noreffer ">here</a>. Same as Windows iso file, download version that is compatible with your current vSphere version and place it on datastore where you store your iso files.</p>
+<h2 id="winrm-enable-script">WinRM enable script</h2>
+<p>A script that will enable WinRM on our image. This script will be placed on virtual floppy disk that will be attached to our image during OS installation and will be triggered by answer file. Once triggered Packer will be able to establish communication with image to perform some additional customization</p>
+<h2 id="vmware-tools-install-script">VMware Tools install script</h2>
+<p>A script that will install VMware Tools fully automatically. VMware VMTools are released separately from ESXi and you can grab proper version <a href="https://packages.vmware.com/tools/esx/index.html" target="_blank" rel="noopener noreffer ">here</a></p>
+<blockquote>
+<p>Both WinRM and VMware Tools install scripts are crucial for building process. Without properly installed VMware Tools, VMXNET network adapter won&rsquo;t be detected by Windows. Without networking, Packer cannot obtain image IP and perform custom on image itself.</p>
+</blockquote>
+<p>Great WinRM and VMware Tools installation scripts are provided by Rui Lopes github repo. I use those all the time and those works great.
+To obtain all files needed to build your first Windows 2016 image use fallowing (github) repo.</p>
+<h2 id="packer-and-ip-address">Packer and IP Address</h2>
+<p>If network you use to provision Packer image already have DHCP server configured, it&rsquo;s fine and everything will work as expected.<br>
+If your network does not have DHCP server configured things gets more complicated. To connect with image we are creating, Packer use WinRM communicator. Anyhow to establish WinRM communication, our Windows image needs to have valid IP assigned. That IP needs to be accessible from machine where Packer build process is triggered.<br>
+Packer template file does not allow us to specify static IP for our image. To workaround this issue you can do some trick which will assign static IP to our image through autounattend.xml file.<br>
+Our template will use VMXNET3 network adapter which is recommended by VMware. Windows iso file does not contain VMXNET3 driver build-in, so to assign static IP for our system we need to install VMware Tools first. Once network adapter will be detected we can then assign IP to our VM. Both operations can be specified in autounattend.xml file under FirstLogonCommands section. This section defines what operation will be triggered once system will be installed.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;FirstLogonCommands&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;SynchronousCommand</span> <span class="na">wcm:action=</span><span class="s">&#34;add&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;Order&gt;</span>1<span class="nt">&lt;/Order&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;CommandLine&gt;</span>PowerShell &#34;Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Force&#34;<span class="nt">&lt;/CommandLine&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;Description&gt;</span>Change the default PowerShell Execution Policy from Restricted to Unrestricted<span class="nt">&lt;/Description&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;/SynchronousCommand&gt;</span>
+</span></span><span class="line"><span class="cl">                 <span class="nt">&lt;SynchronousCommand</span> <span class="na">wcm:action=</span><span class="s">&#34;add&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;Order&gt;</span>2<span class="nt">&lt;/Order&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;CommandLine&gt;</span>PowerShell -File a:\vmtools.ps1<span class="nt">&lt;/CommandLine&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;/SynchronousCommand&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;SynchronousCommand</span> <span class="na">wcm:action=</span><span class="s">&#34;add&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;CommandLine&gt;</span>cmd.exe /c netsh interface ip set address &#34;Ethernet0&#34; static 192.168.1.88 255.255.255.0 192.168.1.1<span class="nt">&lt;/CommandLine&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;Description&gt;</span>Assign static IP<span class="nt">&lt;/Description&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;Order&gt;</span>3<span class="nt">&lt;/Order&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;RequiresUserInput&gt;</span>true<span class="nt">&lt;/RequiresUserInput&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;/SynchronousCommand&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;SynchronousCommand</span> <span class="na">wcm:action=</span><span class="s">&#34;add&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;CommandLine&gt;</span>cmd.exe /c netsh interface ip add dns &#34;Ethernet0&#34; 192.168.1.5<span class="nt">&lt;/CommandLine&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;Description&gt;</span>Assign static DNS<span class="nt">&lt;/Description&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;Order&gt;</span>4<span class="nt">&lt;/Order&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;RequiresUserInput&gt;</span>true<span class="nt">&lt;/RequiresUserInput&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;/SynchronousCommand&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;SynchronousCommand</span> <span class="na">wcm:action=</span><span class="s">&#34;add&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="c">&lt;!-- Enable WinRM service --&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;CommandLine&gt;</span>powershell -ExecutionPolicy Bypass -File a:\winrm.ps1<span class="nt">&lt;/CommandLine&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;Order&gt;</span>5<span class="nt">&lt;/Order&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;RequiresUserInput&gt;</span>true<span class="nt">&lt;/RequiresUserInput&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;/SynchronousCommand&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;SynchronousCommand</span> <span class="na">wcm:action=</span><span class="s">&#34;add&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;CommandLine&gt;</span>cmd.exe /c &#34;net user administrator /active:no&#34;<span class="nt">&lt;/CommandLine&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;Description&gt;</span>Disable local Administrator Account<span class="nt">&lt;/Description&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;Order&gt;</span>6<span class="nt">&lt;/Order&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;RequiresUserInput&gt;</span>true<span class="nt">&lt;/RequiresUserInput&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;/SynchronousCommand&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;/FirstLogonCommands&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>As you suspect Order defines what order listed commands will be triggered. In our example this will be fallowing:</p>
+<ol>
+<li>Set PowerShell execution policy to &ldquo;Unrestricted&rdquo;</li>
+<li>Install VMware Tools from virtual floppy disk using vmtools.ps1 script</li>
+<li>Assign static IP, network mask, default gateway on Ethernet0 (change that according your needs)</li>
+<li>Assign DNS server on Ethernet0 (change that according your needs)</li>
+<li>Enable WinRM from virtual floppy disk using winrm.ps1 script</li>
+<li>Disable local Administrator account
+<blockquote>
+<p>A good security practice is to disable default Administrator account. We will fallow that rule as our goal is to build secured image that will be used in production environment. Answer file which you used to build your first image creates additional account named Admin and adds it to local Administrators group. Admin account is the one that will be used to establish communication with our image and perform customization.</p>
+</blockquote>
+</li>
+</ol>
+<p>You can name you account as you want. To change it you need to modify answer file:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"> <span class="nt">&lt;LocalAccounts&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;LocalAccount</span> <span class="na">wcm:action=</span><span class="s">&#34;add&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">                        <span class="nt">&lt;Description&gt;</span>Admin User<span class="nt">&lt;/Description&gt;</span>
+</span></span><span class="line"><span class="cl">                        <span class="nt">&lt;DisplayName&gt;</span>Admin<span class="nt">&lt;/DisplayName&gt;</span>
+</span></span><span class="line"><span class="cl">                        <span class="nt">&lt;Group&gt;</span>Administrators<span class="nt">&lt;/Group&gt;</span>
+</span></span><span class="line"><span class="cl">                        <span class="nt">&lt;Name&gt;</span>Admin<span class="nt">&lt;/Name&gt;</span>
+</span></span><span class="line"><span class="cl">                        <span class="nt">&lt;Password&gt;</span>
+</span></span><span class="line"><span class="cl">                            <span class="nt">&lt;Value&gt;</span>VMware1!<span class="nt">&lt;/Value&gt;</span>
+</span></span><span class="line"><span class="cl">                            <span class="nt">&lt;PlainText&gt;</span>true<span class="nt">&lt;/PlainText&gt;</span>
+</span></span><span class="line"><span class="cl">                        <span class="nt">&lt;/Password&gt;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&lt;/LocalAccount&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;/LocalAccounts&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>and Packer template file:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">&#34;winrm_username&#34;: </span><span class="s2">&#34;Admin&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">&#34;winrm_password&#34;: </span><span class="s2">&#34;VMware1!&#34;</span><span class="p">,</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="perform-build-process">Perform build process</h2>
+<p>Once all files are properly modified, go to file directory with Packer template file and trigger build process running <code>packer build .\Windows-Server-2016.json</code> command:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">PS C:\packer\Blog&gt; packer build .\Windows-Server-2016.json
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">vsphere-iso: output will be in this color.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Creating VM...
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Customizing hardware...
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Mounting ISO images...
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Adding configuration parameters...
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Creating floppy disk...
+</span></span><span class="line"><span class="cl">    vsphere-iso: Copying files flatly from floppy_files
+</span></span><span class="line"><span class="cl">    vsphere-iso: Copying file: Autounattend_Windows2016/autounattend.xml
+</span></span><span class="line"><span class="cl">    vsphere-iso: Copying file: scripts/winrm.ps1
+</span></span><span class="line"><span class="cl">    vsphere-iso: Copying file: scripts/vmtools.ps1
+</span></span><span class="line"><span class="cl">    vsphere-iso: Done copying files from floppy_files
+</span></span><span class="line"><span class="cl">    vsphere-iso: Collecting paths from floppy_dirs
+</span></span><span class="line"><span class="cl">    vsphere-iso: Resulting paths from floppy_dirs : []
+</span></span><span class="line"><span class="cl">    vsphere-iso: Done copying paths from floppy_dirs
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Uploading created floppy image
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Adding generated Floppy...
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Set boot order temporary...
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Power on VM...
+</span></span><span class="line"><span class="cl">==&gt; vsphere-iso: Waiting for IP...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Build process will start and under defined directory in your vSphere environment you should see new VM that has been powered on. Once installation will complete you will get an image created and converted to template.</p>
+<p>Like mentioned at the beginning this is just a basic configuration, definitely <strong>not ready for production</strong>, but it gives you overview how Packer works.</p>
+<p>In next blog I will demonstrate how to use variables inside Packer template file and why it is so helpful and useful to use those.</p>
+<p>Thanks for reading!</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-08-16</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://danielhanaj.github.io/posts/build_basic_windows_image_with_packer/" data-title="Build basic Windows image with Packer on vSphere" data-via="donkojott" data-hashtags="Packer,DevOps,Automation,VMware,vSphere,Windows"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://danielhanaj.github.io/posts/build_basic_windows_image_with_packer/" data-hashtag="Packer"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://danielhanaj.github.io/posts/build_basic_windows_image_with_packer/" data-title="Build basic Windows image with Packer on vSphere"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://danielhanaj.github.io/posts/build_basic_windows_image_with_packer/" data-title="Build basic Windows image with Packer on vSphere"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://danielhanaj.github.io/posts/build_basic_windows_image_with_packer/" data-title="Build basic Windows image with Packer on vSphere"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/packer/">Packer</a>,&nbsp;<a href="/tags/devops/">DevOps</a>,&nbsp;<a href="/tags/automation/">Automation</a>,&nbsp;<a href="/tags/vmware/">VMware</a>,&nbsp;<a href="/tags/vsphere/">vSphere</a>,&nbsp;<a href="/tags/windows/">Windows</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/packer_resources_for_windows_images/" class="prev" rel="prev" title="Packer resources for Windows images"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Packer resources for Windows images</a>
+            <a href="/posts/packer_variables/" class="next" rel="next" title="Packer variables">Packer variables<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Daniel Hanaj</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":80},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"Daniel Hanaj","id-2":"Daniel Hanaj"},"lightgallery":true,"search":{"highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":0,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

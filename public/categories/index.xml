@@ -1,0 +1,24 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Categories - Category - Daniel Hanaj Blog</title>
+        <link>https://example.org/categories/</link>
+        <description>Categories - Category - Daniel Hanaj Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>daniel.hanaj@gmail.com (Daniel Hanaj)</managingEditor>
+            <webMaster>daniel.hanaj@gmail.com (Daniel Hanaj)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License. © All rights reserved -2018</copyright><lastBuildDate>Sat, 07 Oct 2023 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://example.org/categories/" rel="self" type="application/rss+xml" /><item>
+    <title>VMware</title>
+    <link>https://example.org/categories/vmware/</link>
+    <pubDate>Sat, 07 Oct 2023 00:00:00 &#43;0000</pubDate>
+    <author>Daniel Hanaj</author>
+    <guid>https://example.org/categories/vmware/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Packer</title>
+    <link>https://example.org/categories/packer/</link>
+    <pubDate>Tue, 28 Dec 2021 00:00:00 &#43;0000</pubDate>
+    <author>Daniel Hanaj</author>
+    <guid>https://example.org/categories/packer/</guid>
+    <description><![CDATA[]]></description>
+</item>
+</channel>
+</rss>

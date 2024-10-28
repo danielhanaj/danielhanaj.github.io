@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Packer Explained - Daniel Hanaj Blog</title><meta name="Description" content="Packer Explained"><meta property="og:title" content="Packer Explained" />
+<meta property="og:description" content="Packer Explained" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://danielhanaj.github.io/posts/packer_explained/" /><meta property="og:image" content="https://danielhanaj.github.io/tn.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-08-02T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-08-02T00:00:00+00:00" /><meta property="og:site_name" content="danielhanaj.github.io" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://danielhanaj.github.io/tn.png" /><meta name="twitter:title" content="Packer Explained"/>
+<meta name="twitter:description" content="Packer Explained"/>
+<meta name="twitter:site" content="@donkojott"/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#eee5e5"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://danielhanaj.github.io/posts/packer_explained/" /><link rel="prev" href="https://danielhanaj.github.io/posts/vcenterrole/" /><link rel="next" href="https://danielhanaj.github.io/posts/packer_resources_for_windows_images/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Packer Explained",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/danielhanaj.github.io\/posts\/packer_explained\/"
+        },"genre": "posts","keywords": "Packer, DevOps, Automation","wordcount":  1342 ,
+        "url": "https:\/\/danielhanaj.github.io\/posts\/packer_explained\/","datePublished": "2021-08-02T00:00:00+00:00","dateModified": "2021-08-02T00:00:00+00:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License. © All rights reserved -2018","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Danielhanaj"
+            },"description": "Packer Explained"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Daniel Hanaj Blog"><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="https://www.credly.com/users/daniel-hanaj" title="Certifications" rel="noopener noreffer" target="_blank"> Certifications </a><a class="menu-item" href="/about/" title="The Author"> About </a><a class="menu-item" href="https://github.com/danielhanaj" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><a class="menu-item" href="https://linkedin.com/in/danielhanaj" title="LinkedIn" rel="noopener noreffer" target="_blank"><i class='fab fa-linkedin fa-fw'></i>  </a><a class="menu-item" href="/twitter.com/donkojott" title="Twitter"><i class='fab fa-twitter fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Daniel Hanaj Blog"><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="https://www.credly.com/users/daniel-hanaj" title="Certifications" rel="noopener noreffer" target="_blank">Certifications</a><a class="menu-item" href="/about/" title="The Author">About</a><a class="menu-item" href="https://github.com/danielhanaj" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a class="menu-item" href="https://linkedin.com/in/danielhanaj" title="LinkedIn" rel="noopener noreffer" target="_blank"><i class='fab fa-linkedin fa-fw'></i></a><a class="menu-item" href="/twitter.com/donkojott" title="Twitter"><i class='fab fa-twitter fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Packer Explained</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/about/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Danielhanaj</a></span>&nbsp;<span class="post-category">included in <a href="/categories/packer/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Packer</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-08-02">2021-08-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1342 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#what-hashicorp-packer-is"><strong>What Hashicorp Packer is?</strong></a></li>
+    <li><a href="#what-hashicorp-packer-is-not"><strong>What Hashicorp Packer is not?</strong></a></li>
+    <li><a href="#infrastricture-as-a-code"><strong>Infrastricture as a code</strong></a></li>
+    <li><a href="#declarative-approach"><strong>Declarative approach</strong></a></li>
+    <li><a href="#cloud-agnostic"><strong>Cloud agnostic</strong></a></li>
+    <li><a href="#multiplatform"><strong>Multiplatform</strong></a></li>
+    <li><a href="#packer-template-format"><strong>Packer template format</strong></a></li>
+    <li><a href="#basic-terminology"><strong>Basic Terminology</strong></a>
+      <ul>
+        <li><a href="#packer-template">Packer Template</a></li>
+        <li><a href="#image">Image</a></li>
+        <li><a href="#packer-builder">Packer Builder</a></li>
+        <li><a href="#packer-provisioner">Packer Provisioner</a></li>
+        <li><a href="#post-processor">Post-processor</a></li>
+        <li><a href="#communicators">Communicators</a></li>
+        <li><a href="#user-variables">User variables</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>In this blog post I will explain what Packer is and basic terminology that you need to get fimiliar with before we will start using it.</p>
+<h2 id="what-hashicorp-packer-is"><strong>What Hashicorp Packer is?</strong></h2>
+<p>Packer is an open source template creation tool. Packer is delivered as single binary and It&rsquo;s been designed to automate process of creating and customizing various types of templates in fully automated way.</p>
+<h2 id="what-hashicorp-packer-is-not"><strong>What Hashicorp Packer is not?</strong></h2>
+<ul>
+<li>Packer is not a provisioning/deployment tool. A good example of provisioning tool is Terraform, CloudFormation, Pulumi.</li>
+<li>Packer is not a configuration management tool like Ansible, Puppet or DSC, although it can utilize those technologies to customize your templates.</li>
+</ul>
+<p>Packer has been designed to build and configure your templates. That&rsquo;s it!</p>
+<p>Once you start working with it you will realize how powerful tool it is.</p>
+<blockquote>
+<p>I remember few years back when I worked in Globalization group we had a project where we had to create a massive number of localized VM templates for our vSphere environment. Multiple Windows OS versions with multiple language versions. Our localized products had to be tested on localized operating systems. Imagine the challenge - build all those images in a same way so they would behave exactly the same. Chinese, Japanese, Korean, French, Hungarian, Polish, Russian, name it.</p>
+<p>First I have created a document that described what each template should contain, what options should be enabled, and which one should be disabled, what patches should be applied etc. That document was two A4 pages long.</p>
+<p>Second, someone had to create those templates for us. At that time we had a vendor which performed a product testing for us. I have provided that vendor my document and asked to create those templates for us. I did get a massive number of questions from vendor side, creating templates was very slow. Even completed our templates were not consistent as those have been created manually by different people. Manually means you can make a multiple mistakes within the process.</p>
+<p>At the end we dropped off manual process as it was inefficient, expensive and time consuming. Hopefully we had a very talented scripting engineer within the team who spend around two months to create our own dedicated set of Powershell/PowerCLI scripts which did exactly what we wanted to do. The concept was similar to one that packer currently uses.</p>
+<p>Today you don&rsquo;t have to be a scripting master or spend significant amount of time to develop your own template creation tool, because you have Hashicorp Packer.</p>
+</blockquote>
+<h2 id="infrastricture-as-a-code"><strong>Infrastricture as a code</strong></h2>
+<p>Packer is an infrastructure as a code tool where your entire template configuration is defined within a code. Basically you need only few files and scripts which should be enough to build a template.</p>
+<h2 id="declarative-approach"><strong>Declarative approach</strong></h2>
+<p>To build your images Packer uses a template files that defined declaratively. Declarative, means you tell Packer what you want to get, not how to get it.
+That&rsquo;s the difference between imperative and declarative.
+In imperative programing languages, like PowerShell, you need to tell your script what it needs to do step by step. All commands are performed in order defined within the script itself. If you miss one step your entire script will fail.
+In declarative programming languages you only needs to specify what you want to get, so basically you don&rsquo;t need to keep specify any order.</p>
+<h2 id="cloud-agnostic"><strong>Cloud agnostic</strong></h2>
+<p>Because Packer has been designed as a &ldquo;swiss army knife&rdquo; it allows you to provision your templates for various environments. You can create your templates on-premise or in public cloud. VMware, Hyper-V, Nutanix, Azure, GCP, AWS, Alibaba, name it. Because of that it&rsquo;s very flexible.</p>
+<blockquote>
+<p>You may ask why I need to build my templates within public cloud? Cloud provider already provides me set of pre-defined images that I can use it straight away. The problem is that images delivered by cloud vendors are very often outdated, they do not include recent patches, or do not have necessary tools you need At the end very often after deployment you need to customize your OS, which is not very efficient.</p>
+</blockquote>
+<h2 id="multiplatform"><strong>Multiplatform</strong></h2>
+<p>Packer runs on multiple platforms – Windows, Linux, MacOS and can create templates for Windows, Linux, MacOS, Docker</p>
+<h2 id="packer-template-format"><strong>Packer template format</strong></h2>
+<p>To build your template you need to define it within a code. You can do it using JSON or HCL format. HCL is fairly new and it&rsquo;s been implemented quite recently.Frankly speaking it&rsquo;s good that HashiCorp standardize their tools using one common language, but at the moment most of template files you will find still use JSON format. I will focus on explaining how to define your templates in JSON which then can be converted to HCL natively by Packer.</p>
+<h2 id="basic-terminology"><strong>Basic Terminology</strong></h2>
+<p>Let&rsquo;s start from terminology which is very important as it will be used later one.</p>
+<h3 id="packer-template">Packer Template</h3>
+<p><strong>Packer Template</strong> is a file in JSON format where you define your image.</p>
+<h3 id="image">Image</h3>
+<p><strong>Image</strong> is the final output like vSphere template file you may see under &ldquo;VM and Templates&rdquo; section.</p>
+<h3 id="packer-builder">Packer Builder</h3>
+<p><strong>Packer Builder</strong> is required parameter you need to define inside your <strong>template</strong>. You may think of builder as an engine that talks to your underlying infrastructure. Some builders are build in into packer binary and some you need to download separately and place under same location as Packer binary file. You may find a list of supported builders <a href="https://www.packer.io/docs/builders" target="_blank" rel="noopener noreffer ">here</a>. There is around 30 builders available on Hashicorp website, but that&rsquo;s not all. Thanks to community there is a massive number of third party builders created by specific vendors and published on github. So if you won&rsquo;t find specific builder on Hashicorp website, just search for it on Internet, there is a good chance you will find it.</p>
+<h3 id="packer-provisioner">Packer Provisioner</h3>
+<p><strong>Packer Provisioner</strong> is an optional parameter you may define in your <strong>template</strong>. Provisioners are used to install and configure software for machines created by builders. Same as builders some provisioners are build in into Packer binary, but most of them you will have to download separately and place in same location as Packer binary file. You can use multiple provisioners within same template file which makes them very flexible. There is a number of third party provisioners created by community, like Ansible, Chef, Puppet, DSC.</p>
+<h3 id="post-processor">Post-processor</h3>
+<p><strong>Post-processor</strong> is an optional parameter you may define in your template file. Post-processors is an array of objects defining various steps to take once builder and provisioners parts are completed. As an example of post-processor operation is exporting template to ova/ovf format or perform operation directly on VM object, like removing additional CD-ROM from VM with using PowerCLI.</p>
+<h3 id="communicators">Communicators</h3>
+<p><strong>Communicators</strong> are protocols used for communication between Packer and machine that is being created (ssh for Linux and winrm/ssh for Windows) When you think of it, after machine has been created, Packer needs to connect with it to customize our OS, apply some scripts etc. That&rsquo;s what communicators are used for.</p>
+<h3 id="user-variables">User variables</h3>
+<p><strong>User variables</strong> are key/value strings that defines user variables included in packer <strong>template</strong> file.
+User variables allow to pass different parameters to Packer template file. Variables helps to apply different parameters to same JSON file. This is extremely helpful if we want to use same JSON template to build images on different vCenter servers.
+Variables needs to be defined in packer JSON file within variables section and then defined in builders section</p>
+<blockquote>
+<p>It is a good practice to place your sensitive information, like passwords, usernames as a variable and not placing those directly inside <strong>template</strong> file. Basically each value inside template file can be stored as variable. For example paths to your scripts, path to iso files, vSphere datastore names etc. If you do it wisely your template file can be universal and you will be able to use it in multiple environments, just changing specific variables that are stored separately.</p>
+</blockquote>
+<p>Variables file has fallowing structure and it needs to be saved as separate JSON file:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	    <span class="nt">&#34;vsphere_server&#34;</span><span class="p">:</span> <span class="s2">&#34;vcenter01.lab.local&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	    <span class="nt">&#34;vsphere_user&#34;</span><span class="p">:</span> <span class="s2">&#34;packer@vsphere.local&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Now you know basic Packer terminology. In next blog post we will build our first Windows template on vSphere using Packer.</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-08-02</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://danielhanaj.github.io/posts/packer_explained/" data-title="Packer Explained" data-via="donkojott" data-hashtags="Packer,DevOps,Automation"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://danielhanaj.github.io/posts/packer_explained/" data-hashtag="Packer"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://danielhanaj.github.io/posts/packer_explained/" data-title="Packer Explained"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://danielhanaj.github.io/posts/packer_explained/" data-title="Packer Explained"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://danielhanaj.github.io/posts/packer_explained/" data-title="Packer Explained"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/packer/">Packer</a>,&nbsp;<a href="/tags/devops/">DevOps</a>,&nbsp;<a href="/tags/automation/">Automation</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/vcenterrole/" class="prev" rel="prev" title="Create vCenter Role for Packer using Terraform"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Create vCenter Role for Packer using Terraform</a>
+            <a href="/posts/packer_resources_for_windows_images/" class="next" rel="next" title="Packer resources for Windows images">Packer resources for Windows images<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/about/" target="_blank">Daniel Hanaj</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":80},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"Daniel Hanaj","id-2":"Daniel Hanaj"},"lightgallery":true,"search":{"highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":0,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

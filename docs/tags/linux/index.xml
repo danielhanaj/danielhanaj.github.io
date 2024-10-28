@@ -1,0 +1,24 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Linux - Tag - Daniel Hanaj Blog</title>
+        <link>https://danielhanaj.github.io/tags/linux/</link>
+        <description>Linux - Tag - Daniel Hanaj Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>daniel.hanaj@gmail.com (Daniel Hanaj)</managingEditor>
+            <webMaster>daniel.hanaj@gmail.com (Daniel Hanaj)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License. © All rights reserved -2018</copyright><lastBuildDate>Sat, 07 Oct 2023 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://danielhanaj.github.io/tags/linux/" rel="self" type="application/rss+xml" /><item>
+    <title>SSL Handshake Failure after upgrading to Cloud Director 10.5</title>
+    <link>https://danielhanaj.github.io/posts/ssl_handshake_failure/</link>
+    <pubDate>Sat, 07 Oct 2023 00:00:00 &#43;0000</pubDate>
+    <author>Danielhanaj</author>
+    <guid>https://danielhanaj.github.io/posts/ssl_handshake_failure/</guid>
+    <description><![CDATA[<p>If you use NSX-T Load Balancer to load balance Cloud Director cell traffic you may see SSL Handshake Failure in Server Pools after upgrade to CD 10.5</p>]]></description>
+</item>
+<item>
+    <title>Configure VMware Horizon View Direct-Connection Agent for Linux</title>
+    <link>https://danielhanaj.github.io/posts/horizon_view_direct_connection_to_linux_vm/</link>
+    <pubDate>Thu, 30 Dec 2021 00:00:00 &#43;0000</pubDate>
+    <author>Danielhanaj</author>
+    <guid>https://danielhanaj.github.io/posts/horizon_view_direct_connection_to_linux_vm/</guid>
+    <description><![CDATA[<p>Silently, few days ago VMware has released View Agent Direct-Connection for Linux. In this blog post I will demonstrate how to install and configure VADC agent on Ubuntu Desktop VM.</p>]]></description>
+</item>
+</channel>
+</rss>

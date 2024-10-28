@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>getting started - Category - Daniel Hanaj Blog</title>
+        <link>https://example.org/categories/getting-started/</link>
+        <description>getting started - Category - Daniel Hanaj Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>daniel.hanaj@gmail.com (Daniel Hanaj)</managingEditor>
+            <webMaster>daniel.hanaj@gmail.com (Daniel Hanaj)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License. © All rights reserved -2018</copyright><lastBuildDate>Sat, 07 Oct 2023 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://example.org/categories/getting-started/" rel="self" type="application/rss+xml" /><item>
+    <title>SSL Handshake Failure after upgrading to Cloud Director 10.5</title>
+    <link>https://example.org/posts/ssl_handshake_failure/</link>
+    <pubDate>Sat, 07 Oct 2023 00:00:00 &#43;0000</pubDate>
+    <author>Danielhanaj</author>
+    <guid>https://example.org/posts/ssl_handshake_failure/</guid>
+    <description><![CDATA[<p>If you use NSX-T Load Balancer to load balance Cloud Director cell traffic you may see SSL Handshake Failure in Server Pools after upgrade to CD 10.5</p>]]></description>
+</item>
+</channel>
+</rss>
