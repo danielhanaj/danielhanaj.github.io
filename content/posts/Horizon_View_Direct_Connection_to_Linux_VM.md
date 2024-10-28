@@ -1,5 +1,5 @@
 +++
-author = "Danielhanaj"
+author = "Daniel Hanaj"
 title = "Configure VMware Horizon View Direct-Connection Agent for Linux"
 date = "2021-12-30"
 description = "Configure VMware Horizon View Direct-Connection Agent for Linux"

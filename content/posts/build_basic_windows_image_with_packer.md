@@ -1,5 +1,5 @@
 +++
-author = "Danielhanaj"
+author = "Daniel Hanaj"
 title = "Build basic Windows image with Packer on vSphere"
 date = "2021-08-16"
 description = "Build basic Windows image with Packer on vSphere"

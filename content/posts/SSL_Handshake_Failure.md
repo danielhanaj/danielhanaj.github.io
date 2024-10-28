@@ -1,5 +1,5 @@
 +++
-author = "Danielhanaj"
+author = "Daniel Hanaj"
 authorLink = "/about/"
 lightgallery = true
 title = "SSL Handshake Failure after upgrading to Cloud Director 10.5"

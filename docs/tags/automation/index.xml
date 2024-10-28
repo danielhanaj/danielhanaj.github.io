@@ -8,7 +8,7 @@
     <title>Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent</title>
     <link>https://danielhanaj.github.io/posts/create_docker_container_with_packer/</link>
     <pubDate>Tue, 28 Dec 2021 00:00:00 &#43;0000</pubDate>
-    <author>Danielhanaj</author>
+    <author>Daniel Hanaj</author>
     <guid>https://danielhanaj.github.io/posts/create_docker_container_with_packer/</guid>
     <description><![CDATA[<p>Today we will create a Docker image that will contain Packer, Windows Update Provisioner for Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent.</p>]]></description>
 </item>
@@ -16,7 +16,7 @@
     <title>Build complete Windows image</title>
     <link>https://danielhanaj.github.io/posts/build_complete_image/</link>
     <pubDate>Tue, 24 Aug 2021 00:00:00 &#43;0000</pubDate>
-    <author>Danielhanaj</author>
+    <author>Daniel Hanaj</author>
     <guid>https://danielhanaj.github.io/posts/build_complete_image/</guid>
     <description><![CDATA[<p>In this blog post we will build complete production ready Windows image. Let&rsquo;s crack it out!</p>]]></description>
 </item>
@@ -24,7 +24,7 @@
     <title>Packer variables</title>
     <link>https://danielhanaj.github.io/posts/packer_variables/</link>
     <pubDate>Tue, 24 Aug 2021 00:00:00 &#43;0000</pubDate>
-    <author>Danielhanaj</author>
+    <author>Daniel Hanaj</author>
     <guid>https://danielhanaj.github.io/posts/packer_variables/</guid>
     <description><![CDATA[<p>This blog entry will demonstrate how to use variables inside Packer Template file.</p>]]></description>
 </item>
@@ -32,7 +32,7 @@
     <title>Build basic Windows image with Packer on vSphere</title>
     <link>https://danielhanaj.github.io/posts/build_basic_windows_image_with_packer/</link>
     <pubDate>Mon, 16 Aug 2021 00:00:00 &#43;0000</pubDate>
-    <author>Danielhanaj</author>
+    <author>Daniel Hanaj</author>
     <guid>https://danielhanaj.github.io/posts/build_basic_windows_image_with_packer/</guid>
     <description><![CDATA[<p>In this blog post I will demonstrate how to build basic Windows 2016 image on vSphere using Packer.</p>]]></description>
 </item>
@@ -40,7 +40,7 @@
     <title>Packer resources for Windows images</title>
     <link>https://danielhanaj.github.io/posts/packer_resources_for_windows_images/</link>
     <pubDate>Tue, 03 Aug 2021 00:00:00 &#43;0000</pubDate>
-    <author>Danielhanaj</author>
+    <author>Daniel Hanaj</author>
     <guid>https://danielhanaj.github.io/posts/packer_resources_for_windows_images/</guid>
     <description><![CDATA[<p>In this blog post I will try to provide you some interesting links related to Packer and Windows server builds. Using those and modifying according your needs will make your life much simpler when creating your first Packer image.</p>]]></description>
 </item>
@@ -48,7 +48,7 @@
     <title>Packer Explained</title>
     <link>https://danielhanaj.github.io/posts/packer_explained/</link>
     <pubDate>Mon, 02 Aug 2021 00:00:00 &#43;0000</pubDate>
-    <author>Danielhanaj</author>
+    <author>Daniel Hanaj</author>
     <guid>https://danielhanaj.github.io/posts/packer_explained/</guid>
     <description><![CDATA[<p>In this blog post I will explain what Packer is and basic terminology that you need to get fimiliar with before we will start using it.</p>]]></description>
 </item>

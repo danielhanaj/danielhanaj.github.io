@@ -8,7 +8,7 @@
     <title>Build basic Windows image with Packer on vSphere</title>
     <link>https://danielhanaj.github.io/posts/build_basic_windows_image_with_packer/</link>
     <pubDate>Mon, 16 Aug 2021 00:00:00 &#43;0000</pubDate>
-    <author>Danielhanaj</author>
+    <author>Daniel Hanaj</author>
     <guid>https://danielhanaj.github.io/posts/build_basic_windows_image_with_packer/</guid>
     <description><![CDATA[<p>In this blog post I will demonstrate how to build basic Windows 2016 image on vSphere using Packer.</p>]]></description>
 </item>
@@ -16,7 +16,7 @@
     <title>Create vCenter Role for Packer using Terraform</title>
     <link>https://danielhanaj.github.io/posts/vcenterrole/</link>
     <pubDate>Fri, 25 Jun 2021 00:00:00 &#43;0000</pubDate>
-    <author>Danielhanaj</author>
+    <author>Daniel Hanaj</author>
     <guid>https://danielhanaj.github.io/posts/vcenterrole/</guid>
     <description><![CDATA[<p>In this blog post I would like to demonstrate how to create dedicated role for HashiCorp Packer and assign permissions on vCenter objects using Terraform.</p>]]></description>
 </item>

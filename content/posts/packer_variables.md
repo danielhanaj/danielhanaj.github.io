@@ -1,5 +1,5 @@
 +++
-author = "Danielhanaj"
+author = "Daniel Hanaj"
 title = "Packer variables"
 date = "2021-08-24"
 description = "Packer variables"

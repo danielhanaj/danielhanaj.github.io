@@ -2,15 +2,16 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://danielhanaj.github.io/categories/</loc><lastmod>2023-10-07T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>https://danielhanaj.github.io/categories/</loc><lastmod>2024-10-28T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>https://danielhanaj.github.io/</loc><lastmod>2024-10-28T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>https://danielhanaj.github.io/posts/goodbye_vmware_because_broadcom/</loc><lastmod>2024-10-28T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>https://danielhanaj.github.io/posts/</loc><lastmod>2024-10-28T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>https://danielhanaj.github.io/tags/</loc><lastmod>2024-10-28T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>https://danielhanaj.github.io/tags/vmware/</loc><lastmod>2024-10-28T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>https://danielhanaj.github.io/categories/vmware/</loc><lastmod>2024-10-28T00:00:00&#43;00:00</lastmod></url><url>
             <loc>https://danielhanaj.github.io/tags/cloud-director/</loc><lastmod>2023-10-07T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>https://danielhanaj.github.io/</loc><lastmod>2023-10-07T00:00:00&#43;00:00</lastmod></url><url>
             <loc>https://danielhanaj.github.io/tags/linux/</loc><lastmod>2023-10-07T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>https://danielhanaj.github.io/posts/</loc><lastmod>2023-10-07T00:00:00&#43;00:00</lastmod></url><url>
             <loc>https://danielhanaj.github.io/posts/ssl_handshake_failure/</loc><lastmod>2023-10-07T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>https://danielhanaj.github.io/tags/</loc><lastmod>2023-10-07T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>https://danielhanaj.github.io/tags/vmware/</loc><lastmod>2023-10-07T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>https://danielhanaj.github.io/categories/vmware/</loc><lastmod>2023-10-07T00:00:00&#43;00:00</lastmod></url><url>
             <loc>https://danielhanaj.github.io/posts/horizon_view_direct_connection_to_linux_vm/</loc><lastmod>2021-12-30T00:00:00&#43;00:00</lastmod></url><url>
             <loc>https://danielhanaj.github.io/tags/horizon/</loc><lastmod>2021-12-30T00:00:00&#43;00:00</lastmod></url><url>
             <loc>https://danielhanaj.github.io/tags/ubuntu/</loc><lastmod>2021-12-30T00:00:00&#43;00:00</lastmod></url><url>

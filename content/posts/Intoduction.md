@@ -1,5 +1,5 @@
 +++
-author = "Danielhanaj"
+author = "Daniel Hanaj"
 title = "Fully automated Windows Templates with Packer, Terraform and Azure DevOps"
 date = "2021-06-21"
 description = "Fully automated Windows Templates with Packer, Terraform and Azure DevOps"

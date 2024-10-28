@@ -1,5 +1,5 @@
 +++
-author = "Danielhanaj"
+author = "Daniel Hanaj"
 title = "Create vCenter Role for Packer using Terraform"
 date = "2021-06-25"
 description = "Create vCenter Role for Packer using Terraform"

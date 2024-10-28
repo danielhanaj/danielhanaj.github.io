@@ -1,5 +1,5 @@
 +++
-author = "Danielhanaj"
+author = "Daniel Hanaj"
 title = "Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent"
 date = "2021-12-28"
 description = "Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent"

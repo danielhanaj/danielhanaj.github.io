@@ -8,7 +8,7 @@
     <title>SSL Handshake Failure after upgrading to Cloud Director 10.5</title>
     <link>https://danielhanaj.github.io/posts/ssl_handshake_failure/</link>
     <pubDate>Sat, 07 Oct 2023 00:00:00 &#43;0000</pubDate>
-    <author>Danielhanaj</author>
+    <author>Daniel Hanaj</author>
     <guid>https://danielhanaj.github.io/posts/ssl_handshake_failure/</guid>
     <description><![CDATA[<p>If you use NSX-T Load Balancer to load balance Cloud Director cell traffic you may see SSL Handshake Failure in Server Pools after upgrade to CD 10.5</p>]]></description>
 </item>
@@ -16,7 +16,7 @@
     <title>Configure VMware Horizon View Direct-Connection Agent for Linux</title>
     <link>https://danielhanaj.github.io/posts/horizon_view_direct_connection_to_linux_vm/</link>
     <pubDate>Thu, 30 Dec 2021 00:00:00 &#43;0000</pubDate>
-    <author>Danielhanaj</author>
+    <author>Daniel Hanaj</author>
     <guid>https://danielhanaj.github.io/posts/horizon_view_direct_connection_to_linux_vm/</guid>
     <description><![CDATA[<p>Silently, few days ago VMware has released View Agent Direct-Connection for Linux. In this blog post I will demonstrate how to install and configure VADC agent on Ubuntu Desktop VM.</p>]]></description>
 </item>

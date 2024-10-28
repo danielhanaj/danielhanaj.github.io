@@ -1,5 +1,5 @@
 +++
-author = "Danielhanaj"
+author = "Daniel Hanaj"
 title = "Build complete Windows image"
 date = "2021-08-24"
 description = "Build complete Windows image"

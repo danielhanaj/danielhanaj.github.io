@@ -8,7 +8,7 @@
     <title>Fully automated Windows Templates with Packer, Terraform and Azure DevOps</title>
     <link>https://danielhanaj.github.io/posts/intoduction/</link>
     <pubDate>Mon, 21 Jun 2021 00:00:00 &#43;0000</pubDate>
-    <author>Danielhanaj</author>
+    <author>Daniel Hanaj</author>
     <guid>https://danielhanaj.github.io/posts/intoduction/</guid>
     <description><![CDATA[<p>This is my first blog post and in next few blog entries I will demonstrate entire process how you can fully automatically build and customize vSphere Windows templates using Terraform, Packer and Azure DevOps. My goal is to deliver Windows templates that will be production ready - meaning, you will be able use those to provision production systems. Windows templates will be always up to date since we will rebuild those every month once Microsoft will release their patches. Let&rsquo;s get started then!</p>]]></description>
 </item>

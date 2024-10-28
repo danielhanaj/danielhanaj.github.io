@@ -8,7 +8,7 @@
     <title>SSL Handshake Failure after upgrading to Cloud Director 10.5</title>
     <link>https://danielhanaj.github.io/posts/ssl_handshake_failure/</link>
     <pubDate>Sat, 07 Oct 2023 00:00:00 &#43;0000</pubDate>
-    <author>Danielhanaj</author>
+    <author>Daniel Hanaj</author>
     <guid>https://danielhanaj.github.io/posts/ssl_handshake_failure/</guid>
     <description><![CDATA[<p>If you use NSX-T Load Balancer to load balance Cloud Director cell traffic you may see SSL Handshake Failure in Server Pools after upgrade to CD 10.5</p>]]></description>
 </item>

@@ -1,5 +1,5 @@
 +++
-author = "Danielhanaj"
+author = "Daniel Hanaj"
 title = "Packer resources for Windows images"
 date = "2021-08-03"
 description = "Packer resources for Windows images"
