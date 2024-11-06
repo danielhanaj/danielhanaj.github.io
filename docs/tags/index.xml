@@ -1,87 +1,87 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Tags - Tag - Daniel Hanaj Blog</title>
-        <link>https://danielhanaj.github.io/tags/</link>
+        <link>http://localhost:1313/tags/</link>
         <description>Tags - Tag - Daniel Hanaj Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>daniel.hanaj@gmail.com (Daniel Hanaj)</managingEditor>
-            <webMaster>daniel.hanaj@gmail.com (Daniel Hanaj)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License. © All rights reserved -2018</copyright><lastBuildDate>Sat, 07 Oct 2023 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://danielhanaj.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>daniel.hanaj@gmail.com (Daniel Hanaj)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License. © All rights reserved -2018</copyright><lastBuildDate>Mon, 28 Oct 2024 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://localhost:1313/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>VMware</title>
+    <link>http://localhost:1313/tags/vmware/</link>
+    <pubDate>Mon, 28 Oct 2024 00:00:00 &#43;0000</pubDate>
+    <author>Daniel Hanaj</author>
+    <guid>http://localhost:1313/tags/vmware/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
     <title>Cloud Director</title>
-    <link>https://danielhanaj.github.io/tags/cloud-director/</link>
+    <link>http://localhost:1313/tags/cloud-director/</link>
     <pubDate>Sat, 07 Oct 2023 00:00:00 &#43;0000</pubDate>
     <author>Daniel Hanaj</author>
-    <guid>https://danielhanaj.github.io/tags/cloud-director/</guid>
+    <guid>http://localhost:1313/tags/cloud-director/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>Linux</title>
-    <link>https://danielhanaj.github.io/tags/linux/</link>
+    <link>http://localhost:1313/tags/linux/</link>
     <pubDate>Sat, 07 Oct 2023 00:00:00 &#43;0000</pubDate>
     <author>Daniel Hanaj</author>
-    <guid>https://danielhanaj.github.io/tags/linux/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>VMware</title>
-    <link>https://danielhanaj.github.io/tags/vmware/</link>
-    <pubDate>Sat, 07 Oct 2023 00:00:00 &#43;0000</pubDate>
-    <author>Daniel Hanaj</author>
-    <guid>https://danielhanaj.github.io/tags/vmware/</guid>
+    <guid>http://localhost:1313/tags/linux/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>Horizon</title>
-    <link>https://danielhanaj.github.io/tags/horizon/</link>
+    <link>http://localhost:1313/tags/horizon/</link>
     <pubDate>Thu, 30 Dec 2021 00:00:00 &#43;0000</pubDate>
     <author>Daniel Hanaj</author>
-    <guid>https://danielhanaj.github.io/tags/horizon/</guid>
+    <guid>http://localhost:1313/tags/horizon/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>Ubuntu</title>
-    <link>https://danielhanaj.github.io/tags/ubuntu/</link>
+    <link>http://localhost:1313/tags/ubuntu/</link>
     <pubDate>Thu, 30 Dec 2021 00:00:00 &#43;0000</pubDate>
     <author>Daniel Hanaj</author>
-    <guid>https://danielhanaj.github.io/tags/ubuntu/</guid>
+    <guid>http://localhost:1313/tags/ubuntu/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>View Agent</title>
-    <link>https://danielhanaj.github.io/tags/view-agent/</link>
+    <link>http://localhost:1313/tags/view-agent/</link>
     <pubDate>Thu, 30 Dec 2021 00:00:00 &#43;0000</pubDate>
     <author>Daniel Hanaj</author>
-    <guid>https://danielhanaj.github.io/tags/view-agent/</guid>
+    <guid>http://localhost:1313/tags/view-agent/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>Automation</title>
-    <link>https://danielhanaj.github.io/tags/automation/</link>
+    <link>http://localhost:1313/tags/automation/</link>
     <pubDate>Tue, 28 Dec 2021 00:00:00 &#43;0000</pubDate>
     <author>Daniel Hanaj</author>
-    <guid>https://danielhanaj.github.io/tags/automation/</guid>
+    <guid>http://localhost:1313/tags/automation/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>Azure</title>
-    <link>https://danielhanaj.github.io/tags/azure/</link>
+    <link>http://localhost:1313/tags/azure/</link>
     <pubDate>Tue, 28 Dec 2021 00:00:00 &#43;0000</pubDate>
     <author>Daniel Hanaj</author>
-    <guid>https://danielhanaj.github.io/tags/azure/</guid>
+    <guid>http://localhost:1313/tags/azure/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>DevOps</title>
-    <link>https://danielhanaj.github.io/tags/devops/</link>
+    <link>http://localhost:1313/tags/devops/</link>
     <pubDate>Tue, 28 Dec 2021 00:00:00 &#43;0000</pubDate>
     <author>Daniel Hanaj</author>
-    <guid>https://danielhanaj.github.io/tags/devops/</guid>
+    <guid>http://localhost:1313/tags/devops/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>Docker</title>
-    <link>https://danielhanaj.github.io/tags/docker/</link>
+    <link>http://localhost:1313/tags/docker/</link>
     <pubDate>Tue, 28 Dec 2021 00:00:00 &#43;0000</pubDate>
     <author>Daniel Hanaj</author>
-    <guid>https://danielhanaj.github.io/tags/docker/</guid>
+    <guid>http://localhost:1313/tags/docker/</guid>
     <description><![CDATA[]]></description>
 </item>
 </channel>

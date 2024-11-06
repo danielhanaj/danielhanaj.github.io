@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Role - Tag - Daniel Hanaj Blog</title>
-        <link>https://danielhanaj.github.io/tags/role/</link>
+        <link>http://localhost:1313/tags/role/</link>
         <description>Role - Tag - Daniel Hanaj Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>daniel.hanaj@gmail.com (Daniel Hanaj)</managingEditor>
-            <webMaster>daniel.hanaj@gmail.com (Daniel Hanaj)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License. © All rights reserved -2018</copyright><lastBuildDate>Fri, 25 Jun 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://danielhanaj.github.io/tags/role/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>daniel.hanaj@gmail.com (Daniel Hanaj)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License. © All rights reserved -2018</copyright><lastBuildDate>Fri, 25 Jun 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://localhost:1313/tags/role/" rel="self" type="application/rss+xml" /><item>
     <title>Create vCenter Role for Packer using Terraform</title>
-    <link>https://danielhanaj.github.io/posts/vcenterrole/</link>
+    <link>http://localhost:1313/posts/vcenterrole/</link>
     <pubDate>Fri, 25 Jun 2021 00:00:00 &#43;0000</pubDate>
     <author>Daniel Hanaj</author>
-    <guid>https://danielhanaj.github.io/posts/vcenterrole/</guid>
+    <guid>http://localhost:1313/posts/vcenterrole/</guid>
     <description><![CDATA[<p>In this blog post I would like to demonstrate how to create dedicated role for HashiCorp Packer and assign permissions on vCenter objects using Terraform.</p>]]></description>
 </item>
 </channel>

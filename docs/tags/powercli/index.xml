@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>PowerCLI - Tag - Daniel Hanaj Blog</title>
-        <link>https://danielhanaj.github.io/tags/powercli/</link>
+        <link>http://localhost:1313/tags/powercli/</link>
         <description>PowerCLI - Tag - Daniel Hanaj Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>daniel.hanaj@gmail.com (Daniel Hanaj)</managingEditor>
-            <webMaster>daniel.hanaj@gmail.com (Daniel Hanaj)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License. © All rights reserved -2018</copyright><lastBuildDate>Tue, 28 Dec 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://danielhanaj.github.io/tags/powercli/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>daniel.hanaj@gmail.com (Daniel Hanaj)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License. © All rights reserved -2018</copyright><lastBuildDate>Tue, 28 Dec 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://localhost:1313/tags/powercli/" rel="self" type="application/rss+xml" /><item>
     <title>Create Docker image with Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent</title>
-    <link>https://danielhanaj.github.io/posts/create_docker_container_with_packer/</link>
+    <link>http://localhost:1313/posts/create_docker_container_with_packer/</link>
     <pubDate>Tue, 28 Dec 2021 00:00:00 &#43;0000</pubDate>
     <author>Daniel Hanaj</author>
-    <guid>https://danielhanaj.github.io/posts/create_docker_container_with_packer/</guid>
+    <guid>http://localhost:1313/posts/create_docker_container_with_packer/</guid>
     <description><![CDATA[<p>Today we will create a Docker image that will contain Packer, Windows Update Provisioner for Packer, PowerShell, PowerCLI and Azure DevOps self-hosted agent.</p>]]></description>
 </item>
 </channel>
